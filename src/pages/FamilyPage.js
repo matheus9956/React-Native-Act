@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-const HomePage = () => {
+const FamilyPage = () => {
   return (
     <View>
-      <Text>Home page screen</Text>
+      <Text>family</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default HomePage;
+export default FamilyPage;
