@@ -1,4 +1,4 @@
-import createDataContext from "../context/createDataContext";
+import createDataContext from "./createDataContext";
 import React from "react";
 
 const reducer = (state, action) => {
