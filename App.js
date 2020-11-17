@@ -8,6 +8,8 @@ import FamiliesPage from "./src/pages/FamiliesPage";
 import SettingsPage from "./src/pages/SettingsPage";
 import FamilyPage from "./src/pages/FamilyPage";
 import GroupPage from "./src/pages/GroupPage";
+import { Provider } from "./src/context/context";
+import React from "react";
 
 const TabNavigator = createBottomTabNavigator({
   Register: RegisterPage,
@@ -31,4 +33,12 @@ const navigator = createStackNavigator(
   }
 );
 
-export default createAppContainer(navigator);
+const App = createAppContainer(navigator);
+
+export default () => {
+  return (
+    <Provider>
+      <App />
+    </Provider>
+  );
+};
