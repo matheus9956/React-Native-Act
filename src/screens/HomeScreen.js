@@ -4,7 +4,7 @@ import { View, StyleSheet, Text, Button } from "react-native";
 const HomeScreen = ({ navigation }) => {
   return (
     <View>
-      <Text>Home Screen screen</Text>
+      <Text>Bem vindo!</Text>
 
       <Button
         onPress={() => navigation.navigate("Register")}
