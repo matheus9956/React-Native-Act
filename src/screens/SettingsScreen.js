@@ -1,10 +1,14 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { View, StyleSheet, Text, Button, Linking } from "react-native";
+
+const handleEmaillPress = async () => {
+  await Linking.openURL("mailto: matheus.matheus99@gmail.com");
+};
 
 const SettingsScreen = () => {
   return (
     <View>
-      <Text>settings Screen screen</Text>
+      <Button title="email" onPress={handleEmaillPress} />
     </View>
   );
 };
