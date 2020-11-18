@@ -1,14 +1,14 @@
 import React from "react";
 import { View, StyleSheet, Text } from "react-native";
 
-const GroupScreen = () => {
+const FormScreen = () => {
   return (
     <View>
-      <Text>group screen</Text>
+      <Text>form screen</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({});
 
-export default GroupScreen;
+export default FormScreen;
