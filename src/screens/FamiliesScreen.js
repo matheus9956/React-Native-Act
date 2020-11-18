@@ -7,10 +7,11 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Context } from "../context/FamilyContext";
+import { Context as FamilyContext } from "../context/FamilyContext";
+import { Context as GroupContext } from "../context/GroupContext";
 
 const FamiliesScreen = ({ navigation }) => {
-  const { state, CreateGroup } = useContext(Context);
+  const { state } = useContext(FamilyContext);
 
   if (state.length >= 6) {
     return (
@@ -43,7 +44,7 @@ const FamiliesScreen = ({ navigation }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(family) => family.id}
+        keyExtractor={(family) => family.nomeMae}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
