@@ -2,7 +2,7 @@ import React from "react";
 import { View, StyleSheet, Text, Button, Linking } from "react-native";
 
 const handleEmaillPress = async () => {
-  await Linking.openURL("mailto: matheus.matheus99@gmail.com");
+  await Linking.openURL("mailto: actribeirao@gmail.com");
 };
 
 const SettingsScreen = () => {
