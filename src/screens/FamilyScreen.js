@@ -11,9 +11,9 @@ const FamilyScreen = ({ navigation }) => {
   return (
     <View>
       <Text>{family.id}</Text>
-      <Text>{family.nomeMae}</Text>
-      <Text>{family.nomePai}</Text>
-      <Text>{family.nomeCrianca}</Text>
+      <Text>{family.dados.values.mae}</Text>
+      <Text>{family.dados.values.pai}</Text>
+      <Text>{family.dados.values.crianca}</Text>
     </View>
   );
 };

@@ -13,6 +13,8 @@ import { Context as GroupContext } from "../context/GroupContext";
 const FamiliesScreen = ({ navigation }) => {
   const { state } = useContext(FamilyContext);
 
+  console.log(state);
+
   if (state.length >= 6) {
     return (
       <View>
@@ -24,7 +26,7 @@ const FamiliesScreen = ({ navigation }) => {
         ></Button>
         <FlatList
           data={state}
-          keyExtractor={(family) => family.nomeMae}
+          keyExtractor={(family) => family.dados.values.mae}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
@@ -44,7 +46,7 @@ const FamiliesScreen = ({ navigation }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(family) => family.nomeMae}
+        keyExtractor={(family) => family.dados.values.mae}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity

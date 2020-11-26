@@ -6,12 +6,7 @@ const reducer = (state, action) => {
     case "register":
       return [
         ...state,
-        {
-          id: Math.floor(Math.random() * 999999),
-          nomeMae: action.payload.nomeMae,
-          nomePai: action.payload.nomePai,
-          nomeCrianca: action.payload.nomeCrianca,
-        },
+        { id: Math.floor(Math.random() * 999999), dados: action.payload },
       ];
     default:
       return state;
@@ -19,8 +14,9 @@ const reducer = (state, action) => {
 };
 
 const RegisterFamily = (dispatch) => {
-  return (nomeMae, nomePai, nomeCrianca, callback) => {
-    dispatch({ type: "register", payload: { nomeMae, nomePai, nomeCrianca } });
+  return (values, callback) => {
+    dispatch({ type: "register", payload: { values } });
+
     if (callback) {
       callback();
     }
