@@ -1,7 +1,8 @@
 import React from "react";
-import { View, StyleSheet, Text } from "react-native";
+import { Keyboard, View, StyleSheet, Text } from "react-native";
 
 const FormScreen = () => {
+  Keyboard.dismiss();
   return (
     <View>
       <Text>form screen</Text>

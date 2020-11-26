@@ -36,9 +36,9 @@ const RegisterScreen = ({ navigation }) => {
             <Button
               onPress={() => {
                 handleSubmit;
-                RegisterFamily(values, () => navigation.navigate("Families"));
+                RegisterFamily(values, () => navigation.navigate("Form"));
               }}
-              title="Submit"
+              title="Cadastrar"
             />
           </View>
         )}
