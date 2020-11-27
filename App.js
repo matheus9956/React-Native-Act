@@ -11,7 +11,12 @@ import GroupScreen from "./src/screens/GroupScreen";
 import { Provider } from "./src/context/FamilyContext";
 import React from "react";
 import FormScreen from "./src/screens/FormScreen";
-import Ionicons from "react-native-vector-icons/Ionicons";
+import {
+  MaterialIcons,
+  MaterialCommunityIcons,
+  FontAwesome,
+  Ionicons,
+} from "@expo/vector-icons";
 
 const TabNavigator = createBottomTabNavigator(
   {
@@ -44,15 +49,18 @@ const TabNavigator = createBottomTabNavigator(
     defaultNavigationOptions: ({ navigation }) => ({
       tabBarIcon: ({ focused, horizontal, tintColor }) => {
         const { routeName } = navigation.state;
-        let IconComponent = Ionicons;
+        let IconComponent = MaterialIcons;
         let iconName;
         if (routeName === "Register") {
-          iconName = focused ? "ios-list-box" : "ios-list";
+          IconComponent = FontAwesome;
+          iconName = focused ? "address-book" : "address-book-o";
         } else if (routeName === "Settings") {
-          iconName = focused ? "ios-list-box" : "ios-list";
+          IconComponent = MaterialCommunityIcons;
+          iconName = focused ? "settings" : "settings-outline";
         } else if (routeName === "Families") {
-          iconName = focused ? "ios-list-box" : "ios-list";
+          iconName = focused ? "people" : "people-outline";
         } else if (routeName === "Groups") {
+          IconComponent = Ionicons;
           iconName = focused ? "ios-list-box" : "ios-list";
         }
 
