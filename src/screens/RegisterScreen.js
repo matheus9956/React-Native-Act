@@ -2,13 +2,13 @@ import React, { useContext } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { Context } from "../context/FamilyContext";
-import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Formik } from "formik";
 
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(Context);
 
   return (
-    <View s>
+    <View>
       <Formik
         initialValues={{ pai: "", mae: "", crianca: "" }}
         onSubmit={(values) => console.log(values)}
