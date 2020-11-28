@@ -3,6 +3,14 @@ import { View, StyleSheet, Text, Button } from "react-native";
 import { TextInput } from "react-native-gesture-handler";
 import { Context } from "../context/FamilyContext";
 import { Formik } from "formik";
+import FormComponent from "../components/FormComponent";
+
+const Form = [
+  { id: "Q01", pergunta: "Qual o seu nome?" },
+  { id: "Q02", pergunta: "Qual a sua ocupação?" },
+  { id: "Q03", pergunta: "Quantos filhos você tem?" },
+];
+/////////////////////////////////////////////////////////////////////
 
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(Context);
@@ -36,13 +44,14 @@ const RegisterScreen = ({ navigation }) => {
             <Button
               onPress={() => {
                 handleSubmit;
-                RegisterFamily(values, () => navigation.navigate("Form"));
+                //RegisterFamily(values, () => navigation.navigate("Form"));
               }}
               title="Cadastrar"
             />
           </View>
         )}
       </Formik>
+      <FormComponent data={Form} />
     </View>
   );
 };

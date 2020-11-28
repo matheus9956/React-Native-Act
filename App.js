@@ -10,7 +10,7 @@ import FamilyScreen from "./src/screens/FamilyScreen";
 import GroupScreen from "./src/screens/GroupScreen";
 import { Provider } from "./src/context/FamilyContext";
 import React from "react";
-import FormScreen from "./src/screens/FormScreen";
+
 import {
   MaterialIcons,
   MaterialCommunityIcons,
@@ -81,7 +81,6 @@ const navigator = createStackNavigator(
     Tab: TabNavigator,
     Family: FamilyScreen,
     Group: GroupScreen,
-    Form: FormScreen,
   },
   {
     initialRouteName: "Home",

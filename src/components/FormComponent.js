@@ -3,21 +3,13 @@ import { Keyboard, View, StyleSheet, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 
-/// VARIÁVEL DE EXEMPLO PARA TESTE (RECEBIDO DO BANCO DE DADOS ASSIM)
-const Form = [
-  { id: "Q01", pergunta: "Qual o seu nome?" },
-  { id: "Q02", pergunta: "Qual a sua ocupação?" },
-  { id: "Q03", pergunta: "Quantos filhos você tem?" },
-];
-/////////////////////////////////////////////////////////////////////
-
-const InitialValues = Form.reduce(
-  (acc, curr) => ({ ...acc, [curr.id]: "" }),
-  {}
-);
-
-const FormScreen = () => {
+const FormComponent = ({ data }) => {
   Keyboard.dismiss();
+
+  const InitialValues = data.reduce(
+    (acc, curr) => ({ ...acc, [curr.id]: "" }),
+    {}
+  );
 
   return (
     <View>
@@ -27,7 +19,7 @@ const FormScreen = () => {
       >
         {({ handleChange, values, handleSubmit }) => (
           <View style={styles.label}>
-            {Form.map((formulario, index) => (
+            {data.map((formulario, index) => (
               <View key={index}>
                 <Text style={styles.text}>{formulario.pergunta}</Text>
                 <TextInput
@@ -65,4 +57,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default FormScreen;
+export default FormComponent;
