@@ -52,7 +52,7 @@ const FamiliesScreen = ({ navigation }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(family) => family.dados.values.mae}
+        keyExtractor={(family) => family.dados.values.id}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -75,9 +75,11 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     marginVertical: 12,
     paddingVertical: 12,
+    marginHorizontal: 8,
   },
   familiesText: {
     fontSize: 30,
+    marginHorizontal: 5,
   },
   texto: {
     marginTop: 10,

@@ -3,7 +3,7 @@ import { Keyboard, View, StyleSheet, Text, Button } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 
-const FormComponent = ({ data }) => {
+const FormComponent = ({ data, submit }) => {
   Keyboard.dismiss();
 
   const InitialValues = data.reduce(
@@ -15,7 +15,7 @@ const FormComponent = ({ data }) => {
     <View>
       <Formik
         initialValues={InitialValues}
-        onSubmit={(values) => console.log(values)}
+        onSubmit={(values) => submit(values)}
       >
         {({ handleChange, values, handleSubmit }) => (
           <View style={styles.label}>

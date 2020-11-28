@@ -17,47 +17,17 @@ const RegisterScreen = ({ navigation }) => {
 
   return (
     <View>
-      <Formik
-        initialValues={{ pai: "", mae: "", crianca: "" }}
-        onSubmit={(values) => console.log(values)}
-      >
-        {({ handleChange, handleSubmit, values }) => (
-          <View style={styles.label}>
-            <TextInput
-              placeholder="Nome do Pai"
-              onChangeText={handleChange("pai")}
-              value={values.pai}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Nome da Mãe"
-              onChangeText={handleChange("mae")}
-              value={values.mae}
-              style={styles.input}
-            />
-            <TextInput
-              placeholder="Nome da Criança"
-              onChangeText={handleChange("crianca")}
-              value={values.crianca}
-              style={styles.input}
-            />
-            <Button
-              onPress={() => {
-                handleSubmit;
-                //RegisterFamily(values, () => navigation.navigate("Form"));
-              }}
-              title="Cadastrar"
-            />
-          </View>
-        )}
-      </Formik>
-      <FormComponent data={Form} />
+      <FormComponent
+        data={Form}
+        submit={(data) => {
+          RegisterFamily(data, () => navigation.navigate("Families"));
+        }}
+      />
     </View>
   );
 };
 
 RegisterScreen.navigationOptions = {
-  headerTitle: "Cadastro",
   tabBarLabel: "Cadastro",
 };
 
