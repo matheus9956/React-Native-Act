@@ -26,7 +26,7 @@ const FamiliesScreen = ({ navigation }) => {
         ></Button>
         <FlatList
           data={state}
-          keyExtractor={(family) => family.dados.values.mae}
+          keyExtractor={(family) => family.dados.id}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity

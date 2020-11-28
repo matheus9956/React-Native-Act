@@ -77,12 +77,37 @@ const TabNavigator = createBottomTabNavigator(
 const navigator = createStackNavigator(
   {
     Home: HomeScreen,
-    Tab: TabNavigator,
+    Tab: {
+      screen: TabNavigator,
+      navigationOptions: ({ navigation }) => {
+        const routeName =
+          navigation.state.routes[navigation.state.index].routeName;
+        let name;
+
+        if (routeName === "Register") {
+          name = "Cadastrar";
+        }
+        if (routeName === "Families") {
+          name = "Famílias";
+        }
+        if (routeName === "Groups") {
+          name = "Grupos";
+        }
+        if (routeName === "Settings") {
+          name = "Ajustes";
+        }
+
+        return { title: name, headerLeft: () => null };
+      },
+    },
     Family: FamilyScreen,
     Group: GroupScreen,
   },
   {
     initialRouteName: "Home",
+    defaultNavigationOptions: {
+      headerTitleStyle: { alignSelf: "center" },
+    },
   }
 );
 
