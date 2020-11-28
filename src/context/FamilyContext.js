@@ -15,7 +15,6 @@ const reducer = (state, action) => {
 
 const RegisterFamily = (dispatch) => {
   return (values, callback) => {
-    console.log(values);
     dispatch({ type: "register", payload: { values } });
 
     if (callback) {

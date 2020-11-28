@@ -8,6 +8,7 @@ const handleEmaillPress = async () => {
 const SettingsScreen = () => {
   return (
     <View style={styles.label}>
+      <Text style={styles.versao}>v1.0</Text>
       <Text style={styles.text}>SUPORTE: </Text>
       <Button
         style={styles.button}
@@ -32,6 +33,11 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     marginBottom: 15,
     marginTop: 50,
+  },
+  versao: {
+    marginTop: 10,
+    alignSelf: "center",
+    color: "grey",
   },
 });
 

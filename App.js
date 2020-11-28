@@ -100,8 +100,18 @@ const navigator = createStackNavigator(
         return { title: name, headerLeft: () => null };
       },
     },
-    Family: FamilyScreen,
-    Group: GroupScreen,
+    Family: {
+      screen: FamilyScreen,
+      navigationOptions: {
+        title: "Família",
+      },
+    },
+    Group: {
+      screen: GroupScreen,
+      navigationOptions: {
+        title: "Grupo",
+      },
+    },
   },
   {
     initialRouteName: "Home",
