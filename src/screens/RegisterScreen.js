@@ -56,6 +56,11 @@ const RegisterScreen = ({ navigation }) => {
   );
 };
 
+RegisterScreen.navigationOptions = {
+  headerTitle: "Cadastro",
+  tabBarLabel: "Cadastro",
+};
+
 const styles = StyleSheet.create({
   input: {
     borderWidth: 1,

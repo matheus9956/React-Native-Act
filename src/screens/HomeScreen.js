@@ -19,6 +19,10 @@ const HomeScreen = ({ navigation }) => {
   );
 };
 
+HomeScreen.navigationOptions = {
+  title: "Início",
+};
+
 const styles = StyleSheet.create({});
 
 export default HomeScreen;

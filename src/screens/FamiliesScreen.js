@@ -41,6 +41,12 @@ const FamiliesScreen = ({ navigation }) => {
         />
       </View>
     );
+  } else if (state.length === 0) {
+    return (
+      <View>
+        <Text style={styles.texto}>Você não possui famílias cadastradas</Text>
+      </View>
+    );
   }
   return (
     <View>
@@ -72,6 +78,11 @@ const styles = StyleSheet.create({
   },
   familiesText: {
     fontSize: 30,
+  },
+  texto: {
+    marginTop: 10,
+    alignSelf: "center",
+    color: "grey",
   },
 });
 
