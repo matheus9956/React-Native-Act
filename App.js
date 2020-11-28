@@ -107,6 +107,9 @@ const navigator = createStackNavigator(
     initialRouteName: "Home",
     defaultNavigationOptions: {
       headerTitleStyle: { alignSelf: "center" },
+      headerTitleContainerStyle: {
+        left: 0,
+      },
     },
   }
 );
