@@ -47,7 +47,7 @@ const TabNavigator = createBottomTabNavigator(
   },
   {
     defaultNavigationOptions: ({ navigation }) => ({
-      tabBarIcon: ({ focused, horizontal, tintColor }) => {
+      tabBarIcon: ({ focused, tintColor }) => {
         const { routeName } = navigation.state;
         let IconComponent = MaterialIcons;
         let iconName;
@@ -64,7 +64,6 @@ const TabNavigator = createBottomTabNavigator(
           iconName = focused ? "ios-list-box" : "ios-list";
         }
 
-        // You can return any component that you like here!
         return <IconComponent name={iconName} size={25} color={tintColor} />;
       },
     }),
@@ -85,9 +84,6 @@ const navigator = createStackNavigator(
   },
   {
     initialRouteName: "Home",
-    defaultNavigationOptions: {
-      title: "ACT",
-    },
   }
 );
 
