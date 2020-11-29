@@ -7,6 +7,10 @@ const familyReducer = (state, action) => {
         ...state,
         { id: Math.floor(Math.random() * 999999), dados: action.payload },
       ];
+    case "read": {
+      state = action.payload.families;
+      return state;
+    }
     default:
       return state;
   }
@@ -22,8 +26,18 @@ const RegisterFamily = (dispatch) => {
   };
 };
 
+const ReadFamilies = (dispatch) => {
+  const families = [
+    { id: 123, dados: "test" },
+    { id: 1234, dados: "testando" },
+  ];
+  return () => {
+    dispatch({ type: "read", payload: { families } });
+  };
+};
+
 export const { Context, Provider } = createDataContext(
   familyReducer,
-  { RegisterFamily },
+  { RegisterFamily, ReadFamilies },
   []
 );

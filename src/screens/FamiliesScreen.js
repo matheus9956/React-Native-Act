@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   StyleSheet,
@@ -10,7 +10,11 @@ import {
 import { Context as FamilyContext } from "../context/FamilyContext";
 
 const FamiliesScreen = ({ navigation }) => {
-  const { state } = useContext(FamilyContext);
+  const { state, ReadFamilies } = useContext(FamilyContext);
+
+  useEffect(() => {
+    ReadFamilies();
+  }, []);
 
   if (state.length >= 6) {
     return (

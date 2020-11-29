@@ -6,6 +6,8 @@ const formReducer = (state, action) => {
       state = action.payload.form;
       return state;
     }
+    case "register":
+      return state;
     default:
       return state;
   }
