@@ -1,7 +1,6 @@
 import createDataContext from "./createDataContext";
-import React from "react";
 
-const reducer = (state, action) => {
+const familyReducer = (state, action) => {
   switch (action.type) {
     case "register":
       return [
@@ -24,7 +23,7 @@ const RegisterFamily = (dispatch) => {
 };
 
 export const { Context, Provider } = createDataContext(
-  reducer,
+  familyReducer,
   { RegisterFamily },
   []
 );

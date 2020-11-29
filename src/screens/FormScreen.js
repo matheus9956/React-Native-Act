@@ -1,17 +1,13 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, Text, Button } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
-import { Context as RegisterContext } from "../context/RegisterContext";
-import { Context as FamilyContext } from "../context/FamilyContext";
-import { Formik } from "formik";
+import { View, StyleSheet } from "react-native";
+import { Context as FormContext } from "../context/FormContext";
 import FormComponent from "../components/FormComponent";
 
 const RegisterScreen = ({ navigation }) => {
-  const { RegisterFamily } = useContext(FamilyContext);
-  const { state, ReadRegister } = useContext(RegisterContext);
+  const { state, ReadForm, RegisterForm } = useContext(FormContext);
 
   useEffect(() => {
-    ReadRegister();
+    ReadForm();
   }, []);
 
   return (
@@ -19,15 +15,11 @@ const RegisterScreen = ({ navigation }) => {
       <FormComponent
         data={state}
         submit={(data) => {
-          RegisterFamily(data, () => navigation.navigate("Form"));
+          RegisterForm(data, () => navigation.navigate("Families"));
         }}
       />
     </View>
   );
-};
-
-RegisterScreen.navigationOptions = {
-  tabBarLabel: "Cadastro",
 };
 
 const styles = StyleSheet.create({

@@ -1,7 +1,7 @@
 import createDataContext from "./createDataContext";
 import React from "react";
 
-const reducer = (state, action) => {
+const groupReducer = (state, action) => {
   switch (action.type) {
     case "register":
       return [
@@ -28,7 +28,7 @@ const CreateGroup = (dispatch) => {
 };
 
 export const { Context, Provider } = createDataContext(
-  reducer,
+  groupReducer,
   { CreateGroup },
   []
 );

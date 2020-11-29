@@ -8,9 +8,11 @@ import FamiliesScreen from "./src/screens/FamiliesScreen";
 import SettingsScreen from "./src/screens/SettingsScreen";
 import FamilyScreen from "./src/screens/FamilyScreen";
 import GroupScreen from "./src/screens/GroupScreen";
-import { Provider } from "./src/context/FamilyContext";
+import FormScreen from "./src/screens/FormScreen";
+import { Provider as FormProvider } from "./src/context/FormContext";
+import { Provider as FamilyProvider } from "./src/context/FamilyContext";
+import { Provider as RegisterProvider } from "./src/context/RegisterContext";
 import React from "react";
-
 import {
   MaterialIcons,
   MaterialCommunityIcons,
@@ -82,34 +84,40 @@ const navigator = createStackNavigator(
       navigationOptions: ({ navigation }) => {
         const routeName =
           navigation.state.routes[navigation.state.index].routeName;
-        let name;
+        let nameTitle;
 
         if (routeName === "Register") {
-          name = "Cadastrar";
+          nameTitle = "Cadastrar";
         }
         if (routeName === "Families") {
-          name = "Famílias";
+          nameTitle = "Famílias";
         }
         if (routeName === "Groups") {
-          name = "Grupos";
+          nameTitle = "Grupos";
         }
         if (routeName === "Settings") {
-          name = "Ajustes";
+          nameTitle = "Ajustes";
         }
 
-        return { title: name, headerLeft: () => null };
-      },
-    },
-    Family: {
-      screen: FamilyScreen,
-      navigationOptions: {
-        title: "Família",
+        return { title: nameTitle, headerLeft: () => null };
       },
     },
     Group: {
       screen: GroupScreen,
       navigationOptions: {
         title: "Grupo",
+      },
+    },
+    Form: {
+      screen: FormScreen,
+      navigationOptions: {
+        title: "Questionário",
+      },
+    },
+    Family: {
+      screen: FamilyScreen,
+      navigationOptions: {
+        title: "Família",
       },
     },
   },
@@ -128,8 +136,12 @@ const App = createAppContainer(navigator);
 
 export default () => {
   return (
-    <Provider>
-      <App />
-    </Provider>
+    <RegisterProvider>
+      <FamilyProvider>
+        <FormProvider>
+          <App />
+        </FormProvider>
+      </FamilyProvider>
+    </RegisterProvider>
   );
 };

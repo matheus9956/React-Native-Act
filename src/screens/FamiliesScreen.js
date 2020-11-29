@@ -8,7 +8,6 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
-import { Context as GroupContext } from "../context/GroupContext";
 
 const FamiliesScreen = ({ navigation }) => {
   const { state } = useContext(FamilyContext);
@@ -52,7 +51,6 @@ const FamiliesScreen = ({ navigation }) => {
         data={state}
         keyExtractor={(family) => `${family.id}`}
         renderItem={({ item }) => {
-          console.log(item.id);
           return (
             <TouchableOpacity
               onPress={() => navigation.navigate("Family", { id: item.id })}
