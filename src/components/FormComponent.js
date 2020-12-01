@@ -1,7 +1,12 @@
 import React from "react";
 import { Keyboard, View, StyleSheet, Text, Button } from "react-native";
-import { Formik } from "formik";
+import { Formik, Field, Form } from "formik";
 import { TextInput } from "react-native-gesture-handler";
+import RadioForm, {
+  RadioButton,
+  RadioButtonInput,
+  RadioButtonLabel,
+} from "react-native-simple-radio-button";
 
 const FormComponent = ({ data, submit }) => {
   Keyboard.dismiss();
@@ -15,21 +20,50 @@ const FormComponent = ({ data, submit }) => {
     <View>
       <Formik
         initialValues={InitialValues}
-        onSubmit={(values) => submit(values)}
+        onSubmit={(values) => {
+          console.log(values);
+          submit(values);
+        }}
       >
-        {({ handleChange, values, handleSubmit }) => (
+        {({ handleChange, values, handleSubmit, setFieldValue }) => (
           <View style={styles.label}>
             {data.map((formulario, index) => (
               <View key={index}>
                 <Text style={styles.text}>{formulario.pergunta}</Text>
-                <TextInput
-                  placeholder={formulario.pergunta}
-                  onChangeText={handleChange(formulario.id)}
-                  value={values.id}
-                  style={styles.input}
-                />
+                {formulario.type == "alternativa" ? (
+                  <RadioForm
+                    radio_props={formulario.alternativas}
+                    initial={-1}
+                    onPress={(value) => {
+                      {
+                        console.log(values);
+                        setFieldValue(
+                          formulario.id,
+                          formulario.alternativas[value].label
+                        );
+                      }
+                    }}
+                  />
+                ) : formulario.type == "number" ? (
+                  <TextInput
+                    placeholder={formulario.pergunta}
+                    onChangeText={handleChange(formulario.id)}
+                    value={values.id}
+                    style={styles.input}
+                    keyboardType="numeric"
+                  />
+                ) : (
+                  <TextInput
+                    placeholder={formulario.pergunta}
+                    onChangeText={handleChange(formulario.id)}
+                    value={values.id}
+                    style={styles.input}
+                    //keyboardType="numeric"
+                  />
+                )}
               </View>
             ))}
+
             <Button onPress={() => handleSubmit()} title="Finalizar" />
           </View>
         )}
