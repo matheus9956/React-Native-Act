@@ -7,6 +7,7 @@ import RadioForm, {
   RadioButtonInput,
   RadioButtonLabel,
 } from "react-native-simple-radio-button";
+import * as yup from "yup";
 
 const FormComponent = ({ data, submit }) => {
   Keyboard.dismiss();
@@ -15,11 +16,16 @@ const FormComponent = ({ data, submit }) => {
     (acc, curr) => ({ ...acc, [curr.id]: "" }),
     {}
   );
+  const obj = Object.keys(InitialValues);
 
+  console.log(obj.length);
+
+  //console.log(Object.keys(InitialValues));
   return (
     <View>
       <Formik
         initialValues={InitialValues}
+        validationSchema={ReviewSchema}
         onSubmit={(values) => {
           console.log(values);
           submit(values);
