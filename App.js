@@ -12,6 +12,7 @@ import FormScreen from "./src/screens/FormScreen";
 import { Provider as FormProvider } from "./src/context/FormContext";
 import { Provider as FamilyProvider } from "./src/context/FamilyContext";
 import { Provider as RegisterProvider } from "./src/context/RegisterContext";
+import { Provider as GroupProvider } from "./src/context/GroupContext";
 import React from "react";
 import {
   MaterialIcons,
@@ -139,7 +140,9 @@ export default () => {
     <RegisterProvider>
       <FamilyProvider>
         <FormProvider>
-          <App />
+          <GroupProvider>
+            <App />
+          </GroupProvider>
         </FormProvider>
       </FamilyProvider>
     </RegisterProvider>
