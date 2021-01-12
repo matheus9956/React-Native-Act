@@ -14,6 +14,7 @@ const formReducer = (state, action) => {
 };
 
 const ReadForm = (dispatch) => {
+  /////////////////////////////////////////
   const form = [
     {
       id: "Q01",
@@ -22,11 +23,14 @@ const ReadForm = (dispatch) => {
       alternativas: [
         { label: "gabriel nao sabe como enviar", value: 0 },
         { label: "gabriel se esforça", value: 1 },
+        { label: "gabriel se esforça mt", value: 2 },
       ],
     },
     { id: "Q02", pergunta: "Pergunta 2?", type: "number" },
     { id: "Q03", pergunta: "Pergunta 3?", type: "text" },
   ];
+  /////////////////////////////////////////
+
   return () => {
     dispatch({ type: "read", payload: { form } });
   };
