@@ -9,10 +9,14 @@ import SettingsScreen from "./src/screens/SettingsScreen";
 import FamilyScreen from "./src/screens/FamilyScreen";
 import GroupScreen from "./src/screens/GroupScreen";
 import FormScreen from "./src/screens/FormScreen";
+import LoginScreen from "./src/screens/LoginScreen";
 import { Provider as FormProvider } from "./src/context/FormContext";
 import { Provider as FamilyProvider } from "./src/context/FamilyContext";
 import { Provider as RegisterProvider } from "./src/context/RegisterContext";
 import { Provider as GroupProvider } from "./src/context/GroupContext";
+import { Provider as AuthProvider } from "./src/context/AuthContext";
+import { setNavigator } from "./src/navigationRef";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import React from "react";
 import {
   MaterialIcons,
@@ -79,7 +83,14 @@ const TabNavigator = createBottomTabNavigator(
 
 const navigator = createStackNavigator(
   {
-    Home: HomeScreen,
+    ResolveAuth: ResolveAuthScreen,
+    Login: LoginScreen,
+    Home: {
+      screen: HomeScreen,
+      navigationOptions: {
+        headerLeft: () => null,
+      },
+    },
     Tab: {
       screen: TabNavigator,
       navigationOptions: ({ navigation }) => {
@@ -123,7 +134,7 @@ const navigator = createStackNavigator(
     },
   },
   {
-    initialRouteName: "Home",
+    initialRouteName: "ResolveAuth",
     defaultNavigationOptions: {
       headerTitleStyle: { alignSelf: "center" },
       headerTitleContainerStyle: {
@@ -137,14 +148,20 @@ const App = createAppContainer(navigator);
 
 export default () => {
   return (
-    <RegisterProvider>
-      <FamilyProvider>
-        <FormProvider>
-          <GroupProvider>
-            <App />
-          </GroupProvider>
-        </FormProvider>
-      </FamilyProvider>
-    </RegisterProvider>
+    <AuthProvider>
+      <RegisterProvider>
+        <FamilyProvider>
+          <FormProvider>
+            <GroupProvider>
+              <App
+                ref={(navigator) => {
+                  setNavigator(navigator);
+                }}
+              />
+            </GroupProvider>
+          </FormProvider>
+        </FamilyProvider>
+      </RegisterProvider>
+    </AuthProvider>
   );
 };

@@ -16,7 +16,7 @@ const FamiliesScreen = ({ navigation }) => {
     ReadFamilies();
   }, []);
 
-  if (state.length >= 6) {
+  if (state.lenght >= 6) {
     return (
       <View>
         <Button
@@ -27,14 +27,16 @@ const FamiliesScreen = ({ navigation }) => {
         ></Button>
         <FlatList
           data={state}
-          keyExtractor={(family) => `${family.id}`}
+          keyExtractor={(family) => `${family._id}`}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Family", { id: item.id })}
+                onPress={() => navigation.navigate("Family", { id: item._id })}
               >
                 <View style={styles.familiesLabel}>
-                  <Text style={styles.familiesText}>Família ID: {item.id}</Text>
+                  <Text style={styles.familiesText}>
+                    Família ID: {item._id}
+                  </Text>
                 </View>
               </TouchableOpacity>
             );
@@ -42,7 +44,7 @@ const FamiliesScreen = ({ navigation }) => {
         />
       </View>
     );
-  } else if (state.length === 0) {
+  } else if (state.lenght === 0) {
     return (
       <View>
         <Text style={styles.texto}>Você não possui famílias cadastradas</Text>
@@ -53,14 +55,14 @@ const FamiliesScreen = ({ navigation }) => {
     <View>
       <FlatList
         data={state}
-        keyExtractor={(family) => `${family.id}`}
+        keyExtractor={(family) => `${family._id}`}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
-              onPress={() => navigation.navigate("Family", { id: item.id })}
+              onPress={() => navigation.navigate("Family", { id: item._id })}
             >
               <View style={styles.familiesLabel}>
-                <Text style={styles.familiesText}>Família ID: {item.id}</Text>
+                <Text style={styles.familiesText}>Família ID: {item._id}</Text>
               </View>
             </TouchableOpacity>
           );

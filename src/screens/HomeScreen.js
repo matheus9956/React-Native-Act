@@ -1,9 +1,15 @@
+import { AsyncStorage } from "react-native";
 import React from "react";
+import { Keyboard } from "react-native";
 import { View, StyleSheet, Text, Button } from "react-native";
+import { navigate } from "../navigationRef";
 const HomeScreen = ({ navigation }) => {
+  Keyboard.dismiss();
+
+  const nick = navigation.getParam("nick");
   return (
-    <View>
-      <Text style={styles.text}>Bem vindo!</Text>
+    <>
+      <Text style={styles.text}>Bem vindo, {nick}! </Text>
       <Text style={styles.texto}>Selecione a opção desejada: </Text>
       <View style={styles.buttonLabel}>
         <Button
@@ -27,7 +33,7 @@ const HomeScreen = ({ navigation }) => {
           style={styles.button}
         />
       </View>
-    </View>
+    </>
   );
 };
 

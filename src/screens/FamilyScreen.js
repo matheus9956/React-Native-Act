@@ -1,16 +1,18 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Text } from "react-native";
-import { Context } from "../context/FamilyContext";
+import { Context as FamilyContext } from "../context/FamilyContext";
 
 const FamilyScreen = ({ navigation }) => {
-  const { state } = useContext(Context);
+  const { state, ReadFamily } = useContext(FamilyContext);
   const id = navigation.getParam("id");
 
-  const family = state.find((family) => family.id === id);
+  useEffect(() => {
+    ReadFamily({ id });
+  }, []);
 
   return (
     <View>
-      <Text>{family.id}</Text>
+      <Text>{state.crianca.nome}</Text>
     </View>
   );
 };

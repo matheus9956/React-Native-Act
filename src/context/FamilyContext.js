@@ -1,43 +1,49 @@
 import createDataContext from "./createDataContext";
+import dadosApi from "../api/dados";
 
 const familyReducer = (state, action) => {
   switch (action.type) {
     case "register":
-      return [
-        ...state,
-        { id: Math.floor(Math.random() * 999999), dados: action.payload },
-      ];
-    case "read": {
-      state = action.payload.families;
       return state;
+
+    case "readfamilies": {
+      return action.payload.data;
+    }
+    case "readfamily": {
+      console.log(action.payload.data);
+      return action.payload.data;
     }
     default:
       return state;
   }
 };
 
-const RegisterFamily = (dispatch) => {
-  return (values, callback) => {
-    dispatch({ type: "register", payload: { values } });
+const RegisterFamily = (dispatch) => async (values, callback) => {
+  const response = await dadosApi.post("/novafamilia", values);
 
-    if (callback) {
-      callback();
-    }
-  };
+  dispatch({ type: "register", payload: { values } });
+
+  if (callback) {
+    callback();
+  }
 };
 
 const ReadFamilies = (dispatch) => {
-  const families = [
-    { id: 123, dados: "test" },
-    { id: 1234, dados: "testando" },
-  ];
-  return () => {
-    dispatch({ type: "read", payload: { families } });
+  return async () => {
+    const families = await dadosApi.get("/familiasdisponiveis");
+    dispatch({ type: "readfamilies", payload: families });
+  };
+};
+const ReadFamily = (dispatch) => {
+  return async ({ id }) => {
+    const familia = await dadosApi.get(`/familia/${id}`);
+
+    dispatch({ type: "readfamily", payload: familia });
   };
 };
 
 export const { Context, Provider } = createDataContext(
   familyReducer,
-  { RegisterFamily, ReadFamilies },
+  { RegisterFamily, ReadFamilies, ReadFamily },
   []
 );

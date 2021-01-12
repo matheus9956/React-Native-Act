@@ -1,6 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, Text, Button } from "react-native";
-import { TextInput } from "react-native-gesture-handler";
+import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Formik } from "formik";
@@ -15,14 +15,14 @@ const RegisterScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View>
+    <ScrollView>
       <FormComponent
         data={state}
         submit={(data) => {
           RegisterFamily(data, () => navigation.navigate("Form"));
         }}
       />
-    </View>
+    </ScrollView>
   );
 };
 
