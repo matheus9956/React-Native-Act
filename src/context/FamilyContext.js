@@ -10,7 +10,6 @@ const familyReducer = (state, action) => {
       return action.payload.data;
     }
     case "readfamily": {
-      console.log(action.payload.data);
       return action.payload.data;
     }
     default:
@@ -30,16 +29,15 @@ const RegisterFamily = (dispatch) => async (values, callback) => {
 
 const ReadFamilies = (dispatch) => {
   return async () => {
-    const families = await dadosApi.get("/familiasdisponiveis");
+    const families = await dadosApi.get("/familias");
     dispatch({ type: "readfamilies", payload: families });
   };
 };
-const ReadFamily = (dispatch) => {
-  return async ({ id }) => {
-    const familia = await dadosApi.get(`/familia/${id}`);
+const ReadFamily = (dispatch) => async (id) => {
+  console.log(id);
+  const familia = await dadosApi.get(`/familia/${id}`);
 
-    dispatch({ type: "readfamily", payload: familia });
-  };
+  dispatch({ type: "readfamily", payload: familia });
 };
 
 export const { Context, Provider } = createDataContext(

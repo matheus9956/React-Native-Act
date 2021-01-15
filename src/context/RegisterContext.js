@@ -13,7 +13,6 @@ const registerReducer = (state, action) => {
 
 const ReadRegister = (dispatch) => {
   const form = [
-    { id: "dataCriacao", pergunta: "Data da aplicação:" },
     { id: "crianca.nome", pergunta: "Nome da criança:" },
     {
       id: "crianca.sexo",

@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from "react";
+import { NavigationEvents } from "react-navigation";
 import {
   View,
   StyleSheet,
@@ -12,34 +13,31 @@ import { Context as GroupContext } from "../context/GroupContext";
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
 
-  useEffect(() => {
-    ReadGroups();
-  }, []);
-
   if (state.length === 0) {
     return (
       <View>
+        <NavigationEvents onWillFocus={ReadGroups} />
         <Text style={styles.texto}>Você não possui grupos cadastradas</Text>
       </View>
     );
   }
   return (
     <View>
+      <NavigationEvents onWillFocus={ReadGroups} />
       <FlatList
         data={state}
-        keyExtractor={(groups) => `${groups.id}`}
+        keyExtractor={(groups) => `${groups._id}`}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
               onPress={() =>
                 navigation.navigate("Group", {
-                  id: item.id,
-                  controle: item.controle,
+                  _id: item._id,
                 })
               }
             >
               <View style={styles.GroupsLabel}>
-                <Text style={styles.GroupsText}>Group id : {item.id}</Text>
+                <Text style={styles.GroupsText}>Group id : {item._id}</Text>
               </View>
             </TouchableOpacity>
           );

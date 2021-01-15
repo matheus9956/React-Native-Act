@@ -33,6 +33,7 @@ const signin = (dispatch) => {
       const response = await dadosApi.post("/signin", { nick, password });
       await AsyncStorage.setItem("token", response.data.token);
       await AsyncStorage.setItem("nick", nick);
+
       dispatch({ type: "signin", payload: response.data.token });
       navigate("Home", { nick });
     } catch (err) {
