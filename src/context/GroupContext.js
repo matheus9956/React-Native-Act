@@ -1,10 +1,21 @@
 import createDataContext from "./createDataContext";
-import React from "react";
+import dadosApi from "../api/dados";
 
 const groupReducer = (state, action) => {
   switch (action.type) {
-    case "read": {
-      state = action.payload.groups;
+    case "change": {
+      return state;
+    }
+
+    case "create": {
+      return state;
+    }
+    case "readGroups": {
+      state = action.payload.data;
+      return state;
+    }
+    case "readGroup": {
+      state = action.payload.data;
       return state;
     }
     default:
@@ -12,33 +23,34 @@ const groupReducer = (state, action) => {
   }
 };
 const ReadGroups = (dispatch) => {
-  const groups = [
-    {
-      id: 231,
-      controle: [{ id: 123 }, { id: 1234 }, { id: 354 }],
-      intervencao: [{ id: 324 }, { id: 534 }, { id: 654 }],
-    },
-    {
-      id: 324,
-      controle: [{ id: 4456 }, { id: 1236 }, { id: 3547 }],
-      intervencao: [{ id: 3247 }, { id: 53434 }, { id: 65435 }],
-    },
-  ];
-  return () => {
-    dispatch({ type: "read", payload: { groups } });
+  return async () => {
+    const Groups = await dadosApi.get("/grupos");
+
+    dispatch({ type: "readGroups", payload: Groups });
   };
 };
-const CreateGroup = (dispatch) => {
-  return (familias, callback) => {
-    dispatch({ type: "newGroup", payload: { familias } });
-    if (callback) {
-      callback();
-    }
-  };
+const ReadGroup = (dispatch) => async (id) => {
+  //console.log(id);
+  const group = await dadosApi.get(`/grupo/${id}`);
+
+  dispatch({ type: "readGroup", payload: group });
+};
+
+const CreateGroup = (dispatch) => async (callback) => {
+  const response = await dadosApi.post("/novogrupo");
+
+  dispatch({ type: "create", payload: response });
+  if (callback) callback();
+};
+const ChangeGroup = (dispatch) => async (_id, callback) => {
+  const response = await dadosApi.post("/grupo/fase2/", { groupId: _id });
+
+  dispatch({ type: "change", payload: response });
+  if (callback) callback();
 };
 
 export const { Context, Provider } = createDataContext(
   groupReducer,
-  { CreateGroup, ReadGroups },
+  { CreateGroup, ReadGroups, ReadGroup, ChangeGroup },
   []
 );

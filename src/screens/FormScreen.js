@@ -5,7 +5,7 @@ import FormComponent from "../components/FormComponent";
 
 const RegisterScreen = ({ navigation }) => {
   const { state, ReadForm, RegisterForm } = useContext(FormContext);
-
+  const _id = navigation.getParam("_id");
   useEffect(() => {
     ReadForm();
   }, []);
@@ -15,7 +15,7 @@ const RegisterScreen = ({ navigation }) => {
       <FormComponent
         data={state}
         submit={(data) => {
-          RegisterForm(data, () => navigation.navigate("Families"));
+          RegisterForm(data, _id, () => navigation.navigate("Families"));
         }}
       />
     </View>
