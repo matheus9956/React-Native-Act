@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, Text, Button } from "react-native";
+import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
 import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
@@ -12,9 +12,17 @@ const RegisterScreen = ({ navigation }) => {
 
   useEffect(() => {
     ReadRegister();
+
+    const focusListener = navigation.addListener("didFocus", () =>
+      ReadRegister()
+    );
+
+    return () => {
+      focusListener.remove();
+    };
   }, []);
 
-  return (
+  return state !== undefined ? (
     <ScrollView>
       <FormComponent
         data={state}
@@ -23,6 +31,10 @@ const RegisterScreen = ({ navigation }) => {
         }}
       />
     </ScrollView>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color="#4d4dff" />
+    </View>
   );
 };
 

@@ -4,7 +4,7 @@ import dadosApi from "../api/dados";
 const groupReducer = (state, action) => {
   switch (action.type) {
     case "change":
-      return state;
+      return action.payload;
 
     case "create":
       return state;
@@ -25,13 +25,6 @@ const ReadGroups = (dispatch) => async () => {
   dispatch({ type: "readGroups", payload: groups.data });
 };
 
-const ReadGroup = (dispatch) => async (_id, callback) => {
-  const group = await dadosApi.get(`/grupo/${_id}`);
-
-  dispatch({ type: "readGroup", payload: group.data });
-  if (callback) callback();
-};
-
 const CreateGroup = (dispatch) => async (callback) => {
   const response = await dadosApi.post("/novogrupo");
 
@@ -40,15 +33,15 @@ const CreateGroup = (dispatch) => async (callback) => {
   if (callback) callback();
 };
 const ChangeGroup = (dispatch) => async (_id, callback) => {
-  const response = await dadosApi.post("/grupo/fase2/", { groupId: _id });
+  const response = await dadosApi.get(`/grupo/fase/${_id}`);
 
-  dispatch({ type: "change", payload: response });
+  dispatch({ type: "change", payload: response.data });
 
   if (callback) callback();
 };
 
 export const { Context, Provider } = createDataContext(
   groupReducer,
-  { CreateGroup, ReadGroups, ReadGroup, ChangeGroup },
+  { CreateGroup, ReadGroups, ChangeGroup },
   []
 );

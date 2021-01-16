@@ -1,34 +1,34 @@
-import React, { useContext, useEffect, useRef } from "react";
-import { NavigationEvents } from "react-navigation";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Button,
   FlatList,
   TouchableOpacity,
+  ActivityIndicator,
 } from "react-native";
 import { Context as GroupContext } from "../context/GroupContext";
 
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
 
-  const mounted = useRef(false);
-
   useEffect(() => {
-    mounted.current = true;
+    ReadGroups();
+
+    const focusListener = navigation.addListener("didFocus", () =>
+      ReadGroups()
+    );
 
     return () => {
-      mounted.current = false;
+      focusListener.remove();
     };
   }, []);
 
-  return mounted.current ? (
+  return state !== undefined ? (
     <View>
-      <NavigationEvents onWillFocus={ReadGroups} />
       <FlatList
         data={state}
-        keyExtractor={(groups) => `${groups._id}`}
+        keyExtractor={(item) => `${item._id}`}
         renderItem={({ item }) => {
           return (
             <TouchableOpacity
@@ -47,10 +47,9 @@ const GroupsScreen = ({ navigation }) => {
       />
     </View>
   ) : (
-    <>
-      <NavigationEvents onWillFocus={ReadGroups} />
-      <Text>Carregando</Text>
-    </>
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color="#4d4dff" />
+    </View>
   );
 };
 

@@ -7,34 +7,30 @@ import {
   FlatList,
   TouchableOpacity,
   Picker,
+  ActivityIndicator,
 } from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Context as GroupContext } from "../context/GroupContext";
-import { NavigationEvents } from "react-navigation";
 
 const FamiliesScreen = ({ navigation }) => {
   const { state, ReadFamilies } = useContext(FamilyContext);
   const { CreateGroup } = useContext(GroupContext);
   const [selectedValue, setSelectedValue] = useState("Sem Grupo");
-  if (state.semGrupo === undefined) {
-    return (
-      <>
-        <NavigationEvents onWillFocus={ReadFamilies} />
-        <Text>Carregando</Text>
-      </>
+
+  useEffect(() => {
+    ReadFamilies();
+
+    const focusListener = navigation.addListener("didFocus", () =>
+      ReadFamilies()
     );
-  }
-  if (state.semGrupo.length === 0 && state.comGrupo.length === 0) {
-    return (
-      <View>
-        <NavigationEvents onWillFocus={ReadFamilies} />
-        <Text style={styles.texto}>Você não possui famílias cadastradas</Text>
-      </View>
-    );
-  }
-  return (
+
+    return () => {
+      focusListener.remove();
+    };
+  }, []);
+
+  return state.semGrupo !== undefined ? (
     <>
-      <NavigationEvents onWillFocus={ReadFamilies} />
       <View style={styles.vertical}>
         <Picker
           selectedValue={selectedValue}
@@ -60,11 +56,16 @@ const FamiliesScreen = ({ navigation }) => {
       {selectedValue === "Sem Grupo" ? (
         <FlatList
           data={state.semGrupo}
-          keyExtractor={(family) => `${family._id}`}
+          keyExtractor={(item) => `${item._id}`}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Family", { _id: item._id })}
+                onPress={() =>
+                  navigation.navigate("Family", {
+                    _id: item._id,
+                    grupo: "semGrupo",
+                  })
+                }
               >
                 <View style={styles.familiesLabel}>
                   <Text style={styles.familiesText}>
@@ -78,11 +79,16 @@ const FamiliesScreen = ({ navigation }) => {
       ) : (
         <FlatList
           data={state.comGrupo}
-          keyExtractor={(family) => `${family._id}`}
+          keyExtractor={(item) => `${item._id}`}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Family", { _id: item._id })}
+                onPress={() =>
+                  navigation.navigate("Family", {
+                    _id: item._id,
+                    grupo: "comGrupo",
+                  })
+                }
               >
                 <View style={styles.familiesLabel}>
                   <Text style={styles.familiesText}>
@@ -95,6 +101,10 @@ const FamiliesScreen = ({ navigation }) => {
         />
       )}
     </>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color="#4d4dff" />
+    </View>
   );
 };
 

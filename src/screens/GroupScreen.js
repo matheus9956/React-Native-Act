@@ -7,40 +7,34 @@ import {
   TouchableOpacity,
   SafeAreaView,
   SectionList,
+  Button,
 } from "react-native";
 import { Context as GroupContext } from "../context/GroupContext";
-import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
+import { AntDesign } from "@expo/vector-icons";
 
 const GroupScreen = ({ navigation }) => {
-  const { state, ReadGroup } = useContext(GroupContext);
+  const { state, ChangeGroup } = useContext(GroupContext);
   const _id = navigation.getParam("_id");
+
+  const grupo = state.find((item) => item._id === _id);
+
   const data = [
     {
       title: "Controle",
-      data: state.controle,
+      data: grupo.controle,
     },
     {
       title: "Intervenção",
-      data: state.intervencao,
+      data: grupo.intervencao,
     },
   ];
 
-  useEffect(() => {
-    const focusListener = navigation.addListener("didFocus", () => {
-      ReadGroup(_id);
-    });
-
-    return () => {
-      focusListener.remove();
-    };
-  }, []);
-
-  return state.controle != undefined ? (
+  return grupo !== undefined ? (
     <SafeAreaView>
       <View style={styles.GroupLabel}>
         <SectionList
           sections={data}
-          keyExtractor={(item, index) => index}
+          keyExtractor={(item) => `${item._id}`}
           renderItem={({ item, section: { title } }) => {
             return title === "Controle" ? (
               <TouchableOpacity
@@ -77,6 +71,23 @@ const GroupScreen = ({ navigation }) => {
           )}
         />
       </View>
+      {grupo.fase === 1 ? (
+        <Button
+          onPress={() => {
+            ChangeGroup(_id);
+          }}
+          title="Inverter Controle/Intervenção"
+        />
+      ) : grupo.fase === 2 ? (
+        <Button
+          onPress={() => {
+            ChangeGroup(_id, () => navigation.navigate("Groups"));
+          }}
+          title="Encerrar Grupo"
+        />
+      ) : (
+        <></>
+      )}
     </SafeAreaView>
   ) : (
     <View style={[styles.container, styles.horizontal]}>
@@ -84,20 +95,6 @@ const GroupScreen = ({ navigation }) => {
     </View>
   );
 };
-
-/*GroupScreen.navigationOptions = ({ navigation }) => {
-  return {
-    headerRight: () => (
-      <TouchableOpacity>
-        <MaterialCommunityIcons
-          name="swap-vertical-bold"
-          size={24}
-          color="black"
-        />
-      </TouchableOpacity>
-    ),
-  };
-};*/
 
 const styles = StyleSheet.create({
   GroupText: {

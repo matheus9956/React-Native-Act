@@ -1,93 +1,92 @@
-import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, Text } from "react-native";
+import React, { useContext } from "react";
+import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
-import { NavigationEvents } from "react-navigation";
 import { ScrollView } from "react-native-gesture-handler";
+
 const FamilyScreen = ({ navigation }) => {
-  const { state, ReadFamily } = useContext(FamilyContext);
+  const { state } = useContext(FamilyContext);
   const _id = navigation.getParam("_id");
+  const grupo = navigation.getParam("grupo");
 
-  const lefamilia = () => {
-    ReadFamily(_id);
-  };
-  if (state.crianca === undefined) {
-    return (
-      <>
-        <NavigationEvents onWillFocus={lefamilia} />
-        <Text>Carregando</Text>
-      </>
-    );
-  }
+  const family =
+    grupo === "comGrupo"
+      ? state.comGrupo.find((item) => item._id === _id)
+      : state.semGrupo.find((item) => item._id === _id);
 
-  return (
+  console.log(grupo);
+
+  return family !== undefined ? (
     <ScrollView>
-      <NavigationEvents onWillFocus={lefamilia} />
       <Text style={styles.title}>
-        Formularios preenchida:{state.formulariosPreenchidos}
+        Formularios preenchida:{family.formulariosPreenchidos}
       </Text>
 
       <Text style={styles.title}>Nome da criança:</Text>
 
-      <Text>{state.crianca.nome}</Text>
+      <Text>{family.crianca.nome}</Text>
       <Text style={styles.title}>Sexo:</Text>
-      <Text>{state.crianca.sexo}</Text>
+      <Text>{family.crianca.sexo}</Text>
       <Text style={styles.title}>Idade:</Text>
-      <Text>{state.crianca.idade}</Text>
+      <Text>{family.crianca.idade}</Text>
       <Text style={styles.title}>Nascimento:</Text>
-      <Text>{state.crianca.nascimento}</Text>
+      <Text>{family.crianca.nascimento}</Text>
       <Text style={styles.title}>Pele:</Text>
-      <Text>{state.crianca.pele}</Text>
+      <Text>{family.crianca.pele}</Text>
       <Text style={styles.title}>Cuidador:</Text>
-      <Text>{state.cuidador.nome}</Text>
+      <Text>{family.cuidador.nome}</Text>
       <Text style={styles.title}>Idade:</Text>
-      <Text>{state.cuidador.idade}</Text>
+      <Text>{family.cuidador.idade}</Text>
       <Text style={styles.title}>Nascimento:</Text>
-      <Text>{state.cuidador.nascimento}</Text>
+      <Text>{family.cuidador.nascimento}</Text>
       <Text style={styles.title}>Parentesco Criança:</Text>
-      <Text>{state.cuidador.parentesco}</Text>
+      <Text>{family.cuidador.parentesco}</Text>
       <Text style={styles.title}>Escolaridade:</Text>
-      <Text>{state.cuidador.escolaridade}</Text>
+      <Text>{family.cuidador.escolaridade}</Text>
       <Text style={styles.title}>Anos de estudo:</Text>
-      <Text>{state.cuidador.anosEstudo}</Text>
+      <Text>{family.cuidador.anosEstudo}</Text>
       <Text style={styles.title}>Local do grupo:</Text>
-      <Text>{state.cuidador.localGrupo}</Text>
+      <Text>{family.cuidador.localGrupo}</Text>
       <Text style={styles.title}>Endereço:</Text>
-      <Text>{state.cuidador.endereco}</Text>
+      <Text>{family.cuidador.endereco}</Text>
       <Text style={styles.title}>CEP:</Text>
-      <Text>{state.cuidador.cep}</Text>
+      <Text>{family.cuidador.cep}</Text>
       <Text style={styles.title}>Cidade:</Text>
-      <Text>{state.cuidador.cidade}</Text>
+      <Text>{family.cuidador.cidade}</Text>
       <Text style={styles.title}>Estado:</Text>
-      <Text>{state.cuidador.estado}</Text>
+      <Text>{family.cuidador.estado}</Text>
       <Text style={styles.title}>Telefones:</Text>
-      <Text>{state.cuidador.telefones}</Text>
+      <Text>{family.cuidador.telefones}</Text>
       <Text style={styles.title}>Ocupação:</Text>
-      <Text>{state.cuidador.ocupacao}</Text>
+      <Text>{family.cuidador.ocupacao}</Text>
       <Text style={styles.title}>pele/etnia:</Text>
-      <Text>{state.cuidador.pele}</Text>
+      <Text>{family.cuidador.pele}</Text>
       <Text style={styles.title}>Religião:</Text>
-      <Text>{state.cuidador.religiao}</Text>
+      <Text>{family.cuidador.religiao}</Text>
       <Text style={styles.title}>Situação conjugal:</Text>
-      <Text>{state.cuidador.situacaoConjugal}</Text>
+      <Text>{family.cuidador.situacaoConjugal}</Text>
       <Text style={styles.title}>Número de filhos:</Text>
-      <Text>{state.cuidador.numeroFilhos}</Text>
+      <Text>{family.cuidador.numeroFilhos}</Text>
       <Text style={styles.title}>Idade dos filhos:</Text>
-      <Text>{state.cuidador.idadeFilhos}</Text>
+      <Text>{family.cuidador.idadeFilhos}</Text>
       <Text style={styles.title}>Filhos de 0 a 6 anos:</Text>
-      <Text>{state.cuidador.filhos0a6anos}</Text>
+      <Text>{family.cuidador.filhos0a6anos}</Text>
       <Text style={styles.title}>Tipo de moradia:</Text>
-      <Text>{state.cuidador.moradia}</Text>
+      <Text>{family.cuidador.moradia}</Text>
       <Text style={styles.title}>Situação da moradia:</Text>
-      <Text>{state.cuidador.situacaoMoradia}</Text>
+      <Text>{family.cuidador.situacaoMoradia}</Text>
       <Text style={styles.title}>Número de cômodos:</Text>
-      <Text>{state.cuidador.numeroComodos}</Text>
+      <Text>{family.cuidador.numeroComodos}</Text>
       <Text style={styles.title}>Quantas pessoas moram na casa:</Text>
-      <Text>{state.cuidador.pessoasMorando}</Text>
+      <Text>{family.cuidador.pessoasMorando}</Text>
       <Text style={styles.title}>auxilio do governo:</Text>
-      <Text>{state.cuidador.recebeAuxilio}</Text>
+      <Text>{family.cuidador.recebeAuxilio}</Text>
       <Text style={styles.title}>Renda Mensal:</Text>
-      <Text>{state.cuidador.rendaMensal}</Text>
+      <Text>{family.cuidador.rendaMensal}</Text>
     </ScrollView>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <ActivityIndicator size="large" color="#4d4dff" />
+    </View>
   );
 };
 
