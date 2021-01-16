@@ -1,6 +1,8 @@
 import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { ScrollView, TextInput } from "react-native-gesture-handler";
+import { NavigationEvents } from "react-navigation";
+
 import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 
@@ -8,8 +10,8 @@ import FormComponent from "../components/FormComponent";
 
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(FamilyContext);
-  const { state, ReadRegister } = useContext(RegisterContext);
-
+  const { state, ReadRegister, clearState } = useContext(RegisterContext);
+  console.log(state);
   useEffect(() => {
     ReadRegister();
 
@@ -24,6 +26,7 @@ const RegisterScreen = ({ navigation }) => {
 
   return state !== undefined ? (
     <ScrollView>
+      <NavigationEvents onWillBlur={clearState} />
       <FormComponent
         data={state}
         submit={(data) => {

@@ -6,9 +6,17 @@ const registerReducer = (state, action) => {
       state = action.payload.form;
       return state;
     }
+    case "clear": {
+      return (state = []);
+    }
     default:
       return state;
   }
+};
+const clearState = (dispatch) => {
+  return () => {
+    dispatch({ type: "clear" });
+  };
 };
 
 const ReadRegister = (dispatch) => {
@@ -204,6 +212,6 @@ const ReadRegister = (dispatch) => {
 
 export const { Context, Provider } = createDataContext(
   registerReducer,
-  { ReadRegister },
+  { ReadRegister, clearState },
   []
 );
