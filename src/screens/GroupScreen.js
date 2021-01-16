@@ -1,38 +1,19 @@
-import React, { useContext, useEffect, useRef } from "react";
+import React, { useContext, useEffect } from "react";
 import {
   View,
   ActivityIndicator,
   StyleSheet,
   Text,
-  Button,
-  FlatList,
   TouchableOpacity,
   SafeAreaView,
   SectionList,
 } from "react-native";
-
-import { NavigationEvents } from "react-navigation";
 import { Context as GroupContext } from "../context/GroupContext";
 import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
 const GroupScreen = ({ navigation }) => {
-  const { state, ReadGroup, ChangeGroup } = useContext(GroupContext);
+  const { state, ReadGroup } = useContext(GroupContext);
   const _id = navigation.getParam("_id");
-
-  const mounted = useRef(false);
-
-  useEffect(() => {
-    mounted.current = true;
-    if (mounted.current) ReadGroup(_id);
-
-    return () => {
-      mounted.current = false;
-    };
-  }, []);
-
-  const legrupo = () => {
-    ReadGroup(_id);
-  };
   const data = [
     {
       title: "Controle",
@@ -43,37 +24,42 @@ const GroupScreen = ({ navigation }) => {
       data: state.intervencao,
     },
   ];
-  return mounted.current ? (
+
+  useEffect(() => {
+    const focusListener = navigation.addListener("didFocus", () => {
+      ReadGroup(_id);
+    });
+
+    return () => {
+      focusListener.remove();
+    };
+  }, []);
+
+  return state.controle != undefined ? (
     <SafeAreaView>
-      <NavigationEvents onWillFocus={legrupo} />
       <View style={styles.GroupLabel}>
         <SectionList
           sections={data}
-          keyExtractor={(item) => `${item._id}`}
+          keyExtractor={(item, index) => index}
           renderItem={({ item, section: { title } }) => {
-            if (title === "Controle") {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Family", { _id: item._id })
-                  }
-                >
-                  <View style={styles.coluna}>
-                    <Text>Família ID: {item._id}</Text>
+            return title === "Controle" ? (
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Family", { _id: item._id })}
+              >
+                <View style={styles.coluna}>
+                  <Text>Família ID: {item._id}</Text>
 
-                    <TouchableOpacity
-                      style={styles.form}
-                      onPress={() =>
-                        navigation.navigate("Form", { _id: item._id })
-                      }
-                    >
-                      <AntDesign name="filetext1" size={24} color="black" />
-                    </TouchableOpacity>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
-            return (
+                  <TouchableOpacity
+                    style={styles.form}
+                    onPress={() =>
+                      navigation.navigate("Form", { _id: item._id })
+                    }
+                  >
+                    <AntDesign name="filetext1" size={24} color="black" />
+                  </TouchableOpacity>
+                </View>
+              </TouchableOpacity>
+            ) : (
               <TouchableOpacity
                 onPress={() => navigation.navigate("Family", { _id: item._id })}
               >
@@ -86,19 +72,20 @@ const GroupScreen = ({ navigation }) => {
               </TouchableOpacity>
             );
           }}
-          renderSectionHeader={({ section: { title } }) => <Text>{title}</Text>}
+          renderSectionHeader={({ section: { title } }) => (
+            <Text>{title}:</Text>
+          )}
         />
       </View>
     </SafeAreaView>
   ) : (
     <View style={[styles.container, styles.horizontal]}>
-      <NavigationEvents onWillFocus={legrupo} />
-      <ActivityIndicator size="large" color="#00ff00" />
+      <ActivityIndicator size="large" color="#4d4dff" />
     </View>
   );
 };
 
-GroupScreen.navigationOptions = ({ navigation }) => {
+/*GroupScreen.navigationOptions = ({ navigation }) => {
   return {
     headerRight: () => (
       <TouchableOpacity>
@@ -110,9 +97,9 @@ GroupScreen.navigationOptions = ({ navigation }) => {
       </TouchableOpacity>
     ),
   };
-};
+};*/
+
 const styles = StyleSheet.create({
-  GroupLabel: {},
   GroupText: {
     fontSize: 30,
     marginHorizontal: 5,

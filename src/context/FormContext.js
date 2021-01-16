@@ -15,27 +15,19 @@ const formReducer = (state, action) => {
 };
 
 const ReadForm = (dispatch) => {
-  /////////////////////////////////////////
   const form = [
     {
       id: "Q01",
       pergunta: "Pergunta 1:",
       type: "alternativa",
       alternativas: [
-<<<<<<< HEAD
-        { label: "gabriel nao sabe como enviar", value: 0 },
-        { label: "gabriel se esforça", value: 1 },
-        { label: "gabriel se esforça mt", value: 2 },
-=======
         { label: "Alternativa 1", value: 0 },
         { label: "Alternativa 2", value: 1 },
->>>>>>> 3dd0ed548c5b6e2029146947f0e7a04f5cb39a03
       ],
     },
     { id: "Q02", pergunta: "Pergunta 2:", type: "number" },
     { id: "Q03", pergunta: "Pergunta 3:", type: "text" },
   ];
-  /////////////////////////////////////////
 
   return () => {
     dispatch({ type: "read", payload: { form } });
