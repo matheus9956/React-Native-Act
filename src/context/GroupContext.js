@@ -3,6 +3,10 @@ import dadosApi from "../api/dados";
 
 const groupReducer = (state, action) => {
   switch (action.type) {
+    case "change": {
+      return state;
+    }
+
     case "create": {
       return state;
     }
@@ -38,9 +42,15 @@ const CreateGroup = (dispatch) => async (callback) => {
   dispatch({ type: "create", payload: response });
   if (callback) callback();
 };
+const ChangeGroup = (dispatch) => async (_id, callback) => {
+  const response = await dadosApi.post("/grupo/fase2/", { groupId: _id });
+
+  dispatch({ type: "change", payload: response });
+  if (callback) callback();
+};
 
 export const { Context, Provider } = createDataContext(
   groupReducer,
-  { CreateGroup, ReadGroups, ReadGroup },
+  { CreateGroup, ReadGroups, ReadGroup, ChangeGroup },
   []
 );

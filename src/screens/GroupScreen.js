@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import {
   View,
+  ActivityIndicator,
   StyleSheet,
   Text,
   Button,
@@ -12,41 +13,42 @@ import {
 
 import { NavigationEvents } from "react-navigation";
 import { Context as GroupContext } from "../context/GroupContext";
-import { AntDesign } from "@expo/vector-icons";
+import { MaterialCommunityIcons, AntDesign } from "@expo/vector-icons";
 
 const GroupScreen = ({ navigation }) => {
-  const { state, ReadGroup } = useContext(GroupContext);
-
+  const { state, ReadGroup, ChangeGroup } = useContext(GroupContext);
   const _id = navigation.getParam("_id");
+
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+    if (mounted.current) ReadGroup(_id);
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
 
   const legrupo = () => {
     ReadGroup(_id);
   };
-
-  if (state.controle === undefined && state.intervencao === undefined) {
-    return (
-      <>
-        <NavigationEvents onWillFocus={legrupo} />
-        <Text>Carregando</Text>
-      </>
-    );
-  }
-
-  return (
+  const data = [
+    {
+      title: "Controle",
+      data: state.controle,
+    },
+    {
+      title: "Intervenção",
+      data: state.intervencao,
+    },
+  ];
+  return mounted.current ? (
     <SafeAreaView>
       <NavigationEvents onWillFocus={legrupo} />
       <View style={styles.GroupLabel}>
         <SectionList
-          sections={[
-            {
-              title: "Controle",
-              data: state.controle,
-            },
-            {
-              title: "Intervenção",
-              data: state.intervencao,
-            },
-          ]}
+          sections={data}
           keyExtractor={(item) => `${item._id}`}
           renderItem={({ item, section: { title } }) => {
             if (title === "Controle") {
@@ -88,9 +90,27 @@ const GroupScreen = ({ navigation }) => {
         />
       </View>
     </SafeAreaView>
+  ) : (
+    <View style={[styles.container, styles.horizontal]}>
+      <NavigationEvents onWillFocus={legrupo} />
+      <ActivityIndicator size="large" color="#00ff00" />
+    </View>
   );
 };
 
+GroupScreen.navigationOptions = ({ navigation }) => {
+  return {
+    headerRight: () => (
+      <TouchableOpacity>
+        <MaterialCommunityIcons
+          name="swap-vertical-bold"
+          size={24}
+          color="black"
+        />
+      </TouchableOpacity>
+    ),
+  };
+};
 const styles = StyleSheet.create({
   GroupLabel: {},
   GroupText: {
@@ -118,6 +138,15 @@ const styles = StyleSheet.create({
     left: 80,
     flexDirection: "row",
     color: "red",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 

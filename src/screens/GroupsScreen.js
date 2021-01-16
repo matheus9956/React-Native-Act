@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useRef } from "react";
 import { NavigationEvents } from "react-navigation";
 import {
   View,
@@ -13,15 +13,17 @@ import { Context as GroupContext } from "../context/GroupContext";
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
 
-  if (state.length === 0) {
-    return (
-      <View>
-        <NavigationEvents onWillFocus={ReadGroups} />
-        <Text style={styles.texto}>Você não possui grupos cadastradas</Text>
-      </View>
-    );
-  }
-  return (
+  const mounted = useRef(false);
+
+  useEffect(() => {
+    mounted.current = true;
+
+    return () => {
+      mounted.current = false;
+    };
+  }, []);
+
+  return mounted.current ? (
     <View>
       <NavigationEvents onWillFocus={ReadGroups} />
       <FlatList
@@ -44,6 +46,11 @@ const GroupsScreen = ({ navigation }) => {
         }}
       />
     </View>
+  ) : (
+    <>
+      <NavigationEvents onWillFocus={ReadGroups} />
+      <Text>Carregando</Text>
+    </>
   );
 };
 
