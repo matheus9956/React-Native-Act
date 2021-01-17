@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -6,45 +6,98 @@ import {
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { Context as GroupContext } from "../context/GroupContext";
 
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedValue, setSelectedValue] = useState("ativos");
 
   useEffect(() => {
-    ReadGroups();
+    setIsLoading(true);
+    ReadGroups(() => setIsLoading(false));
 
-    const focusListener = navigation.addListener("didFocus", () =>
-      ReadGroups()
-    );
+    const focusListener = navigation.addListener("didFocus", () => {
+      setIsLoading(true);
+      ReadGroups(() => setIsLoading(false));
+    });
 
     return () => {
       focusListener.remove();
     };
   }, []);
 
-  return state !== undefined ? (
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    ReadGroups().then(() => setRefreshing(false));
+  }, []);
+
+  return state !== undefined && !isLoading ? (
     <View>
-      <FlatList
-        data={state}
-        keyExtractor={(item) => `${item._id}`}
-        renderItem={({ item }) => {
-          return (
-            <TouchableOpacity
-              onPress={() =>
-                navigation.navigate("Group", {
-                  _id: item._id,
-                })
-              }
-            >
-              <View style={styles.GroupsLabel}>
-                <Text style={styles.GroupsText}>Group id : {item._id}</Text>
-              </View>
-            </TouchableOpacity>
-          );
-        }}
-      />
+      <Picker
+        selectedValue={selectedValue}
+        style={{ height: 50, width: 200 }}
+        onValueChange={(itemValue) => setSelectedValue(itemValue)}
+      >
+        <Picker.Item label="Grupos Ativos" value="ativos" />
+        <Picker.Item label="Grupos Encerrados" value="encerrados" />
+      </Picker>
+      {selectedValue === "ativos" ? (
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={state}
+          keyExtractor={(item) => `${item._id}`}
+          renderItem={({ item }) => {
+            if (item.fase < 3) {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Group", {
+                      _id: item._id,
+                    })
+                  }
+                >
+                  <View style={styles.GroupsLabel}>
+                    <Text style={styles.GroupsText}>Group id : {item._id}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }
+          }}
+        />
+      ) : (
+        <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
+          data={state}
+          keyExtractor={(item) => `${item._id}`}
+          renderItem={({ item }) => {
+            if (item.fase === 3) {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Group", {
+                      _id: item._id,
+                    })
+                  }
+                >
+                  <View style={styles.GroupsLabel}>
+                    <Text style={styles.GroupsText}>Group id : {item._id}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }
+          }}
+        />
+      )}
     </View>
   ) : (
     <View style={[styles.container, styles.horizontal]}>
@@ -69,6 +122,15 @@ const styles = StyleSheet.create({
     marginTop: 10,
     alignSelf: "center",
     color: "grey",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 

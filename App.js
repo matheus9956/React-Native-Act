@@ -84,11 +84,17 @@ const TabNavigator = createBottomTabNavigator(
 const navigator = createStackNavigator(
   {
     ResolveAuth: ResolveAuthScreen,
-    Login: LoginScreen,
+    Login: {
+      screen: LoginScreen,
+      navigationOptions: {
+        title: "Login",
+        header: () => null,
+      },
+    },
     Home: {
       screen: HomeScreen,
       navigationOptions: {
-        headerLeft: () => null,
+        header: () => null,
       },
     },
     Tab: {
@@ -111,7 +117,7 @@ const navigator = createStackNavigator(
           nameTitle = "Ajustes";
         }
 
-        return { title: nameTitle, headerLeft: () => null };
+        return { title: nameTitle, header: () => null };
       },
     },
     Group: {

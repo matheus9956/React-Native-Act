@@ -1,5 +1,6 @@
 import createDataContext from "./createDataContext";
 import dadosApi from "../api/dados";
+import React, { useState } from "react";
 
 const familyReducer = (state, action) => {
   switch (action.type) {
@@ -14,11 +15,12 @@ const familyReducer = (state, action) => {
   }
 };
 
-const RegisterFamily = (dispatch) => async (values, callback) => {
-  const response = await dadosApi.post("/novafamilia", values);
+const RegisterFamily = (dispatch) => async (values, loading, callback) => {
+  await dadosApi.post("/novafamilia", values);
 
   dispatch({ type: "register", payload: { values } });
 
+  if (loading) loading();
   if (callback) callback();
 };
 

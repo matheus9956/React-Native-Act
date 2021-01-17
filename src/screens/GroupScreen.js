@@ -1,4 +1,4 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import {
   View,
   ActivityIndicator,
@@ -10,13 +10,27 @@ import {
   Button,
 } from "react-native";
 import { Context as GroupContext } from "../context/GroupContext";
+import { Context as FamilyContext } from "../context/FamilyContext";
 import { AntDesign } from "@expo/vector-icons";
 
 const GroupScreen = ({ navigation }) => {
   const { state, ChangeGroup } = useContext(GroupContext);
+  const { ReadFamilies } = useContext(FamilyContext);
   const _id = navigation.getParam("_id");
-
   const grupo = state.find((item) => item._id === _id);
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    ReadFamilies();
+
+    const focusListener = navigation.addListener("didFocus", () =>
+      ReadFamilies()
+    );
+
+    return () => {
+      focusListener.remove();
+    };
+  }, []);
 
   const data = [
     {
@@ -29,16 +43,48 @@ const GroupScreen = ({ navigation }) => {
     },
   ];
 
-  return grupo !== undefined ? (
+  const footer = () => {
+    return grupo.fase === 1 ? (
+      <Button
+        onPress={() => {
+          setIsLoading(true);
+          ChangeGroup(_id, () => setIsLoading(false));
+        }}
+        title="Inverter Controle/Intervenção"
+      />
+    ) : grupo.fase === 2 ? (
+      <Button
+        onPress={() => {
+          setIsLoading(true);
+          ChangeGroup(
+            _id,
+            () => setIsLoading(false),
+            () => navigation.navigate("Groups")
+          );
+        }}
+        title="Encerrar Grupo"
+      />
+    ) : (
+      <></>
+    );
+  };
+
+  return grupo.controle !== undefined && !isLoading ? (
     <SafeAreaView>
       <View style={styles.GroupLabel}>
         <SectionList
+          ListFooterComponent={footer()}
           sections={data}
           keyExtractor={(item) => `${item._id}`}
           renderItem={({ item, section: { title } }) => {
             return title === "Controle" ? (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Family", { _id: item._id })}
+                onPress={() =>
+                  navigation.navigate("Family", {
+                    _id: item._id,
+                    grupo: "comGrupo",
+                  })
+                }
               >
                 <View style={styles.coluna}>
                   <Text>Família ID: {item._id}</Text>
@@ -55,7 +101,12 @@ const GroupScreen = ({ navigation }) => {
               </TouchableOpacity>
             ) : (
               <TouchableOpacity
-                onPress={() => navigation.navigate("Family", { _id: item._id })}
+                onPress={() =>
+                  navigation.navigate("Family", {
+                    _id: item._id,
+                    grupo: "comGrupo",
+                  })
+                }
               >
                 <View style={styles.coluna}>
                   <Text>Família ID: {item._id}</Text>
@@ -71,23 +122,6 @@ const GroupScreen = ({ navigation }) => {
           )}
         />
       </View>
-      {grupo.fase === 1 ? (
-        <Button
-          onPress={() => {
-            ChangeGroup(_id);
-          }}
-          title="Inverter Controle/Intervenção"
-        />
-      ) : grupo.fase === 2 ? (
-        <Button
-          onPress={() => {
-            ChangeGroup(_id, () => navigation.navigate("Groups"));
-          }}
-          title="Encerrar Grupo"
-        />
-      ) : (
-        <></>
-      )}
     </SafeAreaView>
   ) : (
     <View style={[styles.container, styles.horizontal]}>

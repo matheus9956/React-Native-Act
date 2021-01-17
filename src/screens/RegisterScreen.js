@@ -1,6 +1,6 @@
-import React, { useContext, useEffect } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
-import { ScrollView, TextInput } from "react-native-gesture-handler";
+import { ScrollView } from "react-native-gesture-handler";
 import { NavigationEvents } from "react-navigation";
 
 import { Context as RegisterContext } from "../context/RegisterContext";
@@ -11,7 +11,8 @@ import FormComponent from "../components/FormComponent";
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(FamilyContext);
   const { state, ReadRegister, clearState } = useContext(RegisterContext);
-  console.log(state);
+  const [isLoading, setIsLoading] = useState(false);
+
   useEffect(() => {
     ReadRegister();
 
@@ -24,13 +25,18 @@ const RegisterScreen = ({ navigation }) => {
     };
   }, []);
 
-  return state !== undefined ? (
+  return state.length > 0 && state !== undefined && !isLoading ? (
     <ScrollView>
       <NavigationEvents onWillBlur={clearState} />
       <FormComponent
         data={state}
         submit={(data) => {
-          RegisterFamily(data, () => navigation.navigate("Families"));
+          setIsLoading(true);
+          RegisterFamily(
+            data,
+            () => setIsLoading(false),
+            () => navigation.navigate("Families")
+          );
         }}
       />
     </ScrollView>
@@ -56,6 +62,15 @@ const styles = StyleSheet.create({
   label: {
     marginTop: 10,
     marginHorizontal: 8,
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 

@@ -19,24 +19,29 @@ const groupReducer = (state, action) => {
       return state;
   }
 };
-const ReadGroups = (dispatch) => async () => {
+
+const ReadGroups = (dispatch) => async (loading) => {
   const groups = await dadosApi.get("/grupos");
 
   dispatch({ type: "readGroups", payload: groups.data });
+  if (loading) loading();
 };
 
-const CreateGroup = (dispatch) => async (callback) => {
-  const response = await dadosApi.post("/novogrupo");
+const CreateGroup = (dispatch) => async (callback, loading) => {
+  await dadosApi.post("/novogrupo");
 
-  dispatch({ type: "create", payload: response });
+  dispatch({ type: "create" });
 
+  if (loading) loading();
   if (callback) callback();
 };
-const ChangeGroup = (dispatch) => async (_id, callback) => {
+
+const ChangeGroup = (dispatch) => async (_id, loading, callback) => {
   const response = await dadosApi.get(`/grupo/fase/${_id}`);
 
   dispatch({ type: "change", payload: response.data });
 
+  if (loading) loading();
   if (callback) callback();
 };
 

@@ -6,9 +6,10 @@ import {
   Button,
   FlatList,
   TouchableOpacity,
-  Picker,
   ActivityIndicator,
+  RefreshControl,
 } from "react-native";
+import { Picker } from "@react-native-picker/picker";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Context as GroupContext } from "../context/GroupContext";
 
@@ -16,6 +17,8 @@ const FamiliesScreen = ({ navigation }) => {
   const { state, ReadFamilies } = useContext(FamilyContext);
   const { CreateGroup } = useContext(GroupContext);
   const [selectedValue, setSelectedValue] = useState("Sem Grupo");
+  const [refreshing, setRefreshing] = React.useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     ReadFamilies();
@@ -29,13 +32,19 @@ const FamiliesScreen = ({ navigation }) => {
     };
   }, []);
 
-  return state.semGrupo !== undefined ? (
+  const onRefresh = React.useCallback(() => {
+    setRefreshing(true);
+
+    ReadFamilies().then(() => setRefreshing(false));
+  }, []);
+
+  return state.semGrupo !== undefined && !isLoading ? (
     <>
       <View style={styles.vertical}>
         <Picker
           selectedValue={selectedValue}
           style={{ height: 50, width: 150 }}
-          onValueChange={(itemValue, itemIndex) => setSelectedValue(itemValue)}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}
         >
           <Picker.Item label="Sem Grupo" value="Sem Grupo" />
           <Picker.Item label="Com Grupo" value="Com Grupo" />
@@ -44,9 +53,11 @@ const FamiliesScreen = ({ navigation }) => {
           <Button
             title="Criar Grupo"
             onPress={() => {
-              CreateGroup(() => {
-                navigation.navigate("Groups");
-              });
+              setIsLoading(true);
+              CreateGroup(
+                () => navigation.navigate("Groups"),
+                () => setIsLoading(false)
+              );
             }}
           />
         ) : (
@@ -55,6 +66,9 @@ const FamiliesScreen = ({ navigation }) => {
       </View>
       {selectedValue === "Sem Grupo" ? (
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           data={state.semGrupo}
           keyExtractor={(item) => `${item._id}`}
           renderItem={({ item }) => {
@@ -78,6 +92,9 @@ const FamiliesScreen = ({ navigation }) => {
         />
       ) : (
         <FlatList
+          refreshControl={
+            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+          }
           data={state.comGrupo}
           keyExtractor={(item) => `${item._id}`}
           renderItem={({ item }) => {
@@ -127,6 +144,15 @@ const styles = StyleSheet.create({
   },
   vertical: {
     flexDirection: "row",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+  },
+  horizontal: {
+    flexDirection: "row",
+    justifyContent: "space-around",
+    padding: 10,
   },
 });
 

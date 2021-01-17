@@ -13,8 +13,6 @@ const FamilyScreen = ({ navigation }) => {
       ? state.comGrupo.find((item) => item._id === _id)
       : state.semGrupo.find((item) => item._id === _id);
 
-  console.log(grupo);
-
   return family !== undefined ? (
     <ScrollView>
       <Text style={styles.title}>

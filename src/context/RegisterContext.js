@@ -7,16 +7,14 @@ const registerReducer = (state, action) => {
       return state;
     }
     case "clear": {
-      return (state = []);
+      return [];
     }
     default:
       return state;
   }
 };
-const clearState = (dispatch) => {
-  return () => {
-    dispatch({ type: "clear" });
-  };
+const clearState = (dispatch) => () => {
+  dispatch({ type: "clear" });
 };
 
 const ReadRegister = (dispatch) => {
