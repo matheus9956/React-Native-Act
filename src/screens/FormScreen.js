@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, StatusBar, Platform } from "react-native";
 import { Context as FormContext } from "../context/FormContext";
 import FormComponent from "../components/FormComponent";
 
@@ -11,7 +11,7 @@ const RegisterScreen = ({ navigation }) => {
   }, []);
 
   return (
-    <View>
+    <View style={styles.statusBar}>
       <FormComponent
         data={state}
         submit={(data) => {
@@ -23,6 +23,9 @@ const RegisterScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   input: {
     borderWidth: 1,
     color: "black",

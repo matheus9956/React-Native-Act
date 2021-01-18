@@ -1,5 +1,13 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text, Button, Linking } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  Linking,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 const handleEmaillPress = async () => {
   await Linking.openURL("mailto: actribeirao@gmail.com");
@@ -9,7 +17,7 @@ const SettingsScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
 
   return (
-    <View style={styles.label}>
+    <View style={(styles.label, styles.statusBar)}>
       <Text style={styles.versao}>v1.0</Text>
 
       <Button
@@ -23,6 +31,9 @@ const SettingsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   button: {
     width: 10,
     height: 10,

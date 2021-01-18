@@ -1,5 +1,11 @@
 import React, { useContext, useEffect, useState } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform,
+  StatusBar,
+} from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { NavigationEvents } from "react-navigation";
 
@@ -26,7 +32,7 @@ const RegisterScreen = ({ navigation }) => {
   }, []);
 
   return state.length > 0 && state !== undefined && !isLoading ? (
-    <ScrollView>
+    <ScrollView style={styles.statusBar}>
       <NavigationEvents onWillBlur={clearState} />
       <FormComponent
         data={state}
@@ -52,6 +58,9 @@ RegisterScreen.navigationOptions = {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   input: {
     borderWidth: 1,
     color: "black",

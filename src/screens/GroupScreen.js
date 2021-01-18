@@ -8,31 +8,30 @@ import {
   SafeAreaView,
   SectionList,
   Button,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { Context as GroupContext } from "../context/GroupContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { AntDesign } from "@expo/vector-icons";
 
 const GroupScreen = ({ navigation }) => {
-  const { state, ChangeGroup } = useContext(GroupContext);
+  const { state, ChangeGroup, ReadGroups } = useContext(GroupContext);
   const { ReadFamilies } = useContext(FamilyContext);
   const _id = navigation.getParam("_id");
-
   const [tipo, setTipo] = useState(navigation.getParam("tipo"));
-
+  const [isLoading, setIsLoading] = useState(false);
   const grupo =
     tipo === "ativo"
       ? state.ativos.find((item) => item._id === _id)
       : state.encerrados.find((item) => item._id);
 
-  const [isLoading, setIsLoading] = useState(false);
-
   useEffect(() => {
     ReadFamilies();
 
-    const focusListener = navigation.addListener("didFocus", () =>
-      ReadFamilies()
-    );
+    const focusListener = navigation.addListener("didFocus", () => {
+      ReadFamilies();
+    });
 
     return () => {
       focusListener.remove();
@@ -139,6 +138,9 @@ const GroupScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   GroupText: {
     fontSize: 30,
     marginHorizontal: 5,

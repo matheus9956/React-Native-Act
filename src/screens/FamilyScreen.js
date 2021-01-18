@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { View, StyleSheet, Text, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Text,
+  ActivityIndicator,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { ScrollView } from "react-native-gesture-handler";
 
@@ -89,6 +96,9 @@ const FamilyScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   title: {
     fontWeight: "bold",
   },

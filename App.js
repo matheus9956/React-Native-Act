@@ -83,7 +83,13 @@ const TabNavigator = createBottomTabNavigator(
 
 const navigator = createStackNavigator(
   {
-    ResolveAuth: ResolveAuthScreen,
+    ResolveAuth: {
+      screen: ResolveAuthScreen,
+      navigationOptions: {
+        title: "ResolveAuth",
+        header: () => null,
+      },
+    },
     Login: {
       screen: LoginScreen,
       navigationOptions: {

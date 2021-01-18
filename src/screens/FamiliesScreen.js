@@ -8,6 +8,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Context as FamilyContext } from "../context/FamilyContext";
@@ -39,7 +41,7 @@ const FamiliesScreen = ({ navigation }) => {
   }, []);
 
   return state.semGrupo !== undefined && !isLoading ? (
-    <>
+    <View style={styles.statusBar}>
       <View style={styles.vertical}>
         <Picker
           selectedValue={selectedValue}
@@ -123,7 +125,7 @@ const FamiliesScreen = ({ navigation }) => {
           }}
         />
       )}
-    </>
+    </View>
   ) : (
     <View style={[styles.container, styles.horizontal]}>
       <ActivityIndicator size="large" color="#4d4dff" />
@@ -132,6 +134,9 @@ const FamiliesScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   familiesLabel: {
     borderColor: "black",
     borderWidth: 1,

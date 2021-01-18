@@ -1,5 +1,13 @@
 import React, { useState, useContext } from "react";
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Button,
+  StatusBar,
+  Platform,
+} from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
@@ -8,7 +16,7 @@ const LoginScreen = ({ navigation }) => {
   const [password, setPassword] = useState("");
 
   return (
-    <View style={styles.label}>
+    <View style={(styles.label, styles.statusBar)}>
       <Text style={styles.text}>Usuario:</Text>
       <TextInput
         style={styles.input}
@@ -31,6 +39,9 @@ const LoginScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   input: {
     borderWidth: 1,
     color: "black",

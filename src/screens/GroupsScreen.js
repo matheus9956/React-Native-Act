@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   RefreshControl,
+  StatusBar,
+  Platform,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Context as GroupContext } from "../context/GroupContext";
@@ -37,8 +39,8 @@ const GroupsScreen = ({ navigation }) => {
     ReadGroups().then(() => setRefreshing(false));
   }, []);
 
-  return state !== undefined && !isLoading ? (
-    <View>
+  return state.ativos !== undefined && !isLoading ? (
+    <View style={styles.statusBar}>
       <Picker
         selectedValue={selectedValue}
         style={{ height: 50, width: 200 }}
@@ -49,6 +51,7 @@ const GroupsScreen = ({ navigation }) => {
       </Picker>
       {selectedValue === "ativos" ? (
         <FlatList
+          contentContainerStyle={{ paddingBottom: 50 }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -76,6 +79,7 @@ const GroupsScreen = ({ navigation }) => {
         />
       ) : (
         <FlatList
+          contentContainerStyle={{ paddingBottom: 50 }}
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
@@ -111,6 +115,9 @@ const GroupsScreen = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
+  statusBar: {
+    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  },
   GroupsLabel: {
     borderColor: "black",
     borderWidth: 1,
