@@ -38,7 +38,7 @@ const CreateGroup = (dispatch) => async (callback, loading) => {
 
 const ChangeGroup = (dispatch) => async (_id, loading, callback) => {
   const response = await dadosApi.get(`/grupo/fase/${_id}`);
-
+  console.log(response.data);
   dispatch({ type: "change", payload: response.data });
 
   if (loading) loading();

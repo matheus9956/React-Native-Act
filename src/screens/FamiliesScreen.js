@@ -71,6 +71,9 @@ const FamiliesScreen = ({ navigation }) => {
           }
           data={state.semGrupo}
           keyExtractor={(item) => `${item._id}`}
+          ListEmptyComponent={() => {
+            return <Text>Não existe familia disponiveis </Text>;
+          }}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity
@@ -97,6 +100,9 @@ const FamiliesScreen = ({ navigation }) => {
           }
           data={state.comGrupo}
           keyExtractor={(item) => `${item._id}`}
+          ListEmptyComponent={() => {
+            return <Text>Não existe familia disponiveis </Text>;
+          }}
           renderItem={({ item }) => {
             return (
               <TouchableOpacity

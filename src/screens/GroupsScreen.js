@@ -52,24 +52,26 @@ const GroupsScreen = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          data={state}
+          data={state.ativos}
           keyExtractor={(item) => `${item._id}`}
+          ListEmptyComponent={() => {
+            return <Text>Não existe Grupos disponiveis </Text>;
+          }}
           renderItem={({ item }) => {
-            if (item.fase < 3) {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Group", {
-                      _id: item._id,
-                    })
-                  }
-                >
-                  <View style={styles.GroupsLabel}>
-                    <Text style={styles.GroupsText}>Group id : {item._id}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Group", {
+                    _id: item._id,
+                    tipo: "ativo",
+                  })
+                }
+              >
+                <View style={styles.GroupsLabel}>
+                  <Text style={styles.GroupsText}>Group id : {item._id}</Text>
+                </View>
+              </TouchableOpacity>
+            );
           }}
         />
       ) : (
@@ -77,24 +79,26 @@ const GroupsScreen = ({ navigation }) => {
           refreshControl={
             <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
           }
-          data={state}
+          data={state.encerrados}
           keyExtractor={(item) => `${item._id}`}
+          ListEmptyComponent={() => {
+            return <Text>Não existe Grupos disponiveis </Text>;
+          }}
           renderItem={({ item }) => {
-            if (item.fase === 3) {
-              return (
-                <TouchableOpacity
-                  onPress={() =>
-                    navigation.navigate("Group", {
-                      _id: item._id,
-                    })
-                  }
-                >
-                  <View style={styles.GroupsLabel}>
-                    <Text style={styles.GroupsText}>Group id : {item._id}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }
+            return (
+              <TouchableOpacity
+                onPress={() =>
+                  navigation.navigate("Group", {
+                    _id: item._id,
+                    tipo: "encerrado",
+                  })
+                }
+              >
+                <View style={styles.GroupsLabel}>
+                  <Text style={styles.GroupsText}>Group id : {item._id}</Text>
+                </View>
+              </TouchableOpacity>
+            );
           }}
         />
       )}

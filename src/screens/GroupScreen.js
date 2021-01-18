@@ -17,7 +17,14 @@ const GroupScreen = ({ navigation }) => {
   const { state, ChangeGroup } = useContext(GroupContext);
   const { ReadFamilies } = useContext(FamilyContext);
   const _id = navigation.getParam("_id");
-  const grupo = state.find((item) => item._id === _id);
+
+  const [tipo, setTipo] = useState(navigation.getParam("tipo"));
+
+  const grupo =
+    tipo === "ativo"
+      ? state.ativos.find((item) => item._id === _id)
+      : state.encerrados.find((item) => item._id);
+
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -56,6 +63,7 @@ const GroupScreen = ({ navigation }) => {
       <Button
         onPress={() => {
           setIsLoading(true);
+          setTipo("encerrado");
           ChangeGroup(
             _id,
             () => setIsLoading(false),

@@ -16,6 +16,7 @@
     "expo-status-bar": "~1.0.2",
     "formik": "^2.2.5",
     "linking": "0.1.0-beta.5",
+    "picker": "^0.1.4",
     "react": "16.13.1",
     "react-async-hook": "^3.6.2",
     "react-dom": "16.13.1",
