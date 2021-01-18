@@ -3,9 +3,10 @@ import { View, StyleSheet, StatusBar, Platform } from "react-native";
 import { Context as FormContext } from "../context/FormContext";
 import FormComponent from "../components/FormComponent";
 
-const RegisterScreen = ({ navigation }) => {
+const RegisterScreen = ({ navigation, route }) => {
   const { state, ReadForm, RegisterForm } = useContext(FormContext);
-  const _id = navigation.getParam("_id");
+  const _id = route.params?._id ?? "noId";
+
   useEffect(() => {
     ReadForm();
   }, []);

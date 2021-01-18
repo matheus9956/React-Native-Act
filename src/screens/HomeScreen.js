@@ -7,35 +7,34 @@ import {
   Keyboard,
   StatusBar,
   Platform,
-  AsyncStorage,
 } from "react-native";
-import { navigate } from "../navigationRef";
-const HomeScreen = ({ navigation }) => {
+const HomeScreen = ({ navigation, route }) => {
   Keyboard.dismiss();
 
-  const nick = navigation.getParam("nick");
+  const nick = route.params?.nick ?? "user";
+
   return (
     <View style={styles.statusBar}>
       <Text style={styles.text}>Bem vindo, {nick}! </Text>
       <Text style={styles.texto}>Selecione a opção desejada: </Text>
       <View style={styles.buttonLabel}>
         <Button
-          onPress={() => navigation.navigate("Register")}
+          onPress={() => navigation.navigate("Tab", { screen: "Register" })}
           title="Cadastro"
           style={styles.button}
         />
         <Button
-          onPress={() => navigation.navigate("Families")}
+          onPress={() => navigation.navigate("Tab", { screen: "Families" })}
           title="Famílias"
           style={styles.button}
         />
         <Button
-          onPress={() => navigation.navigate("Groups")}
+          onPress={() => navigation.navigate("Tab", { screen: "Groups" })}
           title="Grupos"
           style={styles.button}
         />
         <Button
-          onPress={() => navigation.navigate("Settings")}
+          onPress={() => navigation.navigate("Tab", { screen: "Settings" })}
           title="Ajustes"
           style={styles.button}
         />

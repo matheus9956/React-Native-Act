@@ -10,10 +10,10 @@ import {
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { ScrollView } from "react-native-gesture-handler";
 
-const FamilyScreen = ({ navigation }) => {
+const FamilyScreen = ({ route }) => {
   const { state } = useContext(FamilyContext);
-  const _id = navigation.getParam("_id");
-  const grupo = navigation.getParam("grupo");
+  const _id = route.params?._id ?? "noId";
+  const grupo = route.params?.grupo ?? "noGroup";
 
   const family =
     grupo === "comGrupo"

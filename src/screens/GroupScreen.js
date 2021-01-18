@@ -14,29 +14,24 @@ import {
 import { Context as GroupContext } from "../context/GroupContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { AntDesign } from "@expo/vector-icons";
+import { useFocusEffect } from "@react-navigation/native";
 
-const GroupScreen = ({ navigation }) => {
+const GroupScreen = ({ navigation, route }) => {
   const { state, ChangeGroup, ReadGroups } = useContext(GroupContext);
   const { ReadFamilies } = useContext(FamilyContext);
-  const _id = navigation.getParam("_id");
-  const [tipo, setTipo] = useState(navigation.getParam("tipo"));
+  const _id = route.params?._id ?? "noId";
+  const [tipo, setTipo] = useState(route.params?.tipo ?? "semTipo");
   const [isLoading, setIsLoading] = useState(false);
   const grupo =
     tipo === "ativo"
       ? state.ativos.find((item) => item._id === _id)
       : state.encerrados.find((item) => item._id);
 
-  useEffect(() => {
-    ReadFamilies();
-
-    const focusListener = navigation.addListener("didFocus", () => {
+  useFocusEffect(
+    React.useCallback(() => {
       ReadFamilies();
-    });
-
-    return () => {
-      focusListener.remove();
-    };
-  }, []);
+    }, [])
+  );
 
   const data = [
     {

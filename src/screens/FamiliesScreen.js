@@ -14,6 +14,7 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Context as GroupContext } from "../context/GroupContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const FamiliesScreen = ({ navigation }) => {
   const { state, ReadFamilies } = useContext(FamilyContext);
@@ -22,17 +23,11 @@ const FamiliesScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  useEffect(() => {
-    ReadFamilies();
-
-    const focusListener = navigation.addListener("didFocus", () =>
-      ReadFamilies()
-    );
-
-    return () => {
-      focusListener.remove();
-    };
-  }, []);
+  useFocusEffect(
+    React.useCallback(() => {
+      ReadFamilies();
+    }, [])
+  );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);

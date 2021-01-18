@@ -1,4 +1,4 @@
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import createDataContext from "./createDataContext";
 import dadosApi from "../api/dados";
 import { navigate } from "../navigationRef";
@@ -19,6 +19,7 @@ const authReducer = (state, action) => {
 const tryLocalSignin = (dispatch) => async () => {
   const token = await AsyncStorage.getItem("token");
   const nick = await AsyncStorage.getItem("nick");
+
   if (token) {
     dispatch({ type: "signin", payload: token });
     navigate("Home", { nick });

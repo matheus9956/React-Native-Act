@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
 import { Context as GroupContext } from "../context/GroupContext";
+import { useFocusEffect } from "@react-navigation/native";
 
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
@@ -19,19 +20,12 @@ const GroupsScreen = ({ navigation }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("ativos");
 
-  useEffect(() => {
-    setIsLoading(true);
-    ReadGroups(() => setIsLoading(false));
-
-    const focusListener = navigation.addListener("didFocus", () => {
+  useFocusEffect(
+    React.useCallback(() => {
       setIsLoading(true);
       ReadGroups(() => setIsLoading(false));
-    });
-
-    return () => {
-      focusListener.remove();
-    };
-  }, []);
+    }, [])
+  );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
