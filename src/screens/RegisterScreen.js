@@ -46,8 +46,8 @@ const RegisterScreen = ({ navigation }) => {
       />
     </ScrollView>
   ) : (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#4d4dff" />
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#336699" />
     </View>
   );
 };

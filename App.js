@@ -50,11 +50,8 @@ function TabNavigator() {
 
           return <Icon name={iconName} size={size} color={color} />;
         },
-        tabBarOptions: {
-          activeTintColor: "#0080ff",
-          inactiveTintColor: "gray",
-        },
       })}
+      tabBarOptions={{ activeTintColor: "#336699", inactiveTintColor: "#777" }}
     >
       <BottomTab.Screen
         name="Register"

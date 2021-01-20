@@ -37,93 +37,109 @@ const FamiliesScreen = ({ navigation }) => {
 
   return state.semGrupo !== undefined && !isLoading ? (
     <View style={styles.statusBar}>
-      <View style={styles.vertical}>
+      <View style={styles.picker}>
         <Picker
+          itemStyle={{ alignSelf: "center" }}
           selectedValue={selectedValue}
-          style={{ height: 50, width: 150 }}
           onValueChange={(itemValue) => setSelectedValue(itemValue)}
         >
           <Picker.Item label="Sem Grupo" value="Sem Grupo" />
           <Picker.Item label="Com Grupo" value="Com Grupo" />
         </Picker>
-        {state.semGrupo.length >= 6 && selectedValue === "Sem Grupo" ? (
-          <Button
-            title="Criar Grupo"
-            onPress={() => {
-              setIsLoading(true);
-              CreateGroup(
-                () => navigation.navigate("Groups"),
-                () => setIsLoading(false)
+      </View>
+
+      {selectedValue === "Sem Grupo" ? (
+        <View style={styles.flatlist}>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 170 }}
+            ListFooterComponent={() => {
+              return state.semGrupo.length >= 6 &&
+                selectedValue === "Sem Grupo" ? (
+                <TouchableOpacity
+                  style={styles.button}
+                  onPress={() => {
+                    setIsLoading(true);
+                    CreateGroup(
+                      () => navigation.navigate("Groups"),
+                      () => setIsLoading(false)
+                    );
+                  }}
+                >
+                  <Text style={styles.appButtonText}>criar grupo</Text>
+                </TouchableOpacity>
+              ) : (
+                <></>
+              );
+            }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            data={state.semGrupo}
+            keyExtractor={(item) => `${item._id}`}
+            ListEmptyComponent={() => {
+              return (
+                <Text style={styles.empty}>Não existe família disponíveis</Text>
+              );
+            }}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      _id: item._id,
+                      grupo: "semGrupo",
+                    })
+                  }
+                >
+                  <View style={styles.familiesLabel}>
+                    <Text style={styles.familiesText}>
+                      Família: {index + 1}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
               );
             }}
           />
-        ) : (
-          <></>
-        )}
-      </View>
-      {selectedValue === "Sem Grupo" ? (
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={state.semGrupo}
-          keyExtractor={(item) => `${item._id}`}
-          ListEmptyComponent={() => {
-            return <Text>Não existe familia disponiveis </Text>;
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "semGrupo",
-                  })
-                }
-              >
-                <View style={styles.familiesLabel}>
-                  <Text style={styles.familiesText}>
-                    Família ID: {item._id}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+        </View>
       ) : (
-        <FlatList
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={state.comGrupo}
-          keyExtractor={(item) => `${item._id}`}
-          ListEmptyComponent={() => {
-            return <Text>Não existe familia disponiveis </Text>;
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "comGrupo",
-                  })
-                }
-              >
-                <View style={styles.familiesLabel}>
-                  <Text style={styles.familiesText}>
-                    Família ID: {item._id}
-                  </Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+        <View style={styles.flatlist}>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 170 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            data={state.comGrupo}
+            keyExtractor={(item) => `${item._id}`}
+            ListEmptyComponent={() => {
+              return (
+                <Text style={styles.empty}>Não existe família disponíveis</Text>
+              );
+            }}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      _id: item._id,
+                      grupo: "comGrupo",
+                    })
+                  }
+                >
+                  <View style={styles.familiesLabel}>
+                    <Text style={styles.familiesText}>
+                      Família: {index + 1}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       )}
     </View>
   ) : (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#4d4dff" />
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#336699" />
     </View>
   );
 };
@@ -131,34 +147,68 @@ const FamiliesScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   statusBar: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    alignItems: "center",
   },
-  familiesLabel: {
-    borderColor: "black",
-    borderWidth: 1,
-    marginVertical: 12,
-    paddingVertical: 12,
-    marginHorizontal: 8,
-  },
-  familiesText: {
-    fontSize: 30,
-    marginHorizontal: 5,
-  },
-  texto: {
-    marginTop: 10,
+
+  button: {
+    width: "80%",
+    backgroundColor: "#336699",
+    borderRadius: 25,
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+    marginBottom: 10,
     alignSelf: "center",
-    color: "grey",
   },
-  vertical: {
-    flexDirection: "row",
+
+  appButtonText: {
+    fontSize: 17,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
   },
   container: {
     flex: 1,
     justifyContent: "center",
   },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
+
+  familiesLabel: {
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "#c9c9c9",
+  },
+  picker: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+  flatlist: {
+    width: "90%",
+  },
+  familiesText: {
+    fontSize: 18,
+  },
+  empty: {
+    color: "#575757",
+    alignSelf: "center",
   },
 });
 

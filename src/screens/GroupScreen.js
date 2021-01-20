@@ -46,15 +46,18 @@ const GroupScreen = ({ navigation, route }) => {
 
   const footer = () => {
     return grupo.fase === 1 ? (
-      <Button
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           setIsLoading(true);
           ChangeGroup(_id, () => setIsLoading(false));
         }}
-        title="Inverter Controle/Intervenção"
-      />
+      >
+        <Text style={styles.text}>Inverter</Text>
+      </TouchableOpacity>
     ) : grupo.fase === 2 ? (
-      <Button
+      <TouchableOpacity
+        style={styles.button}
         onPress={() => {
           setIsLoading(true);
           setTipo("encerrado");
@@ -64,78 +67,95 @@ const GroupScreen = ({ navigation, route }) => {
             () => navigation.navigate("Groups")
           );
         }}
-        title="Encerrar Grupo"
-      />
+      >
+        <Text style={styles.text}>Encerrar Grupo</Text>
+      </TouchableOpacity>
     ) : (
       <></>
     );
   };
 
   return grupo.controle !== undefined && !isLoading ? (
-    <SafeAreaView>
-      <View style={styles.GroupLabel}>
-        <SectionList
-          ListFooterComponent={footer()}
-          sections={data}
-          keyExtractor={(item) => `${item._id}`}
-          renderItem={({ item, section: { title } }) => {
-            return title === "Controle" ? (
+    <SafeAreaView style={styles.GroupLabel}>
+      <SectionList
+        ListFooterComponent={footer()}
+        sections={data}
+        keyExtractor={(item) => `${item._id}`}
+        renderItem={({ item, section: { title } }) => {
+          return title === "Controle" ? (
+            <TouchableOpacity
+              style={styles.coluna}
+              onPress={() =>
+                navigation.navigate("Family", {
+                  _id: item._id,
+                  grupo: "comGrupo",
+                })
+              }
+            >
+              <View style={styles.text2}>
+                <Text>Família ID: {item._id}</Text>
+              </View>
               <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "comGrupo",
-                  })
-                }
+                style={styles.form}
+                onPress={() => navigation.navigate("Form", { _id: item._id })}
               >
-                <View style={styles.coluna}>
-                  <Text>Família ID: {item._id}</Text>
+                <AntDesign name="filetext1" size={24} color="black" />
+              </TouchableOpacity>
+            </TouchableOpacity>
+          ) : (
+            <TouchableOpacity
+              style={styles.coluna}
+              onPress={() =>
+                navigation.navigate("Family", {
+                  _id: item._id,
+                  grupo: "comGrupo",
+                })
+              }
+            >
+              <View style={styles.text2}>
+                <Text>Família ID: {item._id}</Text>
+              </View>
 
-                  <TouchableOpacity
-                    style={styles.form}
-                    onPress={() =>
-                      navigation.navigate("Form", { _id: item._id })
-                    }
-                  >
-                    <AntDesign name="filetext1" size={24} color="black" />
-                  </TouchableOpacity>
-                </View>
+              <TouchableOpacity style={styles.form}>
+                <AntDesign name="filetext1" size={24} color="red" />
               </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "comGrupo",
-                  })
-                }
-              >
-                <View style={styles.coluna}>
-                  <Text>Família ID: {item._id}</Text>
-                  <TouchableOpacity style={styles.form}>
-                    <AntDesign name="filetext1" size={24} color="red" />
-                  </TouchableOpacity>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-          renderSectionHeader={({ section: { title } }) => (
-            <Text>{title}:</Text>
-          )}
-        />
-      </View>
+            </TouchableOpacity>
+          );
+        }}
+        renderSectionHeader={({ section: { title } }) => (
+          <View style={styles.title}>
+            <Text style={styles.text3}>{title}:</Text>
+          </View>
+        )}
+      />
     </SafeAreaView>
   ) : (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#4d4dff" />
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#336699" />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  statusBar: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+  button: {
+    width: "80%",
+    backgroundColor: "#336699",
+    borderRadius: 25,
+    height: 45,
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+    marginBottom: 10,
+    alignSelf: "center",
   },
+  text: {
+    fontSize: 17,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+  },
+
   GroupText: {
     fontSize: 30,
     marginHorizontal: 5,
@@ -146,30 +166,47 @@ const styles = StyleSheet.create({
     color: "grey",
   },
   coluna: {
+    width: "90%",
     flexDirection: "row",
-    borderColor: "black",
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
     borderWidth: 1,
-    marginVertical: 12,
-    paddingVertical: 12,
-    marginHorizontal: 8,
+    borderColor: "#c9c9c9",
+    alignSelf: "center",
   },
   form: {
-    left: 80,
-    flexDirection: "row",
+    width: "20%",
+    alignItems: "center",
+
+    justifyContent: "center",
   },
-  form2: {
-    left: 80,
-    flexDirection: "row",
-    color: "red",
-  },
+
   container: {
     flex: 1,
     justifyContent: "center",
   },
-  horizontal: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    padding: 10,
+
+  text2: {
+    paddingLeft: 10,
+    width: "80%",
+
+    justifyContent: "center",
+  },
+  text3: {
+    textTransform: "uppercase",
+    fontSize: 17,
+    marginTop: 15,
+    marginBottom: 15,
+    fontWeight: "bold",
+    color: "#575757",
+  },
+  title: {
+    width: "80%",
+    alignSelf: "center",
   },
 });
 

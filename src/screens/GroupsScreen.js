@@ -35,75 +35,85 @@ const GroupsScreen = ({ navigation }) => {
 
   return state.ativos !== undefined && !isLoading ? (
     <View style={styles.statusBar}>
-      <Picker
-        selectedValue={selectedValue}
-        style={{ height: 50, width: 200 }}
-        onValueChange={(itemValue) => setSelectedValue(itemValue)}
-      >
-        <Picker.Item label="Grupos Ativos" value="ativos" />
-        <Picker.Item label="Grupos Encerrados" value="encerrados" />
-      </Picker>
+      <View style={styles.picker}>
+        <Picker
+          itemStyle={{ alignSelf: "center" }}
+          selectedValue={selectedValue}
+          onValueChange={(itemValue) => setSelectedValue(itemValue)}
+        >
+          <Picker.Item label="Grupos Ativos" value="ativos" />
+          <Picker.Item label="Grupos Encerrados" value="encerrados" />
+        </Picker>
+      </View>
       {selectedValue === "ativos" ? (
-        <FlatList
-          contentContainerStyle={{ paddingBottom: 50 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={state.ativos}
-          keyExtractor={(item) => `${item._id}`}
-          ListEmptyComponent={() => {
-            return <Text>Não existe Grupos disponiveis </Text>;
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Group", {
-                    _id: item._id,
-                    tipo: "ativo",
-                  })
-                }
-              >
-                <View style={styles.GroupsLabel}>
-                  <Text style={styles.GroupsText}>Group id : {item._id}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+        <View style={styles.flatlist}>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 170 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            data={state.ativos}
+            keyExtractor={(item) => `${item._id}`}
+            ListEmptyComponent={() => {
+              return (
+                <Text style={styles.empty}>Não existe Grupos disponíveis </Text>
+              );
+            }}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Group", {
+                      _id: item._id,
+                      tipo: "ativo",
+                    })
+                  }
+                >
+                  <View style={styles.GroupsLabel}>
+                    <Text style={styles.GroupsText}> Grupo: {index + 1}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       ) : (
-        <FlatList
-          contentContainerStyle={{ paddingBottom: 50 }}
-          refreshControl={
-            <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-          }
-          data={state.encerrados}
-          keyExtractor={(item) => `${item._id}`}
-          ListEmptyComponent={() => {
-            return <Text>Não existe Grupos disponiveis </Text>;
-          }}
-          renderItem={({ item }) => {
-            return (
-              <TouchableOpacity
-                onPress={() =>
-                  navigation.navigate("Group", {
-                    _id: item._id,
-                    tipo: "encerrado",
-                  })
-                }
-              >
-                <View style={styles.GroupsLabel}>
-                  <Text style={styles.GroupsText}>Group id : {item._id}</Text>
-                </View>
-              </TouchableOpacity>
-            );
-          }}
-        />
+        <View style={styles.flatlist}>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 170 }}
+            refreshControl={
+              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+            }
+            data={state.encerrados}
+            keyExtractor={(item) => `${item._id}`}
+            ListEmptyComponent={() => {
+              return (
+                <Text style={styles.empty}>Não existe Grupos disponíveis </Text>
+              );
+            }}
+            renderItem={({ item, index }) => {
+              return (
+                <TouchableOpacity
+                  onPress={() =>
+                    navigation.navigate("Group", {
+                      _id: item._id,
+                      tipo: "encerrado",
+                    })
+                  }
+                >
+                  <View style={styles.GroupsLabel}>
+                    <Text style={styles.GroupsText}> Grupo: {index + 1}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
+        </View>
       )}
     </View>
   ) : (
-    <View style={[styles.container, styles.horizontal]}>
-      <ActivityIndicator size="large" color="#4d4dff" />
+    <View style={styles.container}>
+      <ActivityIndicator size="large" color="#336699" />
     </View>
   );
 };
@@ -111,18 +121,39 @@ const GroupsScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   statusBar: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    alignItems: "center",
   },
   GroupsLabel: {
-    borderColor: "black",
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
     borderWidth: 1,
-    marginVertical: 12,
-    paddingVertical: 12,
-    marginHorizontal: 8,
+    borderColor: "#c9c9c9",
   },
   GroupsText: {
-    fontSize: 30,
-    marginHorizontal: 5,
+    fontSize: 18,
   },
+
+  picker: {
+    width: "90%",
+    backgroundColor: "white",
+    borderRadius: 10,
+    marginTop: 10,
+    marginBottom: 20,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 1,
+    },
+    shadowOpacity: 0.22,
+    shadowRadius: 2.22,
+
+    elevation: 3,
+  },
+
   texto: {
     marginTop: 10,
     alignSelf: "center",
@@ -136,6 +167,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     padding: 10,
+  },
+  flatlist: {
+    width: "90%",
+  },
+  empty: {
+    color: "#575757",
+    alignSelf: "center",
   },
 });
 

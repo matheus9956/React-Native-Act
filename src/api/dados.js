@@ -1,9 +1,9 @@
 import axios from "axios";
-import { AsyncStorage } from "react-native";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let url;
 if (__DEV__) {
-  url = "http://a73279ba68e4.ngrok.io/";
+  url = "http://b42d797b20f3.ngrok.io/";
 } else {
   url = "";
 }
