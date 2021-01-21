@@ -1,5 +1,12 @@
 import React from "react";
-import { Keyboard, View, StyleSheet, Text, Button } from "react-native";
+import {
+  Keyboard,
+  View,
+  StyleSheet,
+  Text,
+  Button,
+  TouchableOpacity,
+} from "react-native";
 import { Formik, Field, Form } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 import RadioForm, {
@@ -56,13 +63,17 @@ const FormComponent = ({ data, submit }) => {
                     onChangeText={handleChange(formulario.id)}
                     value={values.id}
                     style={styles.input}
-                    //keyboardType="numeric"
                   />
                 )}
               </View>
             ))}
 
-            <Button onPress={() => handleSubmit()} title="Finalizar" />
+            <TouchableOpacity
+              style={styles.button}
+              onPress={() => handleSubmit()}
+            >
+              <Text style={styles.textbutton}>Finalizar</Text>
+            </TouchableOpacity>
           </View>
         )}
       </Formik>
@@ -87,6 +98,24 @@ const styles = StyleSheet.create({
     fontSize: 15,
     fontWeight: "bold",
     marginBottom: 5,
+  },
+  textbutton: {
+    fontSize: 17,
+    color: "#fff",
+    fontWeight: "bold",
+    alignSelf: "center",
+    textTransform: "uppercase",
+  },
+  button: {
+    width: "80%",
+    backgroundColor: "#336699",
+    borderRadius: 25,
+    height: 50,
+    alignSelf: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    marginTop: 40,
+    marginBottom: 10,
   },
 });
 

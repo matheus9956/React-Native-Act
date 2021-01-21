@@ -6,8 +6,10 @@ import {
   StyleSheet,
   TextInput,
   TouchableOpacity,
+  StatusBar,
   Image,
 } from "react-native";
+
 import { Context as AuthContext } from "../context/AuthContext";
 
 const LoginScreen = ({ navigation }) => {
@@ -17,7 +19,13 @@ const LoginScreen = ({ navigation }) => {
 
   return (
     <View style={styles.container}>
-      <Text style={styles.logo}>ACT</Text>
+      <StatusBar backgroundColor={"#f5f1e9"} translucent />
+      <View style={styles.logo}>
+        <Image
+          source={require("../../assets/Logo_Act.png")}
+          style={{ width: 375, height: 250 }}
+        />
+      </View>
       <View style={styles.inputView}>
         <View style={styles.icon}>
           <AntDesign name="user" size={27} color="#575757" />
@@ -62,6 +70,7 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
   inputView: {
     width: "80%",
@@ -76,7 +85,7 @@ const styles = StyleSheet.create({
   },
   loginBtn: {
     width: "80%",
-    backgroundColor: "#336699",
+    backgroundColor: "#bd786e",
     borderRadius: 25,
     height: 50,
     alignItems: "center",
@@ -100,12 +109,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     alignSelf: "center",
     textTransform: "uppercase",
-  },
-  logo: {
-    fontWeight: "bold",
-    fontSize: 50,
-    color: "#336699",
-    marginBottom: 40,
   },
 });
 

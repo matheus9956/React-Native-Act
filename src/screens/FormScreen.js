@@ -12,7 +12,7 @@ const RegisterScreen = ({ navigation, route }) => {
   }, []);
 
   return (
-    <View style={styles.statusBar}>
+    <View>
       <FormComponent
         data={state}
         submit={(data) => {
@@ -23,21 +23,6 @@ const RegisterScreen = ({ navigation, route }) => {
   );
 };
 
-const styles = StyleSheet.create({
-  statusBar: {
-    paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
-  },
-  input: {
-    borderWidth: 1,
-    color: "black",
-    paddingVertical: 10,
-    paddingHorizontal: 8,
-    marginBottom: 10,
-  },
-  label: {
-    marginTop: 10,
-    marginHorizontal: 8,
-  },
-});
+const styles = StyleSheet.create({});
 
 export default RegisterScreen;
