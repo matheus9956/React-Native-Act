@@ -35,6 +35,11 @@ const FamiliesScreen = ({ navigation }) => {
     ReadFamilies().then(() => setRefreshing(false));
   }, []);
 
+  const namePicker = (fullName) => {
+    const split = fullName.split(" ");
+    return `${split[0]} ${split[split.length - 1]}`;
+  };
+
   return state.semGrupo !== undefined && !isLoading ? (
     <View style={styles.statusBar}>
       <View style={styles.picker}>
@@ -93,7 +98,7 @@ const FamiliesScreen = ({ navigation }) => {
                 >
                   <View style={styles.familiesLabel}>
                     <Text style={styles.familiesText}>
-                      Família: {index + 1}
+                      Família de {namePicker(item.cuidador.nome)}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -127,7 +132,7 @@ const FamiliesScreen = ({ navigation }) => {
                 >
                   <View style={styles.familiesLabel}>
                     <Text style={styles.familiesText}>
-                      Família: {index + 1}
+                      Família de {item.cuidador.nome}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -149,6 +154,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     alignItems: "center",
     backgroundColor: "#f5f1e9",
+    flex: 1,
   },
 
   button: {
@@ -173,6 +179,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
 
   familiesLabel: {

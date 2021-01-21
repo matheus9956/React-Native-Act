@@ -123,6 +123,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     alignItems: "center",
     backgroundColor: "#f5f1e9",
+    flex: 1,
   },
   GroupsLabel: {
     justifyContent: "center",
@@ -163,6 +164,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
   horizontal: {
     flexDirection: "row",

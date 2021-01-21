@@ -44,9 +44,6 @@ function TabNavigator() {
               return (
                 <FontAwesome5 name="user-circle" size={size} color={color} />
               );
-
-              //iconName = "";
-              break;
             default:
               iconName = "circle";
               break;

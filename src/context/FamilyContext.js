@@ -10,6 +10,9 @@ const familyReducer = (state, action) => {
     case "readFamilies":
       return action.payload;
 
+    case "findFamily":
+      return state;
+
     default:
       return state;
   }
@@ -24,14 +27,21 @@ const RegisterFamily = (dispatch) => async (values, loading, callback) => {
   if (callback) callback();
 };
 
-const ReadFamilies = (dispatch) => async () => {
+const ReadFamilies = (dispatch) => async (callback) => {
   const families = await dadosApi.get("/familias");
 
   dispatch({ type: "readFamilies", payload: families.data });
+  if (callback) callback();
+};
+
+const FindFamily = (dispatch) => () => {
+  console.log(this.state);
+
+  dispatch({ type: "findFamily" });
 };
 
 export const { Context, Provider } = createDataContext(
   familyReducer,
-  { RegisterFamily, ReadFamilies },
+  { RegisterFamily, ReadFamilies, FindFamily },
   []
 );

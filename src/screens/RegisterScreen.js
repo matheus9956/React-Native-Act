@@ -71,6 +71,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
   horizontal: {
     flexDirection: "row",
