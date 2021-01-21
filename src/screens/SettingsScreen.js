@@ -8,6 +8,7 @@ import {
   StatusBar,
   Platform,
   TouchableOpacity,
+  Alert,
 } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
 const handleEmaillPress = async () => {
@@ -17,13 +18,28 @@ const handleEmaillPress = async () => {
 const SettingsScreen = ({ navigation }) => {
   const { signout } = useContext(AuthContext);
 
+  const exitConfirmation = () =>
+    Alert.alert(
+      "SAIR",
+      "Deseja mesmo sair do aplicativo?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        { text: "Confirmar", onPress: () => signout() },
+      ],
+      { cancelable: false }
+    );
+
   return (
     <View style={styles.statusBar}>
       <TouchableOpacity style={styles.button} onPress={handleEmaillPress}>
         <Text style={styles.text}>Contatar Suporte</Text>
       </TouchableOpacity>
 
-      <TouchableOpacity style={styles.button} onPress={signout}>
+      <TouchableOpacity style={styles.button} onPress={exitConfirmation}>
         <Text style={styles.text}>Sair</Text>
       </TouchableOpacity>
     </View>
@@ -36,6 +52,7 @@ const styles = StyleSheet.create({
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
   text: {
     fontSize: 17,
@@ -46,7 +63,7 @@ const styles = StyleSheet.create({
   },
   button: {
     width: "80%",
-    backgroundColor: "#336699",
+    backgroundColor: "#bd786e",
     borderRadius: 25,
     height: 45,
     alignItems: "center",

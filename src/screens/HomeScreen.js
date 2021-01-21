@@ -50,6 +50,7 @@ HomeScreen.navigationOptions = {
 const styles = StyleSheet.create({
   statusBar: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: "#f5f1e9",
   },
   text: {
     fontSize: 35,

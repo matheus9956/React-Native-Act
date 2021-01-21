@@ -55,6 +55,7 @@ const RegisterScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
   statusBar: {
     paddingTop: Platform.OS === "android" ? StatusBar.currentHeight : 0,
+    backgroundColor: "#f5f1e9",
   },
   input: {
     borderWidth: 1,

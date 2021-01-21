@@ -51,7 +51,11 @@ function TabNavigator() {
           return <Icon name={iconName} size={size} color={color} />;
         },
       })}
-      tabBarOptions={{ activeTintColor: "#336699", inactiveTintColor: "#777" }}
+      tabBarOptions={{
+        activeTintColor: "#bd786e",
+        inactiveTintColor: "#777",
+        style: { backgroundColor: "#f5f1e9" },
+      }}
     >
       <BottomTab.Screen
         name="Register"
@@ -106,7 +110,7 @@ function RootStack() {
       <Stack.Screen
         name="Group"
         component={GroupScreen}
-        options={{ title: "Grupo" }}
+        options={{ title: "Grupo", headerTitleAlign: "center" }}
       />
       <Stack.Screen
         name="Tab"
@@ -116,9 +120,19 @@ function RootStack() {
       <Stack.Screen
         name="Family"
         component={FamilyScreen}
-        options={{ title: "Família" }}
+        options={{
+          title: "Família",
+          headerTitleAlign: "center",
+        }}
       />
-      <Stack.Screen name="Form" component={FormScreen} />
+      <Stack.Screen
+        name="Form"
+        component={FormScreen}
+        options={{
+          title: "Formulário",
+          headerTitleAlign: "center",
+        }}
+      />
     </Stack.Navigator>
   );
 }

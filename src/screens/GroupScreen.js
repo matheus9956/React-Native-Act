@@ -76,7 +76,7 @@ const GroupScreen = ({ navigation, route }) => {
   };
 
   return grupo.controle !== undefined && !isLoading ? (
-    <SafeAreaView style={styles.GroupLabel}>
+    <SafeAreaView style={{ backgroundColor: "#f5f1e9" }}>
       <SectionList
         ListFooterComponent={footer()}
         sections={data}
@@ -188,6 +188,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     justifyContent: "center",
+    backgroundColor: "#f5f1e9",
   },
 
   text2: {
