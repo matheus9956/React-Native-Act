@@ -9,7 +9,6 @@ import {
   FlatList,
 } from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
-import { ScrollView } from "react-native-gesture-handler";
 
 const FamilyScreen = ({ route }) => {
   const { state } = useContext(FamilyContext);

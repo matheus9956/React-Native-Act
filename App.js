@@ -19,7 +19,7 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import Icon from "react-native-vector-icons/Feather";
-
+import { FontAwesome5 } from "@expo/vector-icons";
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
@@ -41,7 +41,11 @@ function TabNavigator() {
               iconName = "clipboard";
               break;
             case "Settings":
-              iconName = "settings";
+              return (
+                <FontAwesome5 name="user-circle" size={size} color={color} />
+              );
+
+              //iconName = "";
               break;
             default:
               iconName = "circle";
@@ -71,7 +75,7 @@ function TabNavigator() {
       <BottomTab.Screen
         name="Settings"
         component={SettingsScreen}
-        options={{ tabBarLabel: "Ajustes" }}
+        options={{ tabBarLabel: "Conta" }}
       />
     </BottomTab.Navigator>
   );
