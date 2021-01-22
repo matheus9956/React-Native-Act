@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React from "react";
 import {
   View,
   StyleSheet,
@@ -7,11 +7,11 @@ import {
   FlatList,
   Alert,
 } from "react-native";
-import { Context as FamilyContext } from "../context/FamilyContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
 const FamilyScreen = ({ route, navigation }) => {
+<<<<<<< HEAD
   const { state, DisableFamily } = useContext(FamilyContext);
   const _id = route.params?._id ?? "noId";
   const grupo = route.params?.grupo ?? "noGroup";
@@ -20,6 +20,9 @@ const FamilyScreen = ({ route, navigation }) => {
     grupo === "comGrupo"
       ? state.comGrupo.find((item) => item._id === _id)
       : state.semGrupo.find((item) => item._id === _id);
+=======
+  const family = route.params?.family;
+>>>>>>> master
 
   const exitConfirmation = () =>
     Alert.alert(

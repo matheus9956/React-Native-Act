@@ -2,13 +2,12 @@ import createDataContext from "./createDataContext";
 import dadosApi from "../api/dados";
 const formReducer = (state, action) => {
   switch (action.type) {
-    case "read": {
-      state = action.payload.form;
-      return state;
-    }
+    case "read":
+      return action.payload.form;
 
     case "register":
       return state;
+
     default:
       return state;
   }

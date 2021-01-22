@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, StatusBar, Platform } from "react-native";
+import { View, StyleSheet } from "react-native";
 import { Context as FormContext } from "../context/FormContext";
 import FormComponent from "../components/FormComponent";
 

@@ -3,10 +3,8 @@ import {
   View,
   StyleSheet,
   Text,
-  Button,
   Keyboard,
   StatusBar,
-  Platform,
   TouchableOpacity,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -99,33 +97,25 @@ const styles = StyleSheet.create({
   topLeftButton: {
     backgroundColor: "#bd786e",
     borderBottomLeftRadius: 200,
-    //borderTopLeftRadius: 40,
     borderTopRightRadius: 130,
-
     borderBottomRightRadius: 50,
   },
   topRightButton: {
     backgroundColor: "#DAA66C",
     borderBottomRightRadius: 200,
     borderTopLeftRadius: 130,
-    //borderTopRightRadius: 40,
-
     borderBottomLeftRadius: 50,
   },
   bottomLeftButton: {
     backgroundColor: "#ABC1CE",
     borderTopLeftRadius: 200,
-    //borderBottomLeftRadius: 50,
     borderBottomRightRadius: 130,
-
     borderTopRightRadius: 50,
   },
   bottomRightButton: {
     backgroundColor: "#758279",
     borderTopRightRadius: 200,
-    //borderBottomRightRadius: 40,"#575757"
     borderBottomLeftRadius: 130,
-
     borderTopLeftRadius: 50,
   },
   textButton: {

@@ -1,6 +1,5 @@
 import createDataContext from "./createDataContext";
 import dadosApi from "../api/dados";
-import React, { useState } from "react";
 
 const familyReducer = (state, action) => {
   switch (action.type) {

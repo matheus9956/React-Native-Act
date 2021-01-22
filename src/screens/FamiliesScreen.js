@@ -1,9 +1,8 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
   Text,
-  Button,
   FlatList,
   TouchableOpacity,
   ActivityIndicator,
@@ -11,7 +10,6 @@ import {
   StatusBar,
   Platform,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Context as GroupContext } from "../context/GroupContext";
 import { useFocusEffect } from "@react-navigation/native";
@@ -86,8 +84,7 @@ const FamiliesScreen = ({ navigation }) => {
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Family", {
-                      _id: item._id,
-                      grupo: "semGrupo",
+                      family: item,
                     })
                   }
                 >
@@ -115,13 +112,12 @@ const FamiliesScreen = ({ navigation }) => {
                 <Text style={styles.empty}>Não existe família disponíveis</Text>
               );
             }}
-            renderItem={({ item, index }) => {
+            renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   onPress={() =>
                     navigation.navigate("Family", {
-                      _id: item._id,
-                      grupo: "comGrupo",
+                      family: item,
                     })
                   }
                 >
