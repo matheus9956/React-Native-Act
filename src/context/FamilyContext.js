@@ -18,6 +18,8 @@ const familyReducer = (state, action) => {
 };
 
 const RegisterFamily = (dispatch) => async (values, loading, callback) => {
+  console.log(values);
+
   await dadosApi.post("/novafamilia", values);
 
   dispatch({ type: "register", payload: { values } });
