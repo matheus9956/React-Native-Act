@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   ActivityIndicator,
@@ -7,9 +7,6 @@ import {
   TouchableOpacity,
   SafeAreaView,
   SectionList,
-  Button,
-  StatusBar,
-  Platform,
   FlatList,
   Alert,
 } from "react-native";
@@ -17,7 +14,6 @@ import { Context as GroupContext } from "../context/GroupContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { AntDesign } from "@expo/vector-icons";
 import { useFocusEffect } from "@react-navigation/native";
-import { set } from "react-native-reanimated";
 
 const GroupScreen = ({ navigation, route }) => {
   const { state, ChangeGroup } = useContext(GroupContext);
@@ -95,23 +91,17 @@ const GroupScreen = ({ navigation, route }) => {
     },
   ];
 
-  const findFamily = (_id) => {
-    const family = familyContext.state.comGrupo.find(
-      (item) => item._id === _id
-    );
-    return family;
-  };
-
   const namePicker = (fullName) => {
-    const split = fullName.split(" ");
+    if (fullName !== undefined) {
+      const split = fullName.split(" ");
+      if (split.length > 1) return `${split[0]} ${split[split.length - 1]}`;
+      return `${split[0]}`;
+    }
 
-    if (split.length > 1) return `${split[0]} ${split[split.length - 1]}`;
-    return `${split[0]}`;
+    return "Sem nome";
   };
 
-  return grupo.intervencao !== undefined &&
-    !isLoading &&
-    familyContext.state.comGrupo !== undefined ? (
+  return !isLoading ? (
     <SafeAreaView style={{ backgroundColor: "#f5f1e9", flex: 1 }}>
       {grupo.fase === 1 ? (
         <SectionList
@@ -133,21 +123,18 @@ const GroupScreen = ({ navigation, route }) => {
                 style={styles.coluna}
                 onPress={() =>
                   navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "comGrupo",
+                    family: item,
                   })
                 }
               >
                 <View style={styles.text2}>
-                  <Text>
-                    Família de {namePicker(findFamily(item._id).cuidador.nome)}
-                  </Text>
+                  <Text>Família de {namePicker(item.cuidador.nome)}</Text>
                 </View>
                 <TouchableOpacity
                   style={styles.form}
                   onPress={() => navigation.navigate("Form", { _id: item._id })}
                 >
-                  <Text>{findFamily(item._id).formulariosPreenchidos}</Text>
+                  <Text>{item.formulariosPreenchidos}</Text>
                   <AntDesign name="filetext1" size={24} color="black" />
                 </TouchableOpacity>
               </TouchableOpacity>
@@ -156,20 +143,17 @@ const GroupScreen = ({ navigation, route }) => {
                 style={styles.coluna}
                 onPress={() =>
                   navigation.navigate("Family", {
-                    _id: item._id,
-                    grupo: "comGrupo",
+                    family: item,
                   })
                 }
               >
                 <View style={styles.text2}>
-                  <Text>
-                    Família de {namePicker(findFamily(item._id).cuidador.nome)}
-                  </Text>
+                  <Text>Família de {namePicker(item.cuidador.nome)}</Text>
                 </View>
 
                 <TouchableOpacity style={styles.form}>
                   <Text style={{ color: "red" }}>
-                    {findFamily(item._id).formulariosPreenchidos}
+                    {item.formulariosPreenchidos}
                   </Text>
                   <AntDesign name="filetext1" size={24} color="red" />
                 </TouchableOpacity>
@@ -197,16 +181,12 @@ const GroupScreen = ({ navigation, route }) => {
                   style={styles.coluna}
                   onPress={() =>
                     navigation.navigate("Family", {
-                      _id: item._id,
-                      grupo: "comGrupo",
+                      family: item,
                     })
                   }
                 >
                   <View style={styles.text2}>
-                    <Text>
-                      Família de{" "}
-                      {namePicker(findFamily(item._id).cuidador.nome)}
-                    </Text>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
                   </View>
                   <TouchableOpacity
                     style={styles.form}
@@ -214,7 +194,7 @@ const GroupScreen = ({ navigation, route }) => {
                       navigation.navigate("Form", { _id: item._id })
                     }
                   >
-                    <Text>{findFamily(item._id).formulariosPreenchidos}</Text>
+                    <Text>{item.formulariosPreenchidos}</Text>
                     <AntDesign name="filetext1" size={24} color="black" />
                   </TouchableOpacity>
                 </TouchableOpacity>
@@ -246,16 +226,12 @@ const GroupScreen = ({ navigation, route }) => {
                   style={styles.coluna}
                   onPress={() =>
                     navigation.navigate("Family", {
-                      _id: item._id,
-                      grupo: "comGrupo",
+                      family: item,
                     })
                   }
                 >
                   <View style={styles.text2}>
-                    <Text>
-                      Família de{" "}
-                      {namePicker(findFamily(item._id).cuidador.nome)}
-                    </Text>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
                   </View>
                 </TouchableOpacity>
               );

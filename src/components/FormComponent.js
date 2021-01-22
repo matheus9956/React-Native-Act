@@ -4,16 +4,11 @@ import {
   View,
   StyleSheet,
   Text,
-  Button,
   TouchableOpacity,
 } from "react-native";
-import { Formik, Field, Form } from "formik";
+import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
-import RadioForm, {
-  RadioButton,
-  RadioButtonInput,
-  RadioButtonLabel,
-} from "react-native-simple-radio-button";
+import RadioForm from "react-native-simple-radio-button";
 
 const FormComponent = ({ data, submit }) => {
   Keyboard.dismiss();

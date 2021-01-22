@@ -3,7 +3,6 @@ import {
   View,
   StyleSheet,
   Text,
-  Button,
   Linking,
   StatusBar,
   Platform,
@@ -11,12 +10,13 @@ import {
   Alert,
 } from "react-native";
 import { Context as AuthContext } from "../context/AuthContext";
-const handleEmaillPress = async () => {
-  await Linking.openURL("mailto: actribeirao@gmail.com");
-};
 
-const SettingsScreen = ({ navigation }) => {
+const SettingsScreen = () => {
   const { signout } = useContext(AuthContext);
+
+  const handleEmaillPress = async () => {
+    await Linking.openURL("mailto: actribeirao@gmail.com");
+  };
 
   const exitConfirmation = () =>
     Alert.alert(

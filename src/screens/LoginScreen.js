@@ -9,10 +9,9 @@ import {
   StatusBar,
   Image,
 } from "react-native";
-
 import { Context as AuthContext } from "../context/AuthContext";
 
-const LoginScreen = ({ navigation }) => {
+const LoginScreen = () => {
   const { state, signin } = useContext(AuthContext);
   const [nick, setNick] = useState("");
   const [password, setPassword] = useState("");

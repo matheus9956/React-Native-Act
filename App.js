@@ -9,17 +9,18 @@ import FamilyScreen from "./src/screens/FamilyScreen";
 import GroupScreen from "./src/screens/GroupScreen";
 import FormScreen from "./src/screens/FormScreen";
 import LoginScreen from "./src/screens/LoginScreen";
+import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
+import { setNavigator } from "./src/navigationRef";
 import { Provider as FormProvider } from "./src/context/FormContext";
 import { Provider as FamilyProvider } from "./src/context/FamilyContext";
 import { Provider as RegisterProvider } from "./src/context/RegisterContext";
 import { Provider as GroupProvider } from "./src/context/GroupContext";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
-import { setNavigator } from "./src/navigationRef";
-import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
-import React from "react";
 import { NavigationContainer } from "@react-navigation/native";
-import Icon from "react-native-vector-icons/Feather";
 import { FontAwesome5 } from "@expo/vector-icons";
+import Icon from "react-native-vector-icons/Feather";
+import React from "react";
+
 const Stack = createStackNavigator();
 const BottomTab = createBottomTabNavigator();
 
