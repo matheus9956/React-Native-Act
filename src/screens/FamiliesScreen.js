@@ -132,7 +132,7 @@ const FamiliesScreen = ({ navigation }) => {
                 >
                   <View style={styles.familiesLabel}>
                     <Text style={styles.familiesText}>
-                      Família de {item.cuidador.nome}
+                      Família de {namePicker(item.cuidador.nome)}
                     </Text>
                   </View>
                 </TouchableOpacity>
