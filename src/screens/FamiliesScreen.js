@@ -15,6 +15,7 @@ import { Picker } from "@react-native-picker/picker";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { Context as GroupContext } from "../context/GroupContext";
 import { useFocusEffect } from "@react-navigation/native";
+import SegmentControl from "../components/SegmentControlComponent";
 
 const FamiliesScreen = ({ navigation }) => {
   const { state, ReadFamilies } = useContext(FamilyContext);
@@ -22,7 +23,7 @@ const FamiliesScreen = ({ navigation }) => {
   const [selectedValue, setSelectedValue] = useState("Sem Grupo");
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
-
+  const data = [{ title: "Sem grupo" }, { title: "Com Grupo" }];
   useFocusEffect(
     React.useCallback(() => {
       ReadFamilies();
@@ -42,17 +43,11 @@ const FamiliesScreen = ({ navigation }) => {
 
   return state.semGrupo !== undefined && !isLoading ? (
     <View style={styles.statusBar}>
-      <View style={styles.picker}>
-        <Picker
-          itemStyle={{ alignSelf: "center" }}
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="Sem Grupo" value="Sem Grupo" />
-          <Picker.Item label="Com Grupo" value="Com Grupo" />
-        </Picker>
-      </View>
-
+      <SegmentControl
+        func={() => setSelectedValue("Sem Grupo")}
+        func2={() => setSelectedValue("Com Grupo")}
+        data={data}
+      />
       {selectedValue === "Sem Grupo" ? (
         <View style={styles.flatlist}>
           <FlatList

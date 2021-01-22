@@ -13,13 +13,14 @@ import {
 import { Picker } from "@react-native-picker/picker";
 import { Context as GroupContext } from "../context/GroupContext";
 import { useFocusEffect } from "@react-navigation/native";
+import SegmentControl from "../components/SegmentControlComponent";
 
 const GroupsScreen = ({ navigation }) => {
   const { state, ReadGroups } = useContext(GroupContext);
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [selectedValue, setSelectedValue] = useState("ativos");
-
+  const data = [{ title: "Ativos" }, { title: "Encerrados" }];
   useFocusEffect(
     React.useCallback(() => {
       setIsLoading(true);
@@ -35,16 +36,12 @@ const GroupsScreen = ({ navigation }) => {
 
   return state.ativos !== undefined && !isLoading ? (
     <View style={styles.statusBar}>
-      <View style={styles.picker}>
-        <Picker
-          itemStyle={{ alignSelf: "center" }}
-          selectedValue={selectedValue}
-          onValueChange={(itemValue) => setSelectedValue(itemValue)}
-        >
-          <Picker.Item label="Grupos Ativos" value="ativos" />
-          <Picker.Item label="Grupos Encerrados" value="encerrados" />
-        </Picker>
-      </View>
+      <SegmentControl
+        func={() => setSelectedValue("ativos")}
+        func2={() => setSelectedValue("encerrados")}
+        data={data}
+      />
+
       {selectedValue === "ativos" ? (
         <View style={styles.flatlist}>
           <FlatList
