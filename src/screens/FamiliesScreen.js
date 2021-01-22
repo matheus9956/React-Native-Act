@@ -88,11 +88,19 @@ const FamiliesScreen = ({ navigation }) => {
                     })
                   }
                 >
-                  <View style={styles.familiesLabel}>
-                    <Text style={styles.familiesText}>
-                      Família de {namePicker(item.cuidador.nome)}
-                    </Text>
-                  </View>
+                  {item.desabilitado === 1 ? (
+                    <View style={styles.familiesLabel2}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.familiesLabel}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
               );
             }}
@@ -121,11 +129,19 @@ const FamiliesScreen = ({ navigation }) => {
                     })
                   }
                 >
-                  <View style={styles.familiesLabel}>
-                    <Text style={styles.familiesText}>
-                      Família de {namePicker(item.cuidador.nome)}
-                    </Text>
-                  </View>
+                  {item.desabilitado === 1 ? (
+                    <View style={styles.familiesLabel2}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.familiesLabel}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
               );
             }}
@@ -182,6 +198,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderWidth: 1,
     borderColor: "#c9c9c9",
+  },
+
+  familiesLabel2: {
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "#EEEEEE",
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "red",
   },
   picker: {
     width: "90%",

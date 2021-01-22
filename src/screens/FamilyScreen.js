@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
@@ -9,25 +9,17 @@ import {
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
+import { Context as FamilyContext } from "../context/FamilyContext";
 
 const FamilyScreen = ({ route, navigation }) => {
-<<<<<<< HEAD
-  const { state, DisableFamily } = useContext(FamilyContext);
-  const _id = route.params?._id ?? "noId";
-  const grupo = route.params?.grupo ?? "noGroup";
-
-  const family =
-    grupo === "comGrupo"
-      ? state.comGrupo.find((item) => item._id === _id)
-      : state.semGrupo.find((item) => item._id === _id);
-=======
   const family = route.params?.family;
->>>>>>> master
+  const { DisableFamily } = useContext(FamilyContext);
+  const [isLoading, setIsLoading] = useState(false);
 
   const exitConfirmation = () =>
     Alert.alert(
       "DESABILITAR",
-      "Deseja mesmo desabilitar esta familia?",
+      "Deseja mesmo desabilitar essa família?",
       [
         {
           text: "Cancelar",
@@ -37,7 +29,13 @@ const FamilyScreen = ({ route, navigation }) => {
         {
           text: "Confirmar",
           onPress: () => {
-            DisableFamily(_id);
+            setIsLoading(true);
+
+            DisableFamily(
+              family._id,
+              () => setIsLoading(false),
+              () => navigation.navigate("Families")
+            );
           },
         },
       ],
@@ -47,30 +45,34 @@ const FamilyScreen = ({ route, navigation }) => {
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        if (family.formulariosPreenchidos === 0) {
-          return (
-            <View style={styles.icon}>
-              <TouchableOpacity
-                style={{ paddingRight: 20 }}
-                onPress={exitConfirmation}
-              >
-                <AntDesign name="closecircleo" size={24} color="black" />
-              </TouchableOpacity>
+        if (family.desabilitado === 0) {
+          if (family.formulariosPreenchidos === 0) {
+            return (
+              <View style={styles.icon}>
+                <TouchableOpacity
+                  style={{ paddingRight: 20 }}
+                  onPress={exitConfirmation}
+                >
+                  <AntDesign name="closecircleo" size={24} color="black" />
+                </TouchableOpacity>
 
-              <TouchableOpacity
-                style={{ paddingRight: 10 }}
-                onPress={() => navigation.navigate("Form", { _id: family._id })}
-              >
-                <AntDesign name="filetext1" size={24} color="black" />
-              </TouchableOpacity>
-            </View>
+                <TouchableOpacity
+                  style={{ paddingRight: 10 }}
+                  onPress={() =>
+                    navigation.navigate("Form", { _id: family._id })
+                  }
+                >
+                  <AntDesign name="filetext1" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            );
+          }
+          return (
+            <TouchableOpacity style={{ paddingRight: 20 }}>
+              <AntDesign name="closecircleo" size={24} color="black" />
+            </TouchableOpacity>
           );
         }
-        return (
-          <TouchableOpacity style={{ paddingRight: 20 }}>
-            <AntDesign name="closecircleo" size={24} color="black" />
-          </TouchableOpacity>
-        );
       },
     });
   }, [navigation]);
@@ -169,8 +171,16 @@ const FamilyScreen = ({ route, navigation }) => {
     },
   ];
 
-  return family !== undefined && form[0].resposta !== undefined ? (
+  return family !== undefined &&
+    form[0].resposta !== undefined &&
+    !isLoading ? (
     <View style={{ backgroundColor: "#f5f1e9" }}>
+      {family.desabilitado ? (
+        <Text style={styles.textd}>Essa família está desativada</Text>
+      ) : (
+        <></>
+      )}
+
       <FlatList
         contentContainerStyle={{ paddingBottom: 30 }}
         data={form}
@@ -213,6 +223,17 @@ const styles = StyleSheet.create({
 
   icon: {
     flexDirection: "row",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#f5f1e9",
+  },
+  textd: {
+    alignSelf: "center",
+    color: "red",
+    marginTop: 10,
+    fontWeight: "bold",
   },
 });
 

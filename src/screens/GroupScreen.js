@@ -118,7 +118,71 @@ const GroupScreen = ({ navigation, route }) => {
           sections={data}
           keyExtractor={(item) => `${item._id}`}
           renderItem={({ item, section: { title } }) => {
+            console.log(item);
             return title === "Intervenção" ? (
+              item.desabilitado === 1 ? (
+                <TouchableOpacity
+                  style={styles.coluna2}
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      family: item,
+                    })
+                  }
+                >
+                  <View style={styles.text2}>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
+                  </View>
+                  <TouchableOpacity style={styles.form}>
+                    <Text styles={{ color: "red" }}>
+                      {item.formulariosPreenchidos}
+                    </Text>
+                    <AntDesign name="filetext1" size={24} color="red" />
+                  </TouchableOpacity>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.coluna}
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      family: item,
+                    })
+                  }
+                >
+                  <View style={styles.text2}>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
+                  </View>
+                  <TouchableOpacity
+                    style={styles.form}
+                    onPress={() =>
+                      navigation.navigate("Form", { _id: item._id })
+                    }
+                  >
+                    <Text>{item.formulariosPreenchidos}</Text>
+                    <AntDesign name="filetext1" size={24} color="black" />
+                  </TouchableOpacity>
+                </TouchableOpacity>
+              )
+            ) : item.desabilitado === 1 ? (
+              <TouchableOpacity
+                style={styles.coluna2}
+                onPress={() =>
+                  navigation.navigate("Family", {
+                    family: item,
+                  })
+                }
+              >
+                <View style={styles.text2}>
+                  <Text>Família de {namePicker(item.cuidador.nome)}</Text>
+                </View>
+
+                <TouchableOpacity style={styles.form}>
+                  <Text style={{ color: "red" }}>
+                    {item.formulariosPreenchidos}
+                  </Text>
+                  <AntDesign name="filetext1" size={24} color="red" />
+                </TouchableOpacity>
+              </TouchableOpacity>
+            ) : (
               <TouchableOpacity
                 style={styles.coluna}
                 onPress={() =>
@@ -136,26 +200,6 @@ const GroupScreen = ({ navigation, route }) => {
                 >
                   <Text>{item.formulariosPreenchidos}</Text>
                   <AntDesign name="filetext1" size={24} color="black" />
-                </TouchableOpacity>
-              </TouchableOpacity>
-            ) : (
-              <TouchableOpacity
-                style={styles.coluna}
-                onPress={() =>
-                  navigation.navigate("Family", {
-                    family: item,
-                  })
-                }
-              >
-                <View style={styles.text2}>
-                  <Text>Família de {namePicker(item.cuidador.nome)}</Text>
-                </View>
-
-                <TouchableOpacity style={styles.form}>
-                  <Text style={{ color: "red" }}>
-                    {item.formulariosPreenchidos}
-                  </Text>
-                  <AntDesign name="filetext1" size={24} color="red" />
                 </TouchableOpacity>
               </TouchableOpacity>
             );
@@ -287,6 +331,21 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderWidth: 1,
     borderColor: "#c9c9c9",
+    alignSelf: "center",
+  },
+  coluna2: {
+    width: "90%",
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "#EEEEEE",
+
+    borderColor: "red",
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 1,
+
     alignSelf: "center",
   },
   form: {
