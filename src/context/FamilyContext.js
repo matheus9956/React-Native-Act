@@ -40,8 +40,17 @@ const FindFamily = (dispatch) => () => {
   dispatch({ type: "findFamily" });
 };
 
+const DisableFamily = (dispatch) => async (id) => {
+  const response = await dadosApi.post("/familia/disable", id);
+
+  console.log(response.data);
+
+  dispatch({ type: "register" });
+  dispatch;
+};
+
 export const { Context, Provider } = createDataContext(
   familyReducer,
-  { RegisterFamily, ReadFamilies, FindFamily },
+  { RegisterFamily, ReadFamilies, FindFamily, DisableFamily },
   []
 );

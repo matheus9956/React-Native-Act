@@ -5,13 +5,14 @@ import {
   Text,
   ActivityIndicator,
   FlatList,
+  Alert,
 } from "react-native";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
 
 const FamilyScreen = ({ route, navigation }) => {
-  const { state } = useContext(FamilyContext);
+  const { state, DisableFamily } = useContext(FamilyContext);
   const _id = route.params?._id ?? "noId";
   const grupo = route.params?.grupo ?? "noGroup";
 
@@ -20,19 +21,53 @@ const FamilyScreen = ({ route, navigation }) => {
       ? state.comGrupo.find((item) => item._id === _id)
       : state.semGrupo.find((item) => item._id === _id);
 
+  const exitConfirmation = () =>
+    Alert.alert(
+      "DESABILITAR",
+      "Deseja mesmo desabilitar esta familia?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Confirmar",
+          onPress: () => {
+            DisableFamily(_id);
+          },
+        },
+      ],
+      { cancelable: false }
+    );
+
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
         if (family.formulariosPreenchidos === 0) {
           return (
-            <TouchableOpacity
-              style={{ paddingRight: 10 }}
-              onPress={() => navigation.navigate("Form", { _id: family._id })}
-            >
-              <AntDesign name="filetext1" size={24} color="black" />
-            </TouchableOpacity>
+            <View style={styles.icon}>
+              <TouchableOpacity
+                style={{ paddingRight: 20 }}
+                onPress={exitConfirmation}
+              >
+                <AntDesign name="closecircleo" size={24} color="black" />
+              </TouchableOpacity>
+
+              <TouchableOpacity
+                style={{ paddingRight: 10 }}
+                onPress={() => navigation.navigate("Form", { _id: family._id })}
+              >
+                <AntDesign name="filetext1" size={24} color="black" />
+              </TouchableOpacity>
+            </View>
           );
         }
+        return (
+          <TouchableOpacity style={{ paddingRight: 20 }}>
+            <AntDesign name="closecircleo" size={24} color="black" />
+          </TouchableOpacity>
+        );
       },
     });
   }, [navigation]);
@@ -171,6 +206,10 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     color: "#575757",
+  },
+
+  icon: {
+    flexDirection: "row",
   },
 });
 

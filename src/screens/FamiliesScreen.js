@@ -81,7 +81,7 @@ const FamiliesScreen = ({ navigation }) => {
                 <Text style={styles.empty}>Não existe família disponíveis</Text>
               );
             }}
-            renderItem={({ item, index }) => {
+            renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   onPress={() =>

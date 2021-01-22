@@ -10,7 +10,7 @@ import {
   StatusBar,
   Platform,
 } from "react-native";
-import { Picker } from "@react-native-picker/picker";
+
 import { Context as GroupContext } from "../context/GroupContext";
 import { useFocusEffect } from "@react-navigation/native";
 import SegmentControl from "../components/SegmentControlComponent";
