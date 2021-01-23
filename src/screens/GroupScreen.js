@@ -20,14 +20,13 @@ const GroupScreen = ({ navigation, route }) => {
   const { state, ChangeGroup } = useContext(GroupContext);
   const familyContext = useContext(FamilyContext);
   const _id = route.params?._id ?? "noId";
-  const [tipo, setTipo] = useState(route.params?.tipo ?? "semTipo");
   const [isLoading, setIsLoading] = useState(false);
   const [enable, setEnable] = useState(true);
   const [enable2, setEnable2] = useState(true);
   const grupo =
-    tipo === "ativo"
+    state.ativos.find((item) => item._id === _id) !== undefined
       ? state.ativos.find((item) => item._id === _id)
-      : state.encerrados.find((item) => item._id);
+      : state.encerrados.find((item) => item._id === _id);
 
   useFocusEffect(
     React.useCallback(() => {
@@ -81,7 +80,10 @@ const GroupScreen = ({ navigation, route }) => {
           text: "Confirmar",
           onPress: () => {
             setIsLoading(true);
-            ChangeGroup(_id, () => setIsLoading(false));
+            ChangeGroup(_id, () => {
+              setIsLoading(false);
+              navigation.navigate("Groups");
+            });
           },
         },
       ],
@@ -114,7 +116,6 @@ const GroupScreen = ({ navigation, route }) => {
           text: "Confirmar",
           onPress: () => {
             setIsLoading(true);
-            setTipo("encerrado");
             ChangeGroup(
               _id,
               () => setIsLoading(false),
@@ -397,7 +398,43 @@ const GroupScreen = ({ navigation, route }) => {
         </View>
       ) : (
         <View>
-          <Text>sdfsdfsdf</Text>
+          <View style={styles.title}>
+            <Text style={styles.text3}>Grupo Encerrado:</Text>
+          </View>
+          <FlatList
+            contentContainerStyle={{ paddingBottom: 50 }}
+            data={data[0].data}
+            keyExtractor={(item) => `${item._id}`}
+            renderItem={({ item }) => {
+              return item.desabilitado === 0 ? (
+                <TouchableOpacity
+                  style={styles.coluna}
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      family: item,
+                    })
+                  }
+                >
+                  <View style={styles.text2}>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
+                  </View>
+                </TouchableOpacity>
+              ) : (
+                <TouchableOpacity
+                  style={styles.coluna2}
+                  onPress={() =>
+                    navigation.navigate("Family", {
+                      family: item,
+                    })
+                  }
+                >
+                  <View style={styles.text2}>
+                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
       )}
     </SafeAreaView>
@@ -518,28 +555,5 @@ const styles = StyleSheet.create({
 export default GroupScreen;
 
 /*
-<View style={styles.title}>
-            <Text style={styles.text3}>Grupo Encerrado:</Text>
-          </View>
-          <FlatList
-            contentContainerStyle={{ paddingBottom: 50 }}
-            data={data[0].data}
-            keyExtractor={(item) => `${item._id}`}
-            renderItem={({ item }) => {
-              return (
-                <TouchableOpacity
-                  style={styles.coluna}
-                  onPress={() =>
-                    navigation.navigate("Family", {
-                      family: item,
-                    })
-                  }
-                >
-                  <View style={styles.text2}>
-                    <Text>Família de {namePicker(item.cuidador.nome)}</Text>
-                  </View>
-                </TouchableOpacity>
-              );
-            }}
-          />
+
           */

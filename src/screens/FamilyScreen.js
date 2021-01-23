@@ -67,7 +67,12 @@ const FamilyScreen = ({ route, navigation }) => {
               </View>
             );
           }
-          return (
+          return (family.formulariosPreenchidos === 3 &&
+            family.passouControle === 1) ||
+            (family.formulariosPreenchidos === 2 &&
+              family.passouControle === 0) ? (
+            <></>
+          ) : (
             <TouchableOpacity
               onPress={exitConfirmation}
               style={{ paddingRight: 20 }}
@@ -178,8 +183,12 @@ const FamilyScreen = ({ route, navigation }) => {
     form[0].resposta !== undefined &&
     !isLoading ? (
     <View style={{ backgroundColor: "#f5f1e9" }}>
-      {family.desabilitado ? (
-        <Text style={styles.textd}>Essa família está desativada</Text>
+      {family.desabilitado === 1 ? (
+        <Text style={styles.textd}>Essa família foi desativada</Text>
+      ) : (family.formulariosPreenchidos === 3 &&
+          family.passouControle === 1) ||
+        (family.formulariosPreenchidos === 2 && family.passouControle === 0) ? (
+        <Text style={styles.textv}>Essa família concluiu o projeto</Text>
       ) : (
         <></>
       )}
@@ -235,6 +244,12 @@ const styles = StyleSheet.create({
   textd: {
     alignSelf: "center",
     color: "red",
+    marginTop: 10,
+    fontWeight: "bold",
+  },
+  textv: {
+    alignSelf: "center",
+    color: "green",
     marginTop: 10,
     fontWeight: "bold",
   },

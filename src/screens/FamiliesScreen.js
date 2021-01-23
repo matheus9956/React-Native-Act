@@ -27,20 +27,23 @@ const FamiliesScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       setIsLoading(true);
+      setSelectedValue("Sem Grupo");
       ReadFamilies(() => setIsLoading(false));
     }, [])
   );
 
-  state.semGrupo.map((item) => {
-    if (item.desabilitado === 1) {
-      contador = contador + 1;
-    }
-  });
+  if (state.semGrupo !== undefined) {
+    state.semGrupo.map((item) => {
+      if (item.desabilitado === 1) {
+        contador = contador + 1;
+      }
+    });
+  }
 
   const onRefresh = React.useCallback(() => {
-    setIsLoading(true);
+    setIsRefreshing(true);
 
-    ReadFamilies(() => setIsLoading(false));
+    ReadFamilies(() => setIsRefreshing(false));
   }, []);
 
   const namePicker = (fullName) => {

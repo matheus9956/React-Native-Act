@@ -24,13 +24,13 @@ const GroupsScreen = ({ navigation }) => {
   useFocusEffect(
     React.useCallback(() => {
       setIsLoading(true);
+      setSelectedValue("ativos");
       ReadGroups(() => setIsLoading(false));
     }, [])
   );
 
   const onRefresh = React.useCallback(() => {
     setRefreshing(true);
-
     ReadGroups().then(() => setRefreshing(false));
   }, []);
 
@@ -62,7 +62,6 @@ const GroupsScreen = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate("Group", {
                       _id: item._id,
-                      tipo: "ativo",
                     })
                   }
                 >
@@ -94,7 +93,6 @@ const GroupsScreen = ({ navigation }) => {
                   onPress={() =>
                     navigation.navigate("Group", {
                       _id: item._id,
-                      tipo: "encerrado",
                     })
                   }
                 >
