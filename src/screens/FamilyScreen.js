@@ -1,27 +1,78 @@
-import React from "react";
+import React, { useContext, useState } from "react";
 import {
   View,
   StyleSheet,
   Text,
   ActivityIndicator,
   FlatList,
+  Alert,
 } from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { AntDesign } from "@expo/vector-icons";
+import { Context as FamilyContext } from "../context/FamilyContext";
 
 const FamilyScreen = ({ route, navigation }) => {
   const family = route.params?.family;
+  const { DisableFamily } = useContext(FamilyContext);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const exitConfirmation = () =>
+    Alert.alert(
+      "DESABILITAR",
+      "Deseja mesmo desabilitar essa família?",
+      [
+        {
+          text: "Cancelar",
+          onPress: () => console.log("Cancel Pressed"),
+          style: "cancel",
+        },
+        {
+          text: "Confirmar",
+          onPress: () => {
+            setIsLoading(true);
+
+            DisableFamily(
+              family._id,
+              () => setIsLoading(false),
+              () => navigation.navigate("Families")
+            );
+          },
+        },
+      ],
+      { cancelable: false }
+    );
 
   React.useLayoutEffect(() => {
     navigation.setOptions({
       headerRight: () => {
-        if (family.formulariosPreenchidos === 0) {
+        if (family.desabilitado === 0) {
+          if (family.formulariosPreenchidos === 0) {
+            return (
+              <View style={styles.icon}>
+                <TouchableOpacity
+                  style={{ paddingRight: 20 }}
+                  onPress={exitConfirmation}
+                >
+                  <AntDesign name="closecircleo" size={24} color="black" />
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  style={{ paddingRight: 10 }}
+                  onPress={() =>
+                    navigation.navigate("Form", { _id: family._id })
+                  }
+                >
+                  <AntDesign name="filetext1" size={24} color="black" />
+                </TouchableOpacity>
+              </View>
+            );
+          }
           return (
             <TouchableOpacity
-              style={{ paddingRight: 10 }}
-              onPress={() => navigation.navigate("Form", { _id: family._id })}
+              onPress={exitConfirmation}
+              style={{ paddingRight: 20 }}
             >
-              <AntDesign name="filetext1" size={24} color="black" />
+              <AntDesign name="closecircleo" size={24} color="black" />
             </TouchableOpacity>
           );
         }
@@ -123,8 +174,16 @@ const FamilyScreen = ({ route, navigation }) => {
     },
   ];
 
-  return family !== undefined && form[0].resposta !== undefined ? (
+  return family !== undefined &&
+    form[0].resposta !== undefined &&
+    !isLoading ? (
     <View style={{ backgroundColor: "#f5f1e9" }}>
+      {family.desabilitado ? (
+        <Text style={styles.textd}>Essa família está desativada</Text>
+      ) : (
+        <></>
+      )}
+
       <FlatList
         contentContainerStyle={{ paddingBottom: 30 }}
         data={form}
@@ -163,6 +222,21 @@ const styles = StyleSheet.create({
   text: {
     fontSize: 17,
     color: "#575757",
+  },
+
+  icon: {
+    flexDirection: "row",
+  },
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    backgroundColor: "#f5f1e9",
+  },
+  textd: {
+    alignSelf: "center",
+    color: "red",
+    marginTop: 10,
+    fontWeight: "bold",
   },
 });
 

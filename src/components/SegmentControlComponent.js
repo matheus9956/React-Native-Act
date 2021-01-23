@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
 
-const SegmentControl = ({ func, func2, data, state }) => {
+const SegmentControl = ({ func, func2, data }) => {
   const [prev, setPrev] = useState(1);
 
   return prev === 1 ? (

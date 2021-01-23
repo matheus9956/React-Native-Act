@@ -22,16 +22,25 @@ const FamiliesScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const data = [{ title: "Sem grupo" }, { title: "Com Grupo" }];
+  let contador = 0;
+
   useFocusEffect(
     React.useCallback(() => {
-      ReadFamilies();
+      setIsLoading(true);
+      ReadFamilies(() => setIsLoading(false));
     }, [])
   );
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
+  state.semGrupo.map((item) => {
+    if (item.desabilitado === 1) {
+      contador = contador + 1;
+    }
+  });
 
-    ReadFamilies().then(() => setRefreshing(false));
+  const onRefresh = React.useCallback(() => {
+    setIsLoading(true);
+
+    ReadFamilies(() => setIsLoading(false));
   }, []);
 
   const namePicker = (fullName) => {
@@ -51,7 +60,7 @@ const FamiliesScreen = ({ navigation }) => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 170 }}
             ListFooterComponent={() => {
-              return state.semGrupo.length >= 6 &&
+              return state.semGrupo.length - contador >= 6 &&
                 selectedValue === "Sem Grupo" ? (
                 <TouchableOpacity
                   style={styles.button}
@@ -79,7 +88,7 @@ const FamiliesScreen = ({ navigation }) => {
                 <Text style={styles.empty}>Não existe família disponíveis</Text>
               );
             }}
-            renderItem={({ item, index }) => {
+            renderItem={({ item }) => {
               return (
                 <TouchableOpacity
                   onPress={() =>
@@ -88,11 +97,19 @@ const FamiliesScreen = ({ navigation }) => {
                     })
                   }
                 >
-                  <View style={styles.familiesLabel}>
-                    <Text style={styles.familiesText}>
-                      Família de {namePicker(item.cuidador.nome)}
-                    </Text>
-                  </View>
+                  {item.desabilitado === 1 ? (
+                    <View style={styles.familiesLabel2}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.familiesLabel}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
               );
             }}
@@ -121,11 +138,19 @@ const FamiliesScreen = ({ navigation }) => {
                     })
                   }
                 >
-                  <View style={styles.familiesLabel}>
-                    <Text style={styles.familiesText}>
-                      Família de {namePicker(item.cuidador.nome)}
-                    </Text>
-                  </View>
+                  {item.desabilitado === 1 ? (
+                    <View style={styles.familiesLabel2}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  ) : (
+                    <View style={styles.familiesLabel}>
+                      <Text style={styles.familiesText}>
+                        Família de {namePicker(item.cuidador.nome)}
+                      </Text>
+                    </View>
+                  )}
                 </TouchableOpacity>
               );
             }}
@@ -182,6 +207,17 @@ const styles = StyleSheet.create({
     marginTop: 10,
     borderWidth: 1,
     borderColor: "#c9c9c9",
+  },
+
+  familiesLabel2: {
+    justifyContent: "center",
+    paddingLeft: 10,
+    height: 50,
+    backgroundColor: "#EEEEEE",
+    borderRadius: 10,
+    marginTop: 10,
+    borderWidth: 1,
+    borderColor: "red",
   },
   picker: {
     width: "90%",
