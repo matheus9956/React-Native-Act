@@ -5,8 +5,8 @@ import {
   ActivityIndicator,
   Platform,
   StatusBar,
+  ScrollView,
 } from "react-native";
-import { ScrollView } from "react-native-gesture-handler";
 import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
 import FormComponent from "../components/FormComponent";

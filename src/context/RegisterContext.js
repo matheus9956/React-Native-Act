@@ -141,7 +141,7 @@ const ReadRegister = (dispatch) => {
     },
     {
       id: "cuidador.filhos0a6anos",
-      pergunta: "Quantos filhos de 0 a 6anos:",
+      pergunta: "Quantos filhos de 0 a 6 anos:",
       type: "number",
     },
     {
@@ -167,15 +167,15 @@ const ReadRegister = (dispatch) => {
       pergunta: "Com quem a criança mora atualmente?",
       type: "checkbox",
       alternativas: [
-        { label: "Mãe", value: "mae" },
-        { label: "Pai", value: "pai" },
-        { label: "Madrasta", value: "madrasta" },
-        { label: "Padrasto", value: "padrasto" },
-        { label: "Irmãos", value: "irmaos" },
-        { label: "Avô/Avó", value: "avo" },
-        { label: "Tio/Tia", value: "tio" },
-        { label: "Outras pessoas da família", value: "outroFamiliar" },
-        { label: "Outras pessoas não familiares", value: "outroNaoFamiliar" },
+        { name: "Mãe", id: "mae" },
+        { name: "Pai", id: "pai" },
+        { name: "Madrasta", id: "madrasta" },
+        { name: "Padrasto", id: "padrasto" },
+        { name: "Irmãos", id: "irmaos" },
+        { name: "Avô/Avó", id: "avo" },
+        { name: "Tio/Tia", id: "tio" },
+        { name: "Outras pessoas da família", id: "outroFamiliar" },
+        { name: "Outras pessoas não familiares", id: "outroNaoFamiliar" },
       ],
     },
     {

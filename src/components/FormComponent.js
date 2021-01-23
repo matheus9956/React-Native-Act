@@ -6,17 +6,16 @@ import {
   Text,
   TouchableOpacity,
 } from "react-native";
-import { Formik, Field, Form } from "formik";
+import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 import RadioForm from "react-native-simple-radio-button";
-import { Context as RegisterContext } from "../context/RegisterContext";
 import SelectMultiple from "react-native-select-multiple";
+import CheckboxList from "rn-checkbox-list";
 
 const FormComponent = ({ data, submit }) => {
   Keyboard.dismiss();
 
-  const { clearState } = React.useContext(RegisterContext);
-  const [state, setState] = React.useState({ values: [] });
+  const [state, setState] = React.useState("");
 
   const InitialValues = data.reduce(
     (acc, curr) => ({ ...acc, [curr.id]: "" }),
@@ -24,7 +23,8 @@ const FormComponent = ({ data, submit }) => {
   );
 
   const onSelectionsChange = (values) => {
-    setState({ values });
+    setState(values);
+    console.log(state);
   };
 
   return (
@@ -79,10 +79,10 @@ const FormComponent = ({ data, submit }) => {
                       (Marcar todas que se aplicarem)
                     </Text>
 
-                    <SelectMultiple
-                      items={formulario.alternativas.map((item) => item.label)}
-                      selectedItems={state.values}
-                      onSelectionsChange={onSelectionsChange}
+                    <CheckboxList
+                      listItems={formulario.alternativas}
+                      onChange={({ ids }) => onSelectionsChange(ids)}
+                      onLoading={() => <LoaderComponent />}
                     />
                   </View>
                 ) : (
@@ -100,7 +100,7 @@ const FormComponent = ({ data, submit }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                values.moraAtualmente = state.values.map((item) => item.label);
+                values.moraAtualmente = state;
 
                 handleSubmit();
               }}
