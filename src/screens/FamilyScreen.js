@@ -68,7 +68,10 @@ const FamilyScreen = ({ route, navigation }) => {
             );
           }
           return (
-            <TouchableOpacity style={{ paddingRight: 20 }}>
+            <TouchableOpacity
+              onPress={exitConfirmation}
+              style={{ paddingRight: 20 }}
+            >
               <AntDesign name="closecircleo" size={24} color="black" />
             </TouchableOpacity>
           );

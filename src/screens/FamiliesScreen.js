@@ -22,16 +22,25 @@ const FamiliesScreen = ({ navigation }) => {
   const [refreshing, setRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const data = [{ title: "Sem grupo" }, { title: "Com Grupo" }];
+  let contador = 0;
+
   useFocusEffect(
     React.useCallback(() => {
-      ReadFamilies();
+      setIsLoading(true);
+      ReadFamilies(() => setIsLoading(false));
     }, [])
   );
 
-  const onRefresh = React.useCallback(() => {
-    setRefreshing(true);
+  state.semGrupo.map((item) => {
+    if (item.desabilitado === 1) {
+      contador = contador + 1;
+    }
+  });
 
-    ReadFamilies().then(() => setRefreshing(false));
+  const onRefresh = React.useCallback(() => {
+    setIsLoading(true);
+
+    ReadFamilies(() => setIsLoading(false));
   }, []);
 
   const namePicker = (fullName) => {
@@ -51,7 +60,7 @@ const FamiliesScreen = ({ navigation }) => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 170 }}
             ListFooterComponent={() => {
-              return state.semGrupo.length >= 6 &&
+              return state.semGrupo.length - contador >= 6 &&
                 selectedValue === "Sem Grupo" ? (
                 <TouchableOpacity
                   style={styles.button}
