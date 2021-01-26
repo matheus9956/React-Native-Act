@@ -15,6 +15,7 @@ import CustomInput from "../components/CustomInputComponent";
 
 const RegSchema = Yup.object().shape({
   criancaNome: Yup.string().required("Necessário nome da criança"),
+  criancaIdade: Yup.string().required("Necessário idade da criança"),
 });
 
 const data = [
@@ -230,6 +231,17 @@ const RegisterForm = ({ submit, validation }) => {
               placeholder="Nome completo da criança:"
               onChangeText={handleChange("criancaNome")}
               style={styles.box}
+            />
+
+            <CustomInput
+              onBlur={handleBlur("criancaIdade")}
+              error={errors.criancaIdade}
+              touched={touched.criancaIdade}
+              value={values.criancaIdade}
+              placeholder="Idade:"
+              onChangeText={handleChange("criancaIdade")}
+              style={styles.box}
+              Keyboard="numeric"
             />
 
             <TouchableOpacity
