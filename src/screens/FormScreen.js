@@ -1,7 +1,6 @@
 import React, { useContext, useEffect } from "react";
 import { View, StyleSheet, ActivityIndicator } from "react-native";
 import { Context as FormContext } from "../context/FormContext";
-import FormComponent from "../components/FormComponent";
 
 const RegisterScreen = ({ navigation, route }) => {
   const { state, ReadForm, RegisterForm } = useContext(FormContext);
@@ -14,16 +13,7 @@ const RegisterScreen = ({ navigation, route }) => {
 
   return !isLoading ? (
     <View style={styles.all}>
-      <FormComponent
-        data={state}
-        submit={(data) => {
-          setIsLoading(true);
-          RegisterForm(data, _id, () => {
-            setIsLoading(false);
-            navigation.navigate("Families");
-          });
-        }}
-      />
+      <Text>Form Here</Text>
     </View>
   ) : (
     <View style={styles.container}>

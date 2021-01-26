@@ -20,7 +20,7 @@
     "axios": "^0.21.1",
     "expo": "~39.0.2",
     "expo-status-bar": "~1.0.2",
-    "formik": "^2.2.5",
+    "formik": "^2.2.6",
     "linking": "0.1.0-beta.5",
     "picker": "^0.1.4",
     "react": "16.13.1",
@@ -40,7 +40,7 @@
     "react-navigation-stack": "^2.10.1",
     "react-navigation-tabs": "^2.10.1",
     "rn-checkbox-list": "^0.4.0",
-    "yup": "^0.32.1"
+    "yup": "^0.32.8"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0"

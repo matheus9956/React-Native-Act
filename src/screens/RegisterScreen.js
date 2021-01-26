@@ -9,12 +9,11 @@ import {
 } from "react-native";
 import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
-import FormComponent from "../components/FormComponent";
-import { useFocusEffect } from "@react-navigation/native";
+import RegisterForm from "../Forms/RegisterForm";
 
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(FamilyContext);
-  const { state, ReadRegister, clearState } = useContext(RegisterContext);
+  const { clearState } = useContext(RegisterContext);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -25,16 +24,9 @@ const RegisterScreen = ({ navigation }) => {
     return unsubscribe;
   }, [navigation]);
 
-  useFocusEffect(
-    React.useCallback(() => {
-      ReadRegister();
-    }, [])
-  );
-
-  return state.length > 0 && state !== undefined && !isLoading ? (
+  return !isLoading ? (
     <ScrollView style={styles.statusBar}>
-      <FormComponent
-        data={state}
+      <RegisterForm
         submit={(data) => {
           setIsLoading(true);
           RegisterFamily(

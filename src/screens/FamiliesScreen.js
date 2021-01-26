@@ -19,7 +19,7 @@ const FamiliesScreen = ({ navigation }) => {
   const { state, ReadFamilies } = useContext(FamilyContext);
   const { CreateGroup } = useContext(GroupContext);
   const [selectedValue, setSelectedValue] = useState("Sem Grupo");
-  const [refreshing, setRefreshing] = React.useState(false);
+  const [isRefreshing, setIsRefreshing] = React.useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const data = [{ title: "Sem grupo" }, { title: "Com Grupo" }];
   let contador = 0;
@@ -82,7 +82,7 @@ const FamiliesScreen = ({ navigation }) => {
               );
             }}
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
             }
             data={state.semGrupo}
             keyExtractor={(item) => `${item._id}`}
@@ -123,7 +123,7 @@ const FamiliesScreen = ({ navigation }) => {
           <FlatList
             contentContainerStyle={{ paddingBottom: 170 }}
             refreshControl={
-              <RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+              <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
             }
             data={state.comGrupo}
             keyExtractor={(item) => `${item._id}`}
