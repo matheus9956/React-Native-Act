@@ -7,22 +7,12 @@ import {
   StatusBar,
   ScrollView,
 } from "react-native";
-import { Context as RegisterContext } from "../context/RegisterContext";
 import { Context as FamilyContext } from "../context/FamilyContext";
-import RegisterForm from "../Forms/RegisterForm";
+import RegisterForm from "../Data/RegisterFormData";
 
 const RegisterScreen = ({ navigation }) => {
   const { RegisterFamily } = useContext(FamilyContext);
-  const { clearState } = useContext(RegisterContext);
   const [isLoading, setIsLoading] = useState(false);
-
-  useEffect(() => {
-    const unsubscribe = navigation.addListener("blur", () => {
-      clearState();
-    });
-
-    return unsubscribe;
-  }, [navigation]);
 
   return !isLoading ? (
     <ScrollView style={styles.statusBar}>

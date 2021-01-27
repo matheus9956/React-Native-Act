@@ -10,40 +10,8 @@ import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 import RadioForm from "react-native-simple-radio-button";
 import CheckboxList from "rn-checkbox-list";
-import * as Yup from "yup";
+import RegSchema from "./RegisterFormValidation";
 import CustomInput from "../components/CustomInputComponent";
-
-const RegSchema = Yup.object().shape({
-  criancaNome: Yup.string().required("Necessário nome da criança"),
-  criancaIdade: Yup.string().required("Necessário idade da criança"),
-  criancaNascimento: Yup.string().required("Necessário nascimento da criança"),
-  cuidadorNome: Yup.string().required("Necessário nome do cuidador(a)"),
-  cuidadorIdade: Yup.string().required("Necessário idade do cuidador(a)"),
-  cuidadorNascimento: Yup.string().required(
-    "Necessário nascimento do cuidador(a)"
-  ),
-  cuidadorAnosEstudo: Yup.string().required(
-    "Necessário anos de estudo do cuidador"
-  ),
-  cuidadorLocalGrupo: Yup.string().required(
-    "Necessário local do grupo cuidador(a)"
-  ),
-  cuidadorEndereco: Yup.string().required("Necessário endereço do cuidador(a)"),
-  cuidadorCep: Yup.string().required("Necessário CEP do cuidador"),
-  cuidadorCidade: Yup.string().required("Necessário cidade do cuidador"),
-  cuidadorEstado: Yup.string().required("Necessário estado do cuidador"),
-  cuidadorTelefones: Yup.string().required("Necessário telefones do cuidador"),
-  cuidadorNumeroFilhos: Yup.string().required(
-    "Necessário número de filhos do cuidador"
-  ),
-  cuidadorFilhos0a6Anos: Yup.string().required(
-    "Necessário número de filhos de 0 a 6 anos  do cuidador"
-  ),
-  cuidadorPessoasMorando: Yup.string().required(
-    "Necessário número de pessoas que moram na casa"
-  ),
-  cuidadorCasoReceba: Yup.string().required("Necessário informar o auxilío"),
-});
 
 const data = [
   { id: "crianca.nome", pergunta: "Nome completo da criança:" },
@@ -221,20 +189,33 @@ const data = [
 const RegisterForm = ({ submit, validation }) => {
   const [state, setState] = React.useState("");
 
-  const InitialValues = data.reduce(
-    (acc, curr) => ({ ...acc, [curr.id]: "" }),
-    {}
-  );
-
   const onSelectionsChange = (values) => {
     setState(values);
   };
 
   return (
-    <View>
+    <View style={{ paddingBottom: 40, paddingTop: 10 }}>
       <Formik
         validationSchema={RegSchema}
-        initialValues={{ criancaNome: "" }}
+        initialValues={{
+          criancaNome: "",
+          criancaNascimento: "",
+          criancaIdade: "",
+          cuidadorNome: "",
+          cuidadorNascimento: "",
+          cuidadorIdade: "",
+          cuidadorAnosEstudo: "",
+          cuidadorLocalGrupo: "",
+          cuidadorEndereco: "",
+          cuidadorCep: "",
+          cuidadorCidade: "",
+          cuidadorEstado: "",
+          cuidadorTelefones: "",
+          cuidadorNumeroFilhos: "",
+          cuidadorFilhos0a6Anos: "",
+          cuidadorPessoasMorando: "",
+          cuidadorCasoReceba: "",
+        }}
         onSubmit={(values, actions) => {
           actions.resetForm();
           submit(values);
@@ -250,63 +231,66 @@ const RegisterForm = ({ submit, validation }) => {
           validateForm,
         }) => (
           <>
-            <CustomInput
-              onBlur={handleBlur("criancaNome")}
-              error={errors.criancaNome}
-              touched={touched.criancaNome}
-              value={values.criancaNome}
-              placeholder="Nome completo da criança:"
-              onChangeText={handleChange("criancaNome")}
-              style={styles.box}
-            />
-
-            <CustomInput
-              onBlur={handleBlur("criancaIdade")}
-              error={errors.criancaIdade}
-              touched={touched.criancaIdade}
-              value={values.criancaIdade}
-              placeholder="Idade:"
-              onChangeText={handleChange("criancaIdade")}
-              style={styles.box}
-              keyboardType="numeric"
-            />
-            <CustomInput
-              onBlur={handleBlur("criancaNascimento")}
-              error={errors.criancaNascimento}
-              touched={touched.criancaNascimento}
-              value={values.criancaNascimento}
-              placeholder="Nascimento da criança:"
-              onChangeText={handleChange("criancaNascimento")}
-              style={styles.box}
-            />
-            <CustomInput
-              onBlur={handleBlur("cuidadorNome")}
-              error={errors.cuidadorNome}
-              touched={touched.cuidadorNome}
-              value={values.cuidadorNome}
-              placeholder="Nome completo do Cuidador(a):"
-              onChangeText={handleChange("cuidadorNome")}
-              style={styles.box}
-            />
-            <CustomInput
-              onBlur={handleBlur("cuidadorIdade")}
-              error={errors.cuidadorIdade}
-              touched={touched.cuidadorIdade}
-              value={values.cuidadorIdade}
-              placeholder="Idade do Cuidador(a):"
-              onChangeText={handleChange("cuidadorIdade")}
-              style={styles.box}
-              keyboardType="numeric"
-            />
-            <CustomInput
-              onBlur={handleBlur("cuidadorNascimento")}
-              error={errors.cuidadorNascimento}
-              touched={touched.cuidadorNascimento}
-              value={values.cuidadorNascimento}
-              placeholder="Nascimento do Cuidador(a):"
-              onChangeText={handleChange("cuidadorNascimeto")}
-              style={styles.box}
-            />
+            <View style={styles.box}>
+              <CustomInput
+                onBlur={handleBlur("criancaNome")}
+                error={errors.criancaNome}
+                touched={touched.criancaNome}
+                value={values.criancaNome}
+                placeholder="Nome completo da criança:"
+                onChangeText={handleChange("criancaNome")}
+                style={{ height: 40, margin: 4 }}
+              />
+              <CustomInput
+                onBlur={handleBlur("criancaNascimento")}
+                error={errors.criancaNascimento}
+                touched={touched.criancaNascimento}
+                value={values.criancaNascimento}
+                placeholder="Nascimento:"
+                onChangeText={handleChange("criancaNascimento")}
+                style={{ height: 40, margin: 4 }}
+              />
+              <CustomInput
+                onBlur={handleBlur("criancaIdade")}
+                error={errors.criancaIdade}
+                touched={touched.criancaIdade}
+                value={values.criancaIdade}
+                placeholder="Idade:"
+                onChangeText={handleChange("criancaIdade")}
+                keyboardType="numeric"
+                style={{ height: 40, margin: 4 }}
+              />
+            </View>
+            <View style={styles.box}>
+              <CustomInput
+                onBlur={handleBlur("cuidadorNome")}
+                error={errors.cuidadorNome}
+                touched={touched.cuidadorNome}
+                value={values.cuidadorNome}
+                placeholder="Nome completo do Cuidador(a):"
+                onChangeText={handleChange("cuidadorNome")}
+                style={{ height: 40, margin: 4 }}
+              />
+              <CustomInput
+                onBlur={handleBlur("cuidadorNascimento")}
+                error={errors.cuidadorNascimento}
+                touched={touched.cuidadorNascimento}
+                value={values.cuidadorNascimento}
+                placeholder="Nascimento:"
+                onChangeText={handleChange("cuidadorNascimento")}
+                style={{ height: 40, margin: 4 }}
+              />
+              <CustomInput
+                onBlur={handleBlur("cuidadorIdade")}
+                error={errors.cuidadorIdade}
+                touched={touched.cuidadorIdade}
+                value={values.cuidadorIdade}
+                placeholder="Idade:"
+                onChangeText={handleChange("cuidadorIdade")}
+                keyboardType="numeric"
+                style={{ height: 40, margin: 4 }}
+              />
+            </View>
             <CustomInput
               onBlur={handleBlur("cuidadorAnosEstudo")}
               error={errors.cuidadorAnosEstudo}
@@ -374,7 +358,7 @@ const RegisterForm = ({ submit, validation }) => {
             />
             <CustomInput
               onBlur={handleBlur("cuidadorNumeroFilhos")}
-              error={errors.cuidadoNumeroFilhos}
+              error={errors.cuidadorNumeroFilhos}
               touched={touched.cuidadorNumeroFilhos}
               value={values.cuidadorNumeroFilhos}
               placeholder="Número de filhos:"
@@ -415,7 +399,7 @@ const RegisterForm = ({ submit, validation }) => {
             <TouchableOpacity
               style={styles.button}
               onPress={() => {
-                //values.moraAtualmente = state;
+                console.log(errors);
                 validateForm();
                 handleSubmit();
               }}
@@ -474,10 +458,12 @@ const styles = StyleSheet.create({
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
-      height: 2,
+      height: 5,
     },
-    shadowOpacity: 0.25,
-    color: "black",
+    shadowOpacity: 0.34,
+    shadowRadius: 6.27,
+
+    elevation: 10,
   },
   textAlternativa: {
     fontWeight: "bold",

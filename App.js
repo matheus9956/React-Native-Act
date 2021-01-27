@@ -13,7 +13,6 @@ import ResolveAuthScreen from "./src/screens/ResolveAuthScreen";
 import { setNavigator } from "./src/navigationRef";
 import { Provider as FormProvider } from "./src/context/FormContext";
 import { Provider as FamilyProvider } from "./src/context/FamilyContext";
-import { Provider as RegisterProvider } from "./src/context/RegisterContext";
 import { Provider as GroupProvider } from "./src/context/GroupContext";
 import { Provider as AuthProvider } from "./src/context/AuthContext";
 import { NavigationContainer } from "@react-navigation/native";
@@ -147,13 +146,11 @@ export default function App() {
       }}
     >
       <AuthProvider>
-        <RegisterProvider>
-          <FamilyProvider>
-            <FormProvider>
-              <GroupProvider>{RootStack()}</GroupProvider>
-            </FormProvider>
-          </FamilyProvider>
-        </RegisterProvider>
+        <FamilyProvider>
+          <FormProvider>
+            <GroupProvider>{RootStack()}</GroupProvider>
+          </FormProvider>
+        </FamilyProvider>
       </AuthProvider>
     </NavigationContainer>
   );
