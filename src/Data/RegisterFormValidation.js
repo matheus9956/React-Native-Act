@@ -29,7 +29,27 @@ const RegSchema = Yup.object().shape({
   cuidadorPessoasMorando: Yup.string().required(
     "Necessário número de pessoas que moram na casa"
   ),
-  cuidadorCasoReceba: Yup.string().required("Necessário informar o auxilío"),
+  //cuidadorCasoReceba: Yup.string().required("Necessário informar o auxilío"),
+  criancaSexo: Yup.string().required("Necessário selecionar o sexo da criança"),
+  cuidadorParentesco: Yup.string().required(
+    "Necessário informar o parentesco do cuidador"
+  ),
+  cuidadorEscolaridade: Yup.string().required(
+    "Necessário informar a escolaridade"
+  ),
+  cuidadorOcupacao: Yup.string().required("Necessário informar a ocupação"),
+  cuidadorPele: Yup.string().required("Necessário informar pele do cuidador"),
+  criancaPele: Yup.string().required("Necessário informar pele da criança"),
+  cuidadorReligiao: Yup.string().required("Necessário informar de religião"),
+  cuidadorSituacaoConjugal: Yup.string().required(
+    "Necessário informar Situação Conjugal"
+  ),
+  cuidadorRecebeAuxilio: Yup.string().required(
+    "Necessário informar se recebe auxilio"
+  ),
+  cuidadorRendaMensal: Yup.string().required(
+    "Necessário informar a renda mensal"
+  ),
 });
 
 export default RegSchema;

@@ -48,7 +48,10 @@ const FamiliesScreen = ({ navigation }) => {
 
   const namePicker = (fullName) => {
     const split = fullName.split(" ");
-    return `${split[0]} ${split[split.length - 1]}`;
+    console.log(split);
+
+    if (split.length > 1) return `${split[0]} ${split[split.length - 1]}`;
+    return `${split[0]}`;
   };
 
   return state.semGrupo !== undefined && !isLoading ? (
