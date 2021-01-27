@@ -1,6 +1,6 @@
 import React from "react";
 import {
-  Keyboard,
+  keyboardType,
   View,
   StyleSheet,
   Text,
@@ -16,6 +16,33 @@ import CustomInput from "../components/CustomInputComponent";
 const RegSchema = Yup.object().shape({
   criancaNome: Yup.string().required("Necessário nome da criança"),
   criancaIdade: Yup.string().required("Necessário idade da criança"),
+  criancaNascimento: Yup.string().required("Necessário nascimento da criança"),
+  cuidadorNome: Yup.string().required("Necessário nome do cuidador(a)"),
+  cuidadorIdade: Yup.string().required("Necessário idade do cuidador(a)"),
+  cuidadorNascimento: Yup.string().required(
+    "Necessário nascimento do cuidador(a)"
+  ),
+  cuidadorAnosEstudo: Yup.string().required(
+    "Necessário anos de estudo do cuidador"
+  ),
+  cuidadorLocalGrupo: Yup.string().required(
+    "Necessário local do grupo cuidador(a)"
+  ),
+  cuidadorEndereco: Yup.string().required("Necessário endereço do cuidador(a)"),
+  cuidadorCep: Yup.string().required("Necessário CEP do cuidador"),
+  cuidadorCidade: Yup.string().required("Necessário cidade do cuidador"),
+  cuidadorEstado: Yup.string().required("Necessário estado do cuidador"),
+  cuidadorTelefones: Yup.string().required("Necessário telefones do cuidador"),
+  cuidadorNumeroFilhos: Yup.string().required(
+    "Necessário número de filhos do cuidador"
+  ),
+  cuidadorFilhos0a6Anos: Yup.string().required(
+    "Necessário número de filhos de 0 a 6 anos  do cuidador"
+  ),
+  cuidadorPessoasMorando: Yup.string().required(
+    "Necessário número de pessoas que moram na casa"
+  ),
+  cuidadorCasoReceba: Yup.string().required("Necessário informar o auxilío"),
 });
 
 const data = [
@@ -241,7 +268,148 @@ const RegisterForm = ({ submit, validation }) => {
               placeholder="Idade:"
               onChangeText={handleChange("criancaIdade")}
               style={styles.box}
-              Keyboard="numeric"
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("criancaNascimento")}
+              error={errors.criancaNascimento}
+              touched={touched.criancaNascimento}
+              value={values.criancaNascimento}
+              placeholder="Nascimento da criança:"
+              onChangeText={handleChange("criancaNascimento")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorNome")}
+              error={errors.cuidadorNome}
+              touched={touched.cuidadorNome}
+              value={values.cuidadorNome}
+              placeholder="Nome completo do Cuidador(a):"
+              onChangeText={handleChange("cuidadorNome")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorIdade")}
+              error={errors.cuidadorIdade}
+              touched={touched.cuidadorIdade}
+              value={values.cuidadorIdade}
+              placeholder="Idade do Cuidador(a):"
+              onChangeText={handleChange("cuidadorIdade")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorNascimento")}
+              error={errors.cuidadorNascimento}
+              touched={touched.cuidadorNascimento}
+              value={values.cuidadorNascimento}
+              placeholder="Nascimento do Cuidador(a):"
+              onChangeText={handleChange("cuidadorNascimeto")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorAnosEstudo")}
+              error={errors.cuidadorAnosEstudo}
+              touched={touched.cuidadorAnosEstudo}
+              value={values.cuidadorAnosEstudo}
+              placeholder="Anos de Estudo:"
+              onChangeText={handleChange("cuidadorAnosEstudo")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorLocalGrupo")}
+              error={errors.cuidadorLocalGrupo}
+              touched={touched.cuidadorLocalGrupo}
+              value={values.cuidadorLocalGrupo}
+              placeholder="Local do grupo:"
+              onChangeText={handleChange("cuidadorLocalGrupo")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorEndereco")}
+              error={errors.cuidadorEndereco}
+              touched={touched.cuidadorEndereco}
+              value={values.cuidadorEndereco}
+              placeholder="Endereço da família:"
+              onChangeText={handleChange("cuidadorEndereco")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorCep")}
+              error={errors.cuidadorCep}
+              touched={touched.cuidadorCep}
+              value={values.cuidadorCep}
+              placeholder="CEP:"
+              onChangeText={handleChange("cuidadorCep")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorCidade")}
+              error={errors.cuidadorCidade}
+              touched={touched.cuidadorCidade}
+              value={values.cuidadorCidade}
+              placeholder="Cidade:"
+              onChangeText={handleChange("cuidadorCidade")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorEstado")}
+              error={errors.cuidadorEstado}
+              touched={touched.cuidadorEstado}
+              value={values.cuidadorEstado}
+              placeholder="Estado:"
+              onChangeText={handleChange("cuidadorEstado")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorTelefones")}
+              error={errors.cuidadorTelefones}
+              touched={touched.cuidadorTelefones}
+              value={values.cuidadorTelefones}
+              placeholder="Telefones:"
+              onChangeText={handleChange("cuidadorTelefones")}
+              style={styles.box}
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorNumeroFilhos")}
+              error={errors.cuidadoNumeroFilhos}
+              touched={touched.cuidadorNumeroFilhos}
+              value={values.cuidadorNumeroFilhos}
+              placeholder="Número de filhos:"
+              onChangeText={handleChange("cuidadorNumeroFilhos")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorFilhos0a6Anos")}
+              error={errors.cuidadorFilhos0a6Anos}
+              touched={touched.cuidadorFilhos0a6Anos}
+              value={values.cuidadorFilhos0a6Anos}
+              placeholder="Quantos filhos de 0 a 6 anos:"
+              onChangeText={handleChange("cuidadorFilhos0a6Anos")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorPessoasMorando")}
+              error={errors.cuidadorPessoasMorando}
+              touched={touched.cuidadorPessoasMorando}
+              value={values.cuidadorPessoasMorando}
+              placeholder="Quantas pessoas moram na casa?"
+              onChangeText={handleChange("cuidadorPessoasMorando")}
+              style={styles.box}
+              keyboardType="numeric"
+            />
+            <CustomInput
+              onBlur={handleBlur("cuidadorCasoReceba")}
+              error={errors.cuidadorCasoReceba}
+              touched={touched.cuidadorCasoReceba}
+              value={values.cuidadorCasoReceba}
+              placeholder="Se sim, qual?"
+              onChangeText={handleChange("cuidadorCasoReceba")}
+              style={styles.box}
             />
 
             <TouchableOpacity
@@ -371,7 +539,7 @@ export default RegisterForm;
                       onChangeText={handleChange(formulario.id)}
                       value={values.id}
                       style={styles.box}
-                      keyboardType="numeric"
+                      keyboardTypeType="numeric"
                       placeholderTextColor="#575757"
                     />
                     {errors[formulario.id] && (
