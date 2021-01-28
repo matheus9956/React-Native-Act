@@ -93,7 +93,10 @@ const FamilyScreen = ({ route, navigation }) => {
     },
     { pergunta: "Idade", resposta: family.crianca.idade },
     { pergunta: "Nascimento", resposta: family.crianca.nascimento },
-
+    {
+      pergunta: "Qual a sua cor da pele/etnia da sua criança",
+      resposta: family.crianca.pele,
+    },
     { pergunta: "Nome do Cuidador(a)", resposta: family.cuidador.nome },
     { pergunta: "Idade", resposta: family.cuidador.idade },
     { pergunta: "Nascimento", resposta: family.cuidador.nascimento },
@@ -101,11 +104,6 @@ const FamilyScreen = ({ route, navigation }) => {
       pergunta: "Parentesco Criança",
       resposta: family.cuidador.parentesco,
     },
-    {
-      pergunta: "Escolaridade",
-      resposta: family.cuidador.escolaridade,
-    },
-
     {
       pergunta: "Anos de Estudo",
       resposta: family.cuidador.anosEstudo,
@@ -117,6 +115,23 @@ const FamilyScreen = ({ route, navigation }) => {
     { pergunta: "Estado", resposta: family.cuidador.estado },
     { pergunta: "Telefones", resposta: family.cuidador.telefones },
     {
+      pergunta: "Número de filhos",
+      resposta: family.cuidador.numeroFilhos,
+    },
+    {
+      pergunta: "Quantos filhos de 0 a 6anos",
+      resposta: family.cuidador.filhos0a6anos,
+    },
+    {
+      pergunta: "Quantas pessoas moram na casa",
+      resposta: family.cuidador.pessoasMorando,
+    },
+    {
+      pergunta: "Escolaridade",
+      resposta: family.cuidador.escolaridade,
+    },
+
+    {
       pergunta: "Ocupação",
       resposta: family.cuidador.ocupacao,
     },
@@ -124,10 +139,7 @@ const FamilyScreen = ({ route, navigation }) => {
       pergunta: "Qual a sua cor da pele/etnia",
       resposta: family.cuidador.pele,
     },
-    {
-      pergunta: "Qual a sua cor da pele/etnia da sua criança",
-      resposta: family.crianca.pele,
-    },
+
     {
       pergunta: "Religião",
       resposta: family.cuidador.religiao,
@@ -136,38 +148,14 @@ const FamilyScreen = ({ route, navigation }) => {
       pergunta: "Situação conjugal",
       resposta: family.cuidador.situacaoConjugal,
     },
-    {
-      pergunta: "Número de filhos",
-      resposta: family.cuidador.numeroFilhos,
-    },
-    {
-      pergunta: "idade dos filhos",
-      resposta: family.cuidador.idadeFilhos,
-    },
-    {
-      pergunta: "Quantos filhos de 0 a 6anos",
-      resposta: family.cuidador.filhos0a6anos,
-    },
-    {
-      pergunta: "Tipo-moradia",
-      resposta: family.cuidador.moradia,
-    },
-    {
-      pergunta: "Situação da moradia",
-      resposta: family.cuidador.situacaoMoradia,
-    },
-    {
-      pergunta: "Número de cômodos",
-      resposta: family.cuidador.numeroComodos,
-    },
-    {
-      pergunta: "Quantas pessoas moram na casa",
-      resposta: family.cuidador.pessoasMorando,
-    },
 
     {
-      pergunta: "Recebe algum auxílio do governo?",
+      pergunta: "Recebe algum auxílio do governo",
       resposta: family.cuidador.recebeAuxilio,
+    },
+    {
+      pergunta: "Caso receba",
+      resposta: family.cuidador.casoReceba,
     },
     {
       pergunta: "Renda Mensal",
@@ -176,6 +164,15 @@ const FamilyScreen = ({ route, navigation }) => {
     {
       pergunta: "Formulários Preenchidos",
       resposta: family.formulariosPreenchidos,
+    },
+
+    {
+      pergunta: "Passou pelo controle",
+      resposta: family.passouControle,
+    },
+    {
+      pergunta: "Mora atualmente",
+      resposta: family.moraAtualmente,
     },
   ];
 
@@ -198,11 +195,39 @@ const FamilyScreen = ({ route, navigation }) => {
         data={form}
         keyExtractor={(item, index) => `${item.pergunta}` + index}
         renderItem={({ item }) => {
-          return (
+          return item.pergunta === "Caso receba" ? (
+            item.resposta === "Não" ? null : (
+              <View style={styles.caixinha}>
+                <Text style={styles.text}>
+                  {item.pergunta}: {item.resposta}
+                </Text>
+              </View>
+            )
+          ) : (
             <View style={styles.caixinha}>
-              <Text style={styles.text}>
-                {item.pergunta}: {item.resposta}
-              </Text>
+              {item.pergunta === "Passou pelo controle" ? (
+                item.resposta === 0 ? (
+                  <Text style={styles.text}>{item.pergunta}: Não</Text>
+                ) : (
+                  <Text style={styles.text}>{item.pergunta}: Sim</Text>
+                )
+              ) : item.pergunta === "Mora atualmente" ? (
+                <View>
+                  <Text style={styles.text}>{item.pergunta}:</Text>
+
+                  {family.moraAtualmente.map((resposta, key) => {
+                    return (
+                      <Text key={key} style={styles.text}>
+                        {resposta}
+                      </Text>
+                    );
+                  })}
+                </View>
+              ) : (
+                <Text style={styles.text}>
+                  {item.pergunta}: {item.resposta}
+                </Text>
+              )}
             </View>
           );
         }}
@@ -225,7 +250,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#c9c9c9",
     justifyContent: "center",
-    height: 60,
+    paddingTop: 10,
+    paddingBottom: 10,
     paddingLeft: 10,
   },
   text: {

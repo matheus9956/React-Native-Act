@@ -1,44 +1,15 @@
 import React from "react";
-import {
-  keyboardType,
-  View,
-  StyleSheet,
-  Text,
-  TouchableOpacity,
-} from "react-native";
+import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
 import { TextInput } from "react-native-gesture-handler";
 import RadioForm from "react-native-simple-radio-button";
-import CheckboxList from "rn-checkbox-list";
 import RegSchema from "./RegisterFormValidation";
 import CustomInput from "../components/CustomInputComponent";
 import Select from "../components/SelectComponent";
-
-const data = [
-  {
-    id: "moraAtualmente",
-    pergunta: "Com quem a criança mora atualmente?",
-    type: "checkbox",
-    alternativas: [
-      { name: "Mãe", id: "mae" },
-      { name: "Pai", id: "pai" },
-      { name: "Madrasta", id: "madrasta" },
-      { name: "Padrasto", id: "padrasto" },
-      { name: "Irmãos", id: "irmaos" },
-      { name: "Avô/Avó", id: "avo" },
-      { name: "Tio/Tia", id: "tio" },
-      { name: "Outras pessoas da família", id: "outroFamiliar" },
-      { name: "Outras pessoas não familiares", id: "outroNaoFamiliar" },
-    ],
-  },
-];
+import MultipleCheckBox from "../components/MultipleCheckBoxComponent";
 
 const RegisterForm = ({ submit, validation }) => {
-  const [state, setState] = React.useState("peru");
-
-  const onSelectionsChange = (values) => {
-    setState(values);
-  };
+  const [state, setState] = React.useState("");
 
   return (
     <View style={{ paddingBottom: 40, paddingTop: 10 }}>
@@ -72,6 +43,7 @@ const RegisterForm = ({ submit, validation }) => {
           cuidadorSituacaoConjugal: "",
           cuidadorRecebeAuxilio: "",
           cuidadorRendaMensal: "",
+          moraAtualmente: "",
         }}
         onSubmit={(values, actions) => {
           actions.resetForm();
@@ -88,6 +60,7 @@ const RegisterForm = ({ submit, validation }) => {
           validateForm,
           setFieldTouched,
           setFieldValue,
+          validateField,
         }) => (
           <>
             <View style={styles.box}>
@@ -529,6 +502,28 @@ const RegisterForm = ({ submit, validation }) => {
               style={styles.box}
               keyboardType="numeric"
             />
+            <MultipleCheckBox
+              errors={errors.moraAtualmente}
+              touched={touched.moraAtualmente}
+              title="Com quem a criança mora atualmente?"
+              data={[
+                { id: 0, key: "Mãe", checked: false },
+                { id: 1, key: "Pai", checked: false },
+                { id: 2, key: "Madrasta", checked: false },
+                { id: 3, key: "Padrasto", checked: false },
+                { id: 4, key: "Irmãos", checked: false },
+                { id: 5, key: "Avô/Avó", checked: false },
+                { id: 6, key: "Tio/Tia", checked: false },
+                { id: 7, key: "Outras pessoas da família", checked: false },
+                { id: 8, key: "Outras pessoas não familiares", checked: false },
+              ]}
+              style={styles.box}
+              value={values.moraAtualmente}
+              onSelectionChange={(selected) => {
+                values.moraAtualmente = selected;
+                validateField("moraAtualmente");
+              }}
+            />
             <Select
               touched={touched.cuidadorRecebeAuxilio}
               style={styles.box}
@@ -681,132 +676,3 @@ const styles = StyleSheet.create({
 });
 
 export default RegisterForm;
-
-/*
-<View style={styles.label}>
-            {data.map((formulario, index) => (
-              <View key={index}>
-                {formulario.type === "alternativa" ? (
-                  <>
-                    <View style={styles.box}>
-                      <Text style={styles.textAlternativa}>
-                        {formulario.pergunta}
-                      </Text>
-                      <RadioForm
-                        radio_props={formulario.alternativas}
-                        buttonColor="#bd786e"
-                        selectedButtonColor="#bd786e"
-                        labelColor="#575757"
-                        animation={false}
-                        initial={-1}
-                        onPress={(value) => {
-                          {
-                            setFieldValue(
-                              formulario.id,
-                              formulario.alternativas[value].label
-                            );
-                          }
-                        }}
-                      />
-                    </View>
-                    {errors[formulario.id] && touched[formulario.id] && (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: "red",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {errors[formulario.id]}
-                      </Text>
-                    )}
-                  </>
-                ) : formulario.type === "number" ? (
-                  <>
-                    <TextInput
-                      placeholder={formulario.pergunta}
-                      onChangeText={handleChange(formulario.id)}
-                      value={values.id}
-                      style={styles.box}
-                      keyboardTypeType="numeric"
-                      placeholderTextColor="#575757"
-                    />
-                    {errors[formulario.id] && (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: "red",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {errors[formulario.id]}
-                      </Text>
-                    )}
-                  </>
-                ) : formulario.type === "checkbox" ? (
-                  <>
-                    <View style={styles.box}>
-                      <Text style={styles.textAlternativa}>
-                        {formulario.pergunta}
-                      </Text>
-                      <Text style={styles.textCheck}>
-                        (Marcar todas que se aplicarem)
-                      </Text>
-
-                      <CheckboxList
-                        listItems={formulario.alternativas}
-                        onChange={({ ids }) => onSelectionsChange(ids)}
-                        onLoading={() => <LoaderComponent />}
-                      />
-                    </View>
-                    {errors[formulario.id] && (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: "red",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {errors[formulario.id]}
-                      </Text>
-                    )}
-                  </>
-                ) : (
-                  <>
-                    <TextInput
-                      placeholder={formulario.pergunta}
-                      onChangeText={handleChange(formulario.id)}
-                      value={values.id}
-                      style={styles.box}
-                      placeholderTextColor="#575757"
-                    />
-                    {errors[formulario.id] && touched[formulario.id] && (
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: "red",
-                          alignSelf: "center",
-                        }}
-                      >
-                        {errors[formulario.id]}
-                      </Text>
-                    )}
-                  </>
-                )}
-              </View>
-            ))}
-
-            <TouchableOpacity
-              style={styles.button}
-              onPress={() => {
-                values.moraAtualmente = state;
-                console.log(errors);
-                handleSubmit();
-              }}
-            >
-              <Text style={styles.textbutton}>Finalizar</Text>
-            </TouchableOpacity>
-          </View>
-
-
-*/

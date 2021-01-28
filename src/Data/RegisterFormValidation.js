@@ -50,6 +50,9 @@ const RegSchema = Yup.object().shape({
   cuidadorRendaMensal: Yup.string().required(
     "Necessário informar a renda mensal"
   ),
+  moraAtualmente: Yup.array()
+    .required("Necessário informar com quem mora atualmente")
+    .min(1, "Necessário preencher ao menos um campo"),
 });
 
 export default RegSchema;
