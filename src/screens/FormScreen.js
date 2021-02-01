@@ -1,20 +1,35 @@
 import React, { useContext, useEffect } from "react";
-import { View, StyleSheet, ActivityIndicator } from "react-native";
+import {
+  View,
+  StyleSheet,
+  ActivityIndicator,
+  Platform,
+  StatusBar,
+  ScrollView,
+} from "react-native";
 import { Context as FormContext } from "../context/FormContext";
+import Form from "../Data/FormData";
 
-const RegisterScreen = ({ navigation, route }) => {
-  const { state, ReadForm, RegisterForm } = useContext(FormContext);
-  const _id = route.params?._id ?? "noId";
+const FormScreen = ({ navigation, route }) => {
+  const family = route.params?.family ?? "noFamily";
   const [isLoading, setIsLoading] = React.useState(false);
-
-  useEffect(() => {
-    ReadForm();
-  }, []);
+  const { RegisterForm } = useContext(FormContext);
 
   return !isLoading ? (
-    <View style={styles.all}>
-      <Text>Form Here</Text>
-    </View>
+    <ScrollView>
+      <Form
+        submit={(data) => {
+          setIsLoading(true);
+          RegisterForm(
+            data,
+            family._id,
+            () => setIsLoading(false),
+            () => navigation.navigate("Groups")
+          );
+        }}
+        family={family}
+      />
+    </ScrollView>
   ) : (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="#336699" />
@@ -23,10 +38,6 @@ const RegisterScreen = ({ navigation, route }) => {
 };
 
 const styles = StyleSheet.create({
-  all: {
-    flex: 1,
-    backgroundColor: "#f5f1e9",
-  },
   container: {
     flex: 1,
     justifyContent: "center",
@@ -34,4 +45,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RegisterScreen;
+export default FormScreen;

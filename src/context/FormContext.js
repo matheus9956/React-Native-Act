@@ -2,9 +2,6 @@ import createDataContext from "./createDataContext";
 import dadosApi from "../api/dados";
 const formReducer = (state, action) => {
   switch (action.type) {
-    case "read":
-      return action.payload.form;
-
     case "register":
       return state;
 
@@ -13,27 +10,7 @@ const formReducer = (state, action) => {
   }
 };
 
-const ReadForm = (dispatch) => {
-  const form = [
-    {
-      id: "Q01",
-      pergunta: "Pergunta 1:",
-      type: "alternativa",
-      alternativas: [
-        { label: "Alternativa 1", value: 0 },
-        { label: "Alternativa 2", value: 1 },
-      ],
-    },
-    { id: "Q02", pergunta: "Pergunta 2:", type: "number" },
-    { id: "Q03", pergunta: "Pergunta 3:", type: "text" },
-  ];
-
-  return () => {
-    dispatch({ type: "read", payload: { form } });
-  };
-};
-
-const RegisterForm = (dispatch) => async (values, id, callback) => {
+const RegisterForm = (dispatch) => async (values, id, loading, callback) => {
   console.log(id);
 
   const response = await dadosApi.post("/novoFormulario/", {
@@ -42,6 +19,9 @@ const RegisterForm = (dispatch) => async (values, id, callback) => {
   });
 
   dispatch({ type: "register", payload: response });
+  if (loading) {
+    loading();
+  }
 
   if (callback) {
     callback();
@@ -50,6 +30,6 @@ const RegisterForm = (dispatch) => async (values, id, callback) => {
 
 export const { Context, Provider } = createDataContext(
   formReducer,
-  { ReadForm, RegisterForm },
+  { RegisterForm },
   []
 );

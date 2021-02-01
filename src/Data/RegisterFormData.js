@@ -1,14 +1,12 @@
 import React from "react";
 import { View, StyleSheet, Text, TouchableOpacity } from "react-native";
 import { Formik } from "formik";
-import { TextInput } from "react-native-gesture-handler";
-import RadioForm from "react-native-simple-radio-button";
 import RegSchema from "./RegisterFormValidation";
 import CustomInput from "../components/CustomInputComponent";
 import Select from "../components/SelectComponent";
 import MultipleCheckBox from "../components/MultipleCheckBoxComponent";
 
-const RegisterForm = ({ submit, validation }) => {
+const RegisterForm = ({ submit }) => {
   const [state, setState] = React.useState("");
 
   return (
@@ -57,8 +55,6 @@ const RegisterForm = ({ submit, validation }) => {
           errors,
           touched,
           handleBlur,
-          validateForm,
-          setFieldTouched,
           setFieldValue,
           validateField,
         }) => (

@@ -11,6 +11,7 @@ const Select = ({ style, errors, touched, title, ...restProps }) => {
             fontWeight: "bold",
             alignSelf: "center",
             textTransform: "uppercase",
+            margin: 10,
           }}
         >
           {title}

@@ -58,9 +58,7 @@ const FamilyScreen = ({ route, navigation }) => {
 
                 <TouchableOpacity
                   style={{ paddingRight: 10 }}
-                  onPress={() =>
-                    navigation.navigate("Form", { _id: family._id })
-                  }
+                  onPress={() => navigation.navigate("Form", { family })}
                 >
                   <AntDesign name="filetext1" size={24} color="black" />
                 </TouchableOpacity>

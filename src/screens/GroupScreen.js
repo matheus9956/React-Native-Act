@@ -228,7 +228,7 @@ const GroupScreen = ({ navigation, route }) => {
                   <TouchableOpacity
                     style={styles.form}
                     onPress={() =>
-                      navigation.navigate("Form", { _id: item._id })
+                      navigation.navigate("Form", { family: item })
                     }
                   >
                     <Text>{item.formulariosPreenchidos}</Text>
