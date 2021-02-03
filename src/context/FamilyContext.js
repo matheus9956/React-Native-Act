@@ -9,17 +9,12 @@ const familyReducer = (state, action) => {
     case "readFamilies":
       return action.payload;
 
-    case "findFamily":
-      return state;
-
     default:
       return state;
   }
 };
 
 const RegisterFamily = (dispatch) => async (values, loading, callback) => {
-  console.log(values);
-
   await dadosApi.post("/novafamilia", values);
 
   dispatch({ type: "register", payload: { values } });
@@ -35,12 +30,6 @@ const ReadFamilies = (dispatch) => async (callback) => {
   if (callback) callback();
 };
 
-const FindFamily = (dispatch) => () => {
-  console.log(this.state);
-
-  dispatch({ type: "findFamily" });
-};
-
 const DisableFamily = (dispatch) => async (id, loading, callback) => {
   await dadosApi.post("/familia/disable", { id });
 
@@ -51,6 +40,6 @@ const DisableFamily = (dispatch) => async (id, loading, callback) => {
 
 export const { Context, Provider } = createDataContext(
   familyReducer,
-  { RegisterFamily, ReadFamilies, FindFamily, DisableFamily },
+  { RegisterFamily, ReadFamilies, DisableFamily },
   []
 );

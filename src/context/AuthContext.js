@@ -40,7 +40,7 @@ const signin = (dispatch) => {
     } catch (err) {
       dispatch({
         type: "add_error",
-        payload: "Nome de usuário  ou senha está incorreto",
+        payload: err,
       });
     }
   };

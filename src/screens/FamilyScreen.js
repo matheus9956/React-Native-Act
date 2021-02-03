@@ -1,4 +1,5 @@
 import React, { useContext, useState } from "react";
+import { navigate } from "../navigationRef";
 import {
   View,
   StyleSheet,
@@ -58,7 +59,7 @@ const FamilyScreen = ({ route, navigation }) => {
 
                 <TouchableOpacity
                   style={{ paddingRight: 10 }}
-                  onPress={() => navigation.navigate("Form", { family })}
+                  onPress={() => navigate("Form", { family })}
                 >
                   <AntDesign name="filetext1" size={24} color="black" />
                 </TouchableOpacity>

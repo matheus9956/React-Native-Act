@@ -3,9 +3,9 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let url;
 if (__DEV__) {
-  url = "http://c9c9954e58b4.ngrok.io/";
+  url = "https://8424d7319c5f.ngrok.io/";
 } else {
-  url = "";
+  url = "https://8424d7319c5f.ngrok.io/";
 }
 
 const instance = axios.create({

@@ -7,7 +7,7 @@ import Select from "../components/SelectComponent";
 import MultipleCheckBox from "../components/MultipleCheckBoxComponent";
 
 const RegisterForm = ({ submit }) => {
-  const [state, setState] = React.useState("");
+  const [state, setState] = React.useState(false);
 
   return (
     <View style={{ paddingBottom: 40, paddingTop: 10 }}>
@@ -54,6 +54,7 @@ const RegisterForm = ({ submit }) => {
           handleChange,
           errors,
           touched,
+          validateForm,
           handleBlur,
           setFieldValue,
           validateField,
@@ -108,24 +109,14 @@ const RegisterForm = ({ submit }) => {
                 touched={touched.criancaSexo}
                 style={styles.box1}
                 errors={errors.criancaSexo}
-                radio_props={[
-                  { label: "Masculino", value: 0 },
-                  { label: "Feminino", value: 1 },
+                data={[
+                  { key: "Masculino", id: 0, checked: false },
+                  { key: "Feminino", id: 1, checked: false },
                 ]}
-                buttonColor="#bd786e"
-                selectedButtonColor="#bd786e"
-                labelColor="#575757"
-                animation={false}
-                initial={-1}
-                onPress={(value) =>
-                  setFieldValue(
-                    "criancaSexo",
-                    [
-                      { label: "Masculino", value: 0 },
-                      { label: "Feminino", value: 1 },
-                    ][value].label
-                  )
-                }
+                onSelectionChange={(selected) => {
+                  values.criancaSexo = selected;
+                  //validateField("EPVA_18");
+                }}
                 title="Qual o sexo da criança"
               />
             </View>
@@ -179,35 +170,18 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorParentesco}
               style={styles.box}
               errors={errors.cuidadorParentesco}
-              radio_props={[
-                { label: "Mãe biológica", value: 0 },
-                { label: "Mãe adotiva", value: 1 },
-                { label: "Madrastra", value: 2 },
-                { label: "Pai biológico", value: 3 },
-                { label: "Pai adotivo", value: 4 },
-                { label: "Padrasto", value: 5 },
-                { label: "Outro cuidador principal", value: 6 },
+              data={[
+                { key: "Mãe biológica", id: 0, checked: false },
+                { key: "Mãe adotiva", id: 1, checked: false },
+                { key: "Madrastra", id: 2, checked: false },
+                { key: "Pai biológico", id: 3, checked: false },
+                { key: "Pai adotivo", id: 4, checked: false },
+                { key: "Padrasto", id: 5, checked: false },
+                { key: "Outro cuidador principal", id: 6, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorParentesco",
-                    [
-                      { label: "Mãe biológica", value: 0 },
-                      { label: "Mãe adotiva", value: 1 },
-                      { label: "Madrastra", value: 2 },
-                      { label: "Pai biológico", value: 3 },
-                      { label: "Pai adotivo", value: 4 },
-                      { label: "Padrasto", value: 5 },
-                      { label: "Outro cuidador principal", value: 6 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorParentesco = selected;
+                //validateField("EPVA_18");
               }}
               title="Parentesco da criança:"
             />
@@ -215,35 +189,18 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorEscolaridade}
               style={styles.box}
               errors={errors.cuidadorEscolaridade}
-              radio_props={[
-                { label: "Ensino Fundamental Incompleto", value: 0 },
-                { label: "Ensino Fundamental Completo", value: 1 },
-                { label: "Ensino  Médio Incompleto", value: 2 },
-                { label: "Ensino Médio Completo", value: 3 },
-                { label: "Ensino Técnico", value: 4 },
-                { label: "Ensino Superior Incompleto", value: 5 },
-                { label: "Ensino Superior Completo", value: 6 },
+              data={[
+                { key: "Ensino Fundamental Incompleto", id: 0, checked: false },
+                { key: "Ensino Fundamental Completo", id: 1, checked: false },
+                { key: "Ensino  Médio Incompleto", id: 2, checked: false },
+                { key: "Ensino Médio Completo", id: 3, checked: false },
+                { key: "Ensino Técnico", id: 4, checked: false },
+                { key: "Ensino Superior Incompleto", id: 5, checked: false },
+                { key: "Ensino Superior Completo", id: 6, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorEscolaridade",
-                    [
-                      { label: "Ensino Fundamental Incompleto", value: 0 },
-                      { label: "Ensino Fundamental Completo", value: 1 },
-                      { label: "Ensino  Médio Incompleto", value: 2 },
-                      { label: "Ensino Médio Completo", value: 3 },
-                      { label: "Ensino Técnico", value: 4 },
-                      { label: "Ensino Superior Incompleto", value: 5 },
-                      { label: "Ensino Superior Completo", value: 6 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorEscolaridade = selected;
+                //validateField("EPVA_18");
               }}
               title="Escolaridade:"
             />
@@ -316,31 +273,16 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorOcupacao}
               style={styles.box}
               errors={errors.cuidadorOcupacao}
-              radio_props={[
-                { label: "Estudante", value: 0 },
-                { label: "Do lar", value: 1 },
-                { label: "Autônomo(a)", value: 2 },
-                { label: "Funcionário(a) contratado(a)", value: 3 },
-                { label: "Desempregado(a)", value: 4 },
+              data={[
+                { key: "Estudante", id: 0, checked: false },
+                { key: "Do lar", id: 1, checked: false },
+                { key: "Autônomo(a)", id: 2, checked: false },
+                { key: "Funcionário(a) contratado(a)", id: 3, checked: false },
+                { key: "Desempregado(a)", id: 4, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorOcupacao",
-                    [
-                      { label: "Estudante", value: 0 },
-                      { label: "Do lar", value: 1 },
-                      { label: "Autônomo(a)", value: 2 },
-                      { label: "Funcionário(a) contratado(a)", value: 3 },
-                      { label: "Desempregado(a)", value: 4 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorOcupacao = selected;
+                //validateField("EPVA_18");
               }}
               title="Ocupação:"
             />
@@ -348,31 +290,16 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorPele}
               style={styles.box}
               errors={errors.cuidadorPele}
-              radio_props={[
-                { label: "Branca", value: 0 },
-                { label: "Preta", value: 1 },
-                { label: "Amarela", value: 2 },
-                { label: "Indígena", value: 3 },
-                { label: "Prefiro não declarar", value: 4 },
+              data={[
+                { key: "Branca", id: 0, checked: false },
+                { key: "Preta", id: 1, checked: false },
+                { key: "Amarela", id: 2, checked: false },
+                { key: "Indígena", id: 3, checked: false },
+                { key: "Prefiro não declarar", id: 4, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorPele",
-                    [
-                      { label: "Branca", value: 0 },
-                      { label: "Preta", value: 1 },
-                      { label: "Amarela", value: 2 },
-                      { label: "Indígena", value: 3 },
-                      { label: "Prefiro não declarar", value: 4 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorPele = selected;
+                //validateField("EPVA_18");
               }}
               title="Qual a sua cor da pele/etnia do  cuidador:"
             />
@@ -380,31 +307,16 @@ const RegisterForm = ({ submit }) => {
               touched={touched.criancaPele}
               style={styles.box}
               errors={errors.criancaPele}
-              radio_props={[
-                { label: "Branca", value: 0 },
-                { label: "Preta", value: 1 },
-                { label: "Amarela", value: 2 },
-                { label: "Indígena", value: 3 },
-                { label: "Prefiro não declarar", value: 4 },
+              data={[
+                { key: "Branca", id: 0, checked: false },
+                { key: "Preta", id: 1, checked: false },
+                { key: "Amarela", id: 2, checked: false },
+                { key: "Indígena", id: 3, checked: false },
+                { key: "Prefiro não declarar", id: 4, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "criancaPele",
-                    [
-                      { label: "Branca", value: 0 },
-                      { label: "Preta", value: 1 },
-                      { label: "Amarela", value: 2 },
-                      { label: "Indígena", value: 3 },
-                      { label: "Prefiro não declarar", value: 4 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.criancaPele = selected;
+                //validateField("EPVA_18");
               }}
               title="Qual a sua cor da pele/etnia da  crianca:"
             />
@@ -412,31 +324,16 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorReligiao}
               style={styles.box}
               errors={errors.cuidadorReligiao}
-              radio_props={[
-                { label: "Católica", value: 0 },
-                { label: "Evangélica", value: 1 },
-                { label: "Espírita", value: 2 },
-                { label: "Outras religiões", value: 3 },
-                { label: "Não tenho religião", value: 4 },
+              data={[
+                { key: "Católica", id: 0, checked: false },
+                { key: "Evangélica", id: 1, checked: false },
+                { key: "Espírita", id: 2, checked: false },
+                { key: "Outras religiões", id: 3, checked: false },
+                { key: "Não tenho religião", id: 4, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorReligiao",
-                    [
-                      { label: "Católica", value: 0 },
-                      { label: "Evangélica", value: 1 },
-                      { label: "Espírita", value: 2 },
-                      { label: "Outras religiões", value: 3 },
-                      { label: "Não tenho religião", value: 4 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorReligiao = selected;
+                //validateField("EPVA_18");
               }}
               title="Religião:"
             />
@@ -444,30 +341,19 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorSituacaoConjugal}
               style={styles.box}
               errors={errors.cuidadorSituacaoConjugal}
-              radio_props={[
-                { label: "Casada/União estável", value: 0 },
-                { label: "Solteira", value: 1 },
-                { label: "Separada", value: 2 },
-                { label: "Viúva", value: 3 },
+              data={[
+                { key: "Casada/União estável", id: 0, checked: false },
+                { key: "Solteira", id: 1, checked: false },
+                { key: "Separada", id: 2, checked: false },
+                { key: "Viúva", id: 3, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                setFieldValue(
-                  "cuidadorSituacaoConjugal",
-                  [
-                    { label: "Casada/União estável", value: 0 },
-                    { label: "Solteira", value: 1 },
-                    { label: "Separada", value: 2 },
-                    { label: "Viúva", value: 3 },
-                  ][value].label
-                );
+              onSelectionChange={(selected) => {
+                values.cuidadorSituacaoConjugal = selected;
+                //validateField("EPVA_18");
               }}
               title="Situação conjugal:"
             />
+
             <CustomInput
               onBlur={handleBlur("cuidadorNumeroFilhos")}
               error={errors.cuidadorNumeroFilhos}
@@ -517,42 +403,28 @@ const RegisterForm = ({ submit }) => {
               value={values.moraAtualmente}
               onSelectionChange={(selected) => {
                 values.moraAtualmente = selected;
-                validateField("moraAtualmente");
+                //validateField("moraAtualmente");
               }}
             />
             <Select
               touched={touched.cuidadorRecebeAuxilio}
               style={styles.box}
               errors={errors.cuidadorRecebeAuxilio}
-              radio_props={[
-                { label: "Sim", value: 0 },
-                { label: "Não", value: 1 },
+              data={[
+                { key: "Sim", id: 0, checked: false },
+                { key: "Não", id: 1, checked: false },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setState(
-                    [
-                      { label: "Sim", value: 0 },
-                      { label: "Não", value: 1 },
-                    ][value].label
-                  );
-                  setFieldValue(
-                    "cuidadorRecebeAuxilio",
-                    [
-                      { label: "Sim", value: 0 },
-                      { label: "Não", value: 1 },
-                    ][value].label
-                  );
+              onSelectionChange={(selected) => {
+                values.cuidadorRecebeAuxilio = selected;
+                if (selected === "Sim") {
+                  setState(true);
+                } else {
+                  setState(false);
                 }
               }}
               title="Recebe algum auxílio do governo:"
             />
-            {state === "Sim" ? (
+            {state === true ? (
               <CustomInput
                 onBlur={handleBlur("cuidadorCasoReceba")}
                 error={errors.cuidadorCasoReceba}
@@ -567,29 +439,14 @@ const RegisterForm = ({ submit }) => {
               touched={touched.cuidadorRendaMensal}
               style={styles.box}
               errors={errors.cuidadorRendaMensal}
-              radio_props={[
-                { label: "Menos de R$1000", value: 0 },
-                { label: "Entre R$1.100 - R$3000", value: 1 },
-                { label: "Entre R$ 3100 - R$5000", value: 2 },
-                { label: "Mais de R$5000", value: 3 },
+              data={[
+                { key: "Menos de R$1000", id: 0, checked: false },
+                { key: "Entre R$1.100 - R$3000", id: 1, checked: false },
+                { key: "Entre R$ 3100 - R$5000", id: 2, checked: false },
+                { key: "Mais de R$5000", id: 3 },
               ]}
-              buttonColor="#bd786e"
-              selectedButtonColor="#bd786e"
-              labelColor="#575757"
-              animation={false}
-              initial={-1}
-              onPress={(value) => {
-                {
-                  setFieldValue(
-                    "cuidadorRendaMensal",
-                    [
-                      { label: "Menos de R$1000", value: 0 },
-                      { label: "Entre R$1.100 - R$3000", value: 1 },
-                      { label: "Entre R$ 3100 - R$5000", value: 2 },
-                      { label: "Mais de R$5000", value: 3 },
-                    ][value].label
-                  );
-                }
+              onSelectionChange={(selected) => {
+                values.cuidadorRendaMensal = selected;
               }}
               title="Renda Mensal:"
             />
@@ -617,7 +474,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 8,
     marginBottom: 10,
   },
-  label: {
+  key: {
     marginTop: 10,
     marginHorizontal: 8,
     paddingBottom: 45,

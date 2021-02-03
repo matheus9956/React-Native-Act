@@ -11,8 +11,6 @@ const formReducer = (state, action) => {
 };
 
 const RegisterForm = (dispatch) => async (values, id, loading, callback) => {
-  console.log(id);
-
   const response = await dadosApi.post("/novoFormulario/", {
     questionario: values,
     familyId: id,
