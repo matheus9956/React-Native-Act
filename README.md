@@ -1,3 +1,3 @@
 # React-Native-Act
 
-App desenvolvido para a IVEPESP em React Native
+Front-end do app desenvolvido para a IVEPESP em React Native.
