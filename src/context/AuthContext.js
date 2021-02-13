@@ -6,6 +6,7 @@ import { navigate } from "../navigationRef";
 const authReducer = (state, action) => {
   switch (action.type) {
     case "add_error":
+      console.log("caraiooooooooooo");
       return { ...state, errorMessage: action.payload };
     case "signin":
       return { errorMessage: "", token: action.payload };
@@ -40,7 +41,8 @@ const signin = (dispatch) => {
     } catch (err) {
       dispatch({
         type: "add_error",
-        payload: err,
+
+        payload: "O usuário ou senha está incorreto",
       });
     }
   };

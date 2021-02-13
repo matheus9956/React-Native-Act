@@ -122,7 +122,7 @@ const Form = ({ submit, family }) => {
           EPVA_14: "",
           EPVA_15: "",
           EPVA_16: "",
-          EPVA_17: "",
+
           EPVA_18: "",
           EPVA_20: "",
           EPVA_21: "",
@@ -2761,43 +2761,7 @@ const Form = ({ submit, family }) => {
                   }}
                   title="Gostaria de estar trabalhando em algo que faça a diferença na vida de outras pessoas"
                 />
-                <Select
-                  touched={touched.EPVA_17}
-                  style={styles.box1}
-                  errors={errors.EPVA_17}
-                  data={[
-                    {
-                      key: "Discordo totalmete",
-                      id: 0,
-                      checked: false,
-                    },
-                    {
-                      key: "Discordo parcialmente",
-                      id: 1,
-                      checked: false,
-                    },
-                    {
-                      key: "Não sei avaliar",
-                      id: 2,
-                      checked: false,
-                    },
-                    {
-                      key: "Concordo parcialmente",
-                      id: 3,
-                      checked: false,
-                    },
-                    {
-                      key: "Concordo",
-                      id: 4,
-                      checked: false,
-                    },
-                  ]}
-                  onSelectionChange={(selected) => {
-                    values.EPVA_17 = selected;
-                    //validateField("EPVA_17");
-                  }}
-                  title="Pretendo ensinar meus valores para a familia que irei construir"
-                />
+
                 <Select
                   touched={touched.EPVA_18}
                   style={styles.box1}
@@ -3450,7 +3414,7 @@ const styles = StyleSheet.create({
     fontSize: 17,
     fontWeight: "bold",
     marginBottom: 5,
-    alignSelf: "center",
+    paddingLeft: 10,
     textTransform: "uppercase",
   },
   textbutton: {

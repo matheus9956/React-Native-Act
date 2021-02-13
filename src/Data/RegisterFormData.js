@@ -61,12 +61,23 @@ const RegisterForm = ({ submit }) => {
         }) => (
           <>
             <View style={styles.box}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+
+                  textTransform: "uppercase",
+                  padding: 10,
+                }}
+              >
+                Dados da criança:
+              </Text>
+
               <CustomInput
                 onBlur={handleBlur("criancaNome")}
                 error={errors.criancaNome}
                 touched={touched.criancaNome}
                 value={values.criancaNome}
-                placeholder="Nome completo da criança:"
+                placeholder="Nome completo:"
                 onChangeText={handleChange("criancaNome")}
                 style={{
                   height: 40,
@@ -108,6 +119,7 @@ const RegisterForm = ({ submit }) => {
               <Select
                 touched={touched.criancaSexo}
                 style={styles.box1}
+                styleTitle={styles.title}
                 errors={errors.criancaSexo}
                 data={[
                   { key: "Masculino", id: 0, checked: false },
@@ -115,18 +127,44 @@ const RegisterForm = ({ submit }) => {
                 ]}
                 onSelectionChange={(selected) => {
                   values.criancaSexo = selected;
-                  //validateField("EPVA_18");
                 }}
-                title="Qual o sexo da criança"
+                title="Sexo:"
+              />
+              <Select
+                touched={touched.criancaPele}
+                style={styles.box1}
+                styleTitle={styles.title}
+                errors={errors.criancaPele}
+                data={[
+                  { key: "Branca", id: 0, checked: false },
+                  { key: "Preta", id: 1, checked: false },
+                  { key: "Amarela", id: 2, checked: false },
+                  { key: "Indígena", id: 3, checked: false },
+                  { key: "Prefiro não declarar", id: 4, checked: false },
+                ]}
+                onSelectionChange={(selected) => {
+                  values.criancaPele = selected;
+                }}
+                title="cor da pele/etnia:"
               />
             </View>
             <View style={styles.box}>
+              <Text
+                style={{
+                  fontWeight: "bold",
+
+                  textTransform: "uppercase",
+                  padding: 10,
+                }}
+              >
+                Dados do cuidador:
+              </Text>
               <CustomInput
                 onBlur={handleBlur("cuidadorNome")}
                 error={errors.cuidadorNome}
                 touched={touched.cuidadorNome}
                 value={values.cuidadorNome}
-                placeholder="Nome completo do Cuidador(a):"
+                placeholder="Nome completo:"
                 onChangeText={handleChange("cuidadorNome")}
                 style={{
                   height: 40,
@@ -303,23 +341,7 @@ const RegisterForm = ({ submit }) => {
               }}
               title="Qual a sua cor da pele/etnia do  cuidador:"
             />
-            <Select
-              touched={touched.criancaPele}
-              style={styles.box}
-              errors={errors.criancaPele}
-              data={[
-                { key: "Branca", id: 0, checked: false },
-                { key: "Preta", id: 1, checked: false },
-                { key: "Amarela", id: 2, checked: false },
-                { key: "Indígena", id: 3, checked: false },
-                { key: "Prefiro não declarar", id: 4, checked: false },
-              ]}
-              onSelectionChange={(selected) => {
-                values.criancaPele = selected;
-                //validateField("EPVA_18");
-              }}
-              title="Qual a sua cor da pele/etnia da  crianca:"
-            />
+
             <Select
               touched={touched.cuidadorReligiao}
               style={styles.box}
@@ -524,6 +546,11 @@ const styles = StyleSheet.create({
   textCheck: {
     alignSelf: "center",
     marginBottom: 12,
+    textTransform: "uppercase",
+  },
+  title: {
+    fontWeight: "bold",
+    fontSize: 12,
     textTransform: "uppercase",
   },
 });

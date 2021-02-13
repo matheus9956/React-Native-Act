@@ -46,7 +46,7 @@ const MultipleCheckBox = ({
       <Text
         style={{
           fontWeight: "bold",
-          alignSelf: "center",
+          padding: 10,
           textTransform: "uppercase",
         }}
       >
@@ -54,8 +54,8 @@ const MultipleCheckBox = ({
       </Text>
       <Text
         style={{
-          alignSelf: "center",
           textTransform: "uppercase",
+          paddingLeft: 10,
         }}
       >
         (Marcar todas que se aplicarem)

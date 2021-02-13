@@ -9,7 +9,7 @@ const Select = ({
   touched,
   title,
   data,
-  value,
+  styleTitle,
   onSelectionChange,
 }) => {
   const [state, setState] = useState({ checkboxes: data });
@@ -34,18 +34,23 @@ const Select = ({
 
     onSelectionChange(selecteds.key);
   };
-
+  console.log(styleTitle);
   return (
     <View style={style}>
-      <Text
-        style={{
-          fontWeight: "bold",
-          alignSelf: "center",
-          textTransform: "uppercase",
-        }}
-      >
-        {title}
-      </Text>
+      {styleTitle === undefined ? (
+        <Text
+          style={{
+            fontWeight: "bold",
+            padding: 10,
+            textTransform: "uppercase",
+          }}
+        >
+          {title}
+        </Text>
+      ) : (
+        <Text style={styleTitle}>{title}</Text>
+      )}
+
       <Text
         style={{
           alignSelf: "center",
