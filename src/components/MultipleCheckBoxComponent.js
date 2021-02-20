@@ -6,7 +6,7 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import CheckBox from "@react-native-community/checkbox";
+import { Checkbox } from "react-native-paper";
 
 const MultipleCheckBox = ({
   title,
@@ -22,7 +22,8 @@ const MultipleCheckBox = ({
   const onchecked = (id) => {
     const values = state.checkboxes;
     const index = values.findIndex((item) => item.id === id);
-    values[index].checked = !values[index].checked;
+    values[index].checked =
+      values[index].checked === "checked" ? "unchecked" : "checked";
 
     setState({ checkboxes: values });
   };
@@ -33,7 +34,7 @@ const MultipleCheckBox = ({
     let selecteds = [];
 
     for (let i = 0; i < checks.length; i++) {
-      if (checks[i] === true) {
+      if (checks[i] === "checked") {
         selecteds.push(keys[i]);
       }
     }
@@ -68,9 +69,9 @@ const MultipleCheckBox = ({
             style={{ flexDirection: "row", alignItems: "center", margin: 3 }}
             onPress={() => onchecked(item.id)}
           >
-            <CheckBox
-              value={item.checked}
-              onValueChange={() => {
+            <Checkbox
+              status={item.checked}
+              onPress={() => {
                 onchecked(item.id);
                 getSelectedValues();
               }}

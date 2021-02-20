@@ -183,10 +183,14 @@ const Form = ({ submit, family }) => {
                 touched={touched.casoParticipe}
                 title="Se sim qual ?"
                 data={[
-                  { id: 0, key: "Crescendo e Aprendendo", checked: false },
-                  { id: 1, key: "Criança Feliz", checked: false },
-                  { id: 2, key: "PADIN", checked: false },
-                  { id: 3, key: "Outros", checked: false },
+                  {
+                    id: 0,
+                    key: "Crescendo e Aprendendo",
+                    checked: "unchecked",
+                  },
+                  { id: 1, key: "Criança Feliz", checked: "unchecked" },
+                  { id: 2, key: "PADIN", checked: "unchecked" },
+                  { id: 3, key: "Outros", checked: "unchecked" },
                 ]}
                 style={styles.box}
                 value={values.casoParticipe}
@@ -3320,9 +3324,9 @@ const Form = ({ submit, family }) => {
                       touched={touched.VI_2}
                       title="Em qual fase da sua vida?"
                       data={[
-                        { id: 0, key: "Infância", checked: false },
-                        { id: 1, key: "Adolêscencia", checked: false },
-                        { id: 2, key: "Fase adulta", checked: false },
+                        { id: 0, key: "Infância", checked: "unchecked" },
+                        { id: 1, key: "Adolêscencia", checked: "unchecked" },
+                        { id: 2, key: "Fase adulta", checked: "unchecked" },
                       ]}
                       style={styles.box1}
                       value={values.VI_2}
@@ -3336,18 +3340,18 @@ const Form = ({ submit, family }) => {
                       touched={touched.VI_3}
                       title="Qual foi o tipo de violência?"
                       data={[
-                        { id: 0, key: "Abuso fisico", checked: false },
+                        { id: 0, key: "Abuso fisico", checked: "unchecked" },
                         {
                           id: 1,
                           key: "Abuso psicológico(ex:humilhou)",
-                          checked: false,
+                          checked: "unchecked",
                         },
-                        { id: 2, key: "Abuso sexual", checked: false },
+                        { id: 2, key: "Abuso sexual", checked: "unchecked" },
                         {
                           id: 3,
                           key:
                             "Negligência(ex: falta de alimentação e cuidados)",
-                          checked: false,
+                          checked: "unchecked",
                         },
                       ]}
                       style={styles.box1}
@@ -3362,12 +3366,12 @@ const Form = ({ submit, family }) => {
                       touched={touched.VI_4}
                       title="Quem cometeu a violência"
                       data={[
-                        { id: 0, key: "Pai", checked: false },
-                        { id: 1, key: "Mãe", checked: false },
-                        { id: 2, key: "Avós", checked: false },
-                        { id: 3, key: "Tios", checked: false },
-                        { id: 4, key: "Companheiro", checked: false },
-                        { id: 5, key: "Outro", checked: false },
+                        { id: 0, key: "Pai", checked: "unchecked" },
+                        { id: 1, key: "Mãe", checked: "unchecked" },
+                        { id: 2, key: "Avós", checked: "unchecked" },
+                        { id: 3, key: "Tios", checked: "unchecked" },
+                        { id: 4, key: "Companheiro", checked: "unchecked" },
+                        { id: 5, key: "Outro", checked: "unchecked" },
                       ]}
                       style={styles.box1}
                       value={values.VI_4}

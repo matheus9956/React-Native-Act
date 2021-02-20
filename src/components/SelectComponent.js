@@ -1,7 +1,5 @@
 import React, { useState } from "react";
 import { View, Text, StyleSheet, TouchableOpacity } from "react-native";
-import RadioForm from "react-native-simple-radio-button";
-import CheckBox from "@react-native-community/checkbox";
 
 const Select = ({
   style,

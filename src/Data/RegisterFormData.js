@@ -411,15 +411,23 @@ const RegisterForm = ({ submit }) => {
               touched={touched.moraAtualmente}
               title="Com quem a criança mora atualmente?"
               data={[
-                { id: 0, key: "Mãe", checked: false },
-                { id: 1, key: "Pai", checked: false },
-                { id: 2, key: "Madrasta", checked: false },
-                { id: 3, key: "Padrasto", checked: false },
-                { id: 4, key: "Irmãos", checked: false },
-                { id: 5, key: "Avô/Avó", checked: false },
-                { id: 6, key: "Tio/Tia", checked: false },
-                { id: 7, key: "Outras pessoas da família", checked: false },
-                { id: 8, key: "Outras pessoas não familiares", checked: false },
+                { id: 0, key: "Mãe", checked: "unchecked" },
+                { id: 1, key: "Pai", checked: "unchecked" },
+                { id: 2, key: "Madrasta", checked: "unchecked" },
+                { id: 3, key: "Padrasto", checked: "unchecked" },
+                { id: 4, key: "Irmãos", checked: "unchecked" },
+                { id: 5, key: "Avô/Avó", checked: "unchecked" },
+                { id: 6, key: "Tio/Tia", checked: "unchecked" },
+                {
+                  id: 7,
+                  key: "Outras pessoas da família",
+                  checked: "unchecked",
+                },
+                {
+                  id: 8,
+                  key: "Outras pessoas não familiares",
+                  checked: "unchecked",
+                },
               ]}
               style={styles.box}
               value={values.moraAtualmente}
